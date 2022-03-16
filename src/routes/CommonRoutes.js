@@ -53,6 +53,7 @@ router.post('/deleteUpdate/:action', requireAuth, (req, res) =>{
 
     db.query(sql, (err, results) =>{
         if(err){
+            
             return res.status(422).send({error: 'Error Processing request'})
         }
 

@@ -10,6 +10,7 @@ AddTrailers.create = (table) =>{
         trailerno VARCHAR(255) NOT NULL unique,
         vinnumber VARCHAR(255) NOT NULL,
         licence_plate VARCHAR(255) NOT NULL,
+        state text not null,
         type text,
         filepath text,
         notes text,
@@ -22,7 +23,7 @@ AddTrailers.create = (table) =>{
 
 AddTrailers.insert = (table) =>{
     const insert = `INSERT INTO ${table} 
-    (model,make,year,trailerno,vinnumber,filepath,licence_plate, type, notes) VALUES(?,?,?,?,?,?,?,?,?)`;
+    (model,make,year,trailerno,vinnumber,filepath,licence_plate, state, type, notes) VALUES(?,?,?,?,?,?,?,?,?,?)`;
  
     return insert;
 }

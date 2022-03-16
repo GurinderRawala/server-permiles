@@ -22,8 +22,8 @@ class TrailerUpdate{
             res.status(422).send({error: 'Invalid access'})
         }
         const filepath = `${this.username}/${type}/${unitno}`;
-        const licence_plate = JSON.stringify({plate, state});
-        const DATA = [model, make, year, unitno, vin, filepath, licence_plate, type, notes];
+        
+        const DATA = [model, make, year, unitno, vin, filepath, plate, state, type, notes];
         db.query(InsertQuery, DATA,  (err, results) =>{
              if(err){
                  return res.status(422).send({error: `Record for unit# ${unitno} already exits. `})
@@ -61,9 +61,9 @@ router.post('/addEquipment/:type', requireAuth, (req, res) =>{
         return res.status(422).send({ error: "Access denied"})
     }
     const filepath = `${username}/${type}/${unitno}`;
-    const licence_plate = JSON.stringify({plate, state});
+    
     const InsertQuery = AddTrucks.insert(table);
-    db.query(InsertQuery, [model, make, year, unitno, vin, filepath, licence_plate, notes], (err, results) =>{
+    db.query(InsertQuery, [model, make, year, unitno, vin, filepath, plate, state, notes], (err, results) =>{
         if(err){
             return res.status(422).send({error: `Record for unit# ${unitno} already exits. `})
         }

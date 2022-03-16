@@ -8,6 +8,7 @@ AddTrucks.create  = (table) =>{
         truckno VARCHAR(255) NOT NULL unique,
         vinnumber VARCHAR(255) NOT NULL,
         licence_plate VARCHAR(255) NOT NULL,
+        state text not null,
         filepath text,
         notes text,
         reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -18,7 +19,7 @@ AddTrucks.create  = (table) =>{
 
 AddTrucks.insert = (table) =>{
    const insert = `INSERT INTO ${table} 
-   (model,make,year,truckno,vinnumber,filepath,licence_plate,notes) VALUES(?,?,?,?,?,?,?,?)`;
+   (model,make,year,truckno,vinnumber,filepath,licence_plate,state,notes) VALUES(?,?,?,?,?,?,?,?,?)`;
 
    return insert;
 }
