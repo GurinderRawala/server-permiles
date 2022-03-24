@@ -1,7 +1,6 @@
-const bunyan = require('bunyan')
-exports.loadConfig = (component) => rc('permiles', exports.defaultConfig(component))
+exports.loadConfig = () => rc('permiles', exports.defaultConfig(component))
 
-exports.defaultConfig = (component) => ({
+exports.defaultConfig = () => ({
   authentication: {
     enabled: false
   },

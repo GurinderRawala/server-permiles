@@ -1,4 +1,4 @@
 const { startServer } = require('./server.js')
-const config = require('../config.js').defaultConfig()
+const config = require('../config.js').loadConfig()
 
 startServer(config)
