@@ -1,7 +1,7 @@
 
 
-module.exports.registerAllRoutes = (server, config, deps) => {
-    require('./drivers.js').registerRoutes(server, config)
+module.exports.registerAllRoutes = (server, modules) => {
+    require('./drivers.js').registerRoutes(server, modules)
 }
 
 
