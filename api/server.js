@@ -13,7 +13,7 @@ module.exports.startServer = async (config) => {
 
   server.use(express.static('public'));
   server.use(bodyParser.json())
-  routes.registerAllRoutes(server, config, modules)  
+  routes.registerAllRoutes(server, modules)  
   server.listen(PORT, () => 
     log.info({ PORT }, 'permiles-api started succesfully')
   );
