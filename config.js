@@ -1,4 +1,5 @@
-exports.loadConfig = () => rc('permiles', exports.defaultConfig(component))
+const rc = require('rc')
+exports.loadConfig = (component) => rc('permiles', exports.defaultConfig(component))
 
 exports.defaultConfig = () => ({
   authentication: {

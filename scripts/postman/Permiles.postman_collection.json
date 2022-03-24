@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2d041097-3464-4cde-a5e0-8b3cba4938ac",
+		"_postman_id": "b828b127-c511-46ec-9155-8357efc9d87b",
 		"name": "Permiles",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -28,6 +28,65 @@
 					"path": [
 						"drivers",
 						"add-driver"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-driver",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"find\": \"789\",\r\n    \"findField\": \"driver_id\",\r\n    \"update\": \"{{$randomPhoneNumber}}\",\r\n    \"updateField\": \"phone\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/drivers/update-driver",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"drivers",
+						"update-driver"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "find-driver",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"driver_id\": \"789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/drivers/find-driver",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"drivers",
+						"find-driver"
 					]
 				}
 			},

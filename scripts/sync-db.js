@@ -22,7 +22,7 @@ const sync = async () => {
         process.exit(0) 
     }
     catch (ex) {
-        console.log( { ex}, 'database sync failed')
+        console.log( { ex }, 'database sync failed')
     }
 }
 
