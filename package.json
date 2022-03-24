@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon api/index.js"
+    "dev": "NODE_ENV=development nodemon ./api | bunyan -o short",
+    "sync-db" : "docker compose up -d && nodemon ./scripts/sync-db | bunyan -o short"
   },
   "keywords": [],
   "author": "",
