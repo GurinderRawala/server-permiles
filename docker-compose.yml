@@ -1,0 +1,11 @@
+version: "2.4"
+services:
+  pg:
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: NInAN5t3kJo8d7I3
+      POSTGRES_DB: permiles
+    ports:
+      - "5432:5432"
+    volumes:
+    - ./db:/docker-entrypoint-initdb.d

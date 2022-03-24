@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "2d041097-3464-4cde-a5e0-8b3cba4938ac",
+		"name": "Permiles",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add-driver",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"id\" : \"{{$randomUUID}}\",\n \"driverid\" : \"{{$randomInt}}\",\n \"firstname\" : \"{{$randomFirstName}}\",\n \"lastname\" :\"{{$randomLastName}}\",\n \"phone\" : \"{{$randomPhoneNumber}}\",\n \"email\" : \"{{$randomEmail}}\",\n \"driver_id\" : \"{{$randomInt}}\",\n \"drivers_licence\" : \"{{$randomJobDescriptor}}\",\n \"licence_state\" : \"{{$randomCity}}\",\n \"truckno\" : \"{{$randomJobDescriptor}}\",\n \"filepath\" : \"{{$randomFilePath}}\",\n \"reg_date\" : \"{{$isoTimestamp}}\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/drivers/add-driver",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"drivers",
+						"add-driver"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
