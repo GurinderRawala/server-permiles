@@ -1,19 +1,21 @@
-const cors = require('cors')
 const express = require('express')
 const routes = require('./routes') 
 const bodyParser = require('body-parser')
-const { getConnection } = require('./postgres')
+const { configureModules } = require('../lib/configure-modules')
 
 module.exports.startServer = async (config) => {
-  const { port: PORT } = config
+  const modules = await configureModules(config)
+  const { log } = modules
+  const { port: PORT} = config
   const server = express()
-  const dependencies = {}
+
+  log.info('permiles-api is starting...')
 
   server.use(express.static('public'));
   server.use(bodyParser.json())
-  routes.registerAllRoutes(server, config)  
+  routes.registerAllRoutes(server, config, modules)  
   server.listen(PORT, () => 
-    console.log(`Your server is running on port ${PORT}`)
+    log.info({ PORT }, 'permiles-api started succesfully')
   );
 
   return server

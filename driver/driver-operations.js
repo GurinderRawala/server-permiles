@@ -1,7 +1,4 @@
-const { createDriverModel }= require('../lib/models')
-
-module.exports.createAddDriver =  ({connection}) => {
-  const driverRepo = createDriverModel(connection)
+module.exports.createAddDriver =  ({driverRepo}) => {
   const createAddDriver = addDriver.bind(null, driverRepo)
   return createAddDriver
 }

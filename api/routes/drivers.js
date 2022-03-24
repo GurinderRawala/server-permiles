@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const { createAddDriver, Driver } = require('../../driver')
+const { createAddDriver } = require('../../driver')
 
 exports.registerRoutes = (server, config) => {
     router.post('/drivers/add-driver', (req, res, next) => {
