@@ -10,19 +10,20 @@ const syncTable = async (log, table) => {
         log.error( { table, ex}, 'failed to sync')
     }
 log.info({ table } , 'model synced')
-}
+} 
 
 const sync = async () => {
     try {
-        const { log,  driverRepo } = await configureModules(config)
+        const { log,  driverRepo, userAccountRepo } = await configureModules(config)
         
         log.info( 'starting database sync')
         await syncTable(log, driverRepo)
+        await syncTable(log, userAccountRepo)
         log.info( 'database sync complete')
         process.exit(0) 
     }
     catch (ex) {
-        console.log( { ex}, 'database sync failed')
+        console.log( { ex }, 'database sync failed')
     }
 }
 
