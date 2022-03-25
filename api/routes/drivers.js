@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const { createAddDriver } = require('../../driver')
+const { createAddDriver, createUpdateDriver } = require('../../driver')
 
 exports.registerRoutes = (server, modules) => {
     router.post('/drivers/add-driver', (req, res, next) => {
@@ -11,6 +11,16 @@ exports.registerRoutes = (server, modules) => {
           res.sendStatus(201)
         next()
       })
-  })
+    })
+
+    router.post('/drivers/update-driver', (req, res, next) => {
+        const updateDriver = createUpdateDriver(modules)
+        //Todo: translate req.body to Driver object
+        updateDriver(req.body, (err) => {
+          if (err) { return next(err) }
+            res.sendStatus(201)
+          next()
+        })
+    })
   server.use(router)
 }
