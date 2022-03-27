@@ -18,7 +18,7 @@ async function addUserAccount ( userAccountRepo, log, userAccount, callback) {
 
 async function getUserRoleId (userAccountRepo, log, userId, callback) {
     const res = await userAccountRepo.findByPk(userId)
-    callback(null, res.role)
+    callback(null, res?.role)
 }
   
 module.exports = {
