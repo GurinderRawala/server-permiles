@@ -1,6 +1,7 @@
 const express = require('express')
 const routes = require('./routes') 
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const { configureModules } = require('../lib/configure-modules')
 
 module.exports.startServer = async (config) => {
@@ -13,6 +14,7 @@ module.exports.startServer = async (config) => {
 
   server.use(express.static('public'));
   server.use(bodyParser.json())
+  server.use(cookieParser())
   routes.registerAllRoutes(server, modules)  
   server.listen(PORT, () => 
     log.info({ PORT }, 'permiles-api started succesfully')
