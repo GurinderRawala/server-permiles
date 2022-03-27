@@ -1,7 +1,4 @@
-const rc = require('rc')
-exports.loadConfig = () => rc('permiles', exports.defaultConfig())
-
-exports.defaultConfig = () => ({
+module.exports = require('rc')('permiles',{
   authentication: {
     enabled: false
   },
