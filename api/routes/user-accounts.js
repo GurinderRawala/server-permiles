@@ -13,7 +13,7 @@ exports.registerRoutes = (server, modules) =>{
     })
     router.post('/user-accounts/edit-user-account', (req, res, next) =>{
         const editUserAccount = createEditUserAccount(modules)
-        editUserAccount(req.body, (err, resp) =>{
+        editUserAccount(req.body, (err) =>{
             if(err) return next(err)
             res.sendStatus(201)
             next()
