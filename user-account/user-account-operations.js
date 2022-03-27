@@ -16,7 +16,7 @@ async function addUserAccount ( userAccountRepo, log, userAccount, callback) {
     callback(null, res)
 }
 
-async function getUserRoleId (userAccountRepo, log, userId, callback) {
+async function getUserRoleById (userAccountRepo, log, userId, callback) {
     const res = await userAccountRepo.findByPk(userId)
     callback(null, res?.role)
 }
@@ -24,6 +24,6 @@ async function getUserRoleId (userAccountRepo, log, userId, callback) {
 module.exports = {
     createAddUserAccount : ({ userAccountRepo, log  }) => addUserAccount.bind(null, userAccountRepo, log),
     createEditUserAccount : ({ userAccountRepo, log  }) => editUserAccount.bind(null, userAccountRepo, log),
-    createGetUserRoleById : ({ userAccountRepo, log  }) => getUserRoleId.bind(null, userAccountRepo, log )
+    createGetUserRoleById : ({ userAccountRepo, log  }) => getUserRoleById.bind(null, userAccountRepo, log )
 }
   
