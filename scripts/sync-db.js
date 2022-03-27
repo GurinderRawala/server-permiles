@@ -1,5 +1,5 @@
 const { configureModules } = require('../lib/configure-modules')
-const config = require('../config.js').defaultConfig()
+const config = require('../config.js')
 
 const syncTable = async (log, table) => {
     log.info( { table } ,'syncing model')
