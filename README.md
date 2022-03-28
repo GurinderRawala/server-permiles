@@ -1,2 +1,2 @@
 # server-permiles
- nodejs/mysql/express
+ nodejs/postgres/express
