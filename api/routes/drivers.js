@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const { createAddDriver, createUpdateDriver } = require('../../driver')
+const { createAddDriver, createUpdateDriver, createGetDriver } = require('../../driver')
 
 exports.registerRoutes = (server, modules) => {
     const { authenticationMiddlware : { determineUserRole, permissions } } = modules
@@ -21,6 +21,15 @@ exports.registerRoutes = (server, modules) => {
         updateDriver(req.body, (err) => {
             if (err) { return next(err) }
             res.sendStatus(201)
+            next()
+        })
+    })
+
+    router.get('/drivers/find-driver', (req, res, next) =>{
+        const findDriver = createGetDriver(modules)
+        findDriver(req.body, (err, driverList) => {
+            if (err) { return next(err) }
+            res.status(200).send({data: driverList})
             next()
         })
     })
