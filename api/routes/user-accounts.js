@@ -3,7 +3,9 @@ const { createAddUserAccount, createEditUserAccount } = require('../../user-acco
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
-    router.post('/user-accounts/create-user-account', (req, res, next) => {
+    const { authenticationMiddlware : { determineUserRole, permissions } } = modules
+    const permissionCreateUserAccount = permissions('user:create')
+    router.post('/user-accounts/create-user-account',[determineUserRole, permissionCreateUserAccount], (req, res, next) => {
         const addUserAccount = createAddUserAccount(modules)
         addUserAccount(req.body, (err) => {
             if (err) { return next(err) }
