@@ -13,7 +13,8 @@ exports.registerRoutes = (server, modules) =>{
             next()
         })
     })
-    router.post('/user-accounts/edit-user-account', (req, res, next) =>{
+    const permissionEditUserAccount = permissions('user:edit')
+    router.post('/user-accounts/edit-user-account',[determineUserRole, permissionEditUserAccount], (req, res, next) =>{
         const editUserAccount = createEditUserAccount(modules)
         editUserAccount(req.body, (err) =>{
             if(err) return next(err)
