@@ -1,14 +1,3 @@
-module.exports.createAddDriver =  ({driverRepo, log}) => {
-    const createAddDriver = addDriver.bind(null, driverRepo, log)
-    return createAddDriver
-}
-
-module.exports.createUpdateDriver =  ({driverRepo, log}) => {
-    const createUpdateDriver = updateDriver.bind(null, driverRepo, log)
-    return createUpdateDriver
-}
-
-
 async function addDriver (driverRepo, log, driver, callback) {
     log.info({driver}, 'adding driver')
     const res = await driverRepo.create(driver)
@@ -25,4 +14,18 @@ async function updateDriver (driverRepo, log, driver, callback) {
     });
     log.info({res}, 'driver updated')
     callback(null, res)
+}
+
+async function getDriverById (driverRepo, log, driver, callback){
+    log.info({driver}, 'get driver by id')
+    const query = driver.id? {where:{id: driver.id}} : {}
+    const res = await driverRepo.findAll(query)
+    log.info({res}, 'get list of driver')
+    callback(null, res)
+}
+
+module.exports = {
+    createAddDriver: ({driverRepo, log}) =>  addDriver.bind(null, driverRepo, log),
+    createUpdateDriver: ({driverRepo, log}) => updateDriver.bind(null, driverRepo, log),
+    createGetDriver: ({driverRepo, log}) => getDriverById.bind(null, driverRepo, log)
 }
