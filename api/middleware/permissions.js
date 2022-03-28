@@ -5,7 +5,7 @@ const permissions = ({ log, rbac, enabled }) => (permission) => {
             return  
         } 
           
-        const allowed = await rbac.can('xx', permission)
+        const allowed = await rbac.can(req.role, permission)
         if(!allowed) {
             const errorMessage = `You don't have the permission to ${permission}. If you think this is in error, please contact support.`
             const userId = req.session?.user?.id
