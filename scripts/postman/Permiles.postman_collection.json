@@ -147,6 +147,31 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/drivers/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/drivers/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"drivers",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1e9bdeaf-1073-4bcb-ac00-5a21f9bcf824"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
