@@ -17,10 +17,8 @@ async function updateDriver (driverRepo, log, driver, callback) {
 }
 
 async function getDriverById (driverRepo, log, driver, callback){
-    log.info({driver}, 'get driver by id')
-    const query = driver.id? {where:{id: driver.id}} : {}
-    const res = await driverRepo.findAll(query)
-    log.info({res}, 'get list of driver')
+    const res = await driverRepo.findByPk(driver.id)
+    log.info({res}, 'get Driver')
     callback(null, res)
 }
 
