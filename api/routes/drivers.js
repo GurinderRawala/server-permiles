@@ -14,8 +14,8 @@ exports.registerRoutes = (server, modules) => {
             next()
         })
     })
-
-    router.post('/drivers/update-driver', (req, res, next) => {
+    const permissionEditDriver = permissions('driver:edit')
+    router.post('/drivers/update-driver', [determineUserRole, permissionEditDriver], (req, res, next) => {
         const updateDriver = createUpdateDriver(modules)
         //Todo: translate req.body to Driver object
         updateDriver(req.body, (err) => {
