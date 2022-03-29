@@ -25,11 +25,11 @@ exports.registerRoutes = (server, modules) => {
         })
     })
 
-    router.get('/drivers/find-driver', (req, res, next) =>{
-        const findDriver = createGetDriver(modules)
-        findDriver(req.body, (err, driverList) => {
+    router.get('/drivers/:id', (req, res, next) =>{
+        const getDriver = createGetDriver(modules)
+        getDriver(req.params, (err, driver) => {
             if (err) { return next(err) }
-            res.status(200).send({data: driverList})
+            res.status(200).send({data: driver})
             next()
         })
     })
