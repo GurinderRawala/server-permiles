@@ -18,7 +18,7 @@ async function updateDriver (driverRepo, log, driver, callback) {
 
 async function getDriverById (driverRepo, log, driver, callback){
     const res = await driverRepo.findByPk(driver.id)
-    log.info({res}, 'get Driver')
+    log.info({res}, 'driver information retrieved')
     callback(null, res)
 }
 
