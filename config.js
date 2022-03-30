@@ -1,6 +1,6 @@
 module.exports = require('rc')('permiles',{
     authentication: {
-        enabled: false
+        enabled: true
     },
     log: {
         name: 'permiles.api',
