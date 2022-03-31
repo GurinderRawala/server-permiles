@@ -228,6 +228,31 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/clients/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/clients/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"clients",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1df38d55-e143-4eda-8759-9d7f696d5ad3"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

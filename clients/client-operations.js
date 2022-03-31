@@ -26,5 +26,5 @@ async function getClientById (clientRepo, log, Client, callback) {
 module.exports = {
     createAddClient : ({ clientRepo, log  }) => addClientAccount.bind(null, clientRepo, log),
     createUpdateClient : ({ clientRepo, log  }) => updateClient.bind(null, clientRepo, log),
-    createGetClientById : ({ clientRepo, log  }) => getClientById.bind(null, clientRepo, log )
+    createGetClient : ({ clientRepo, log  }) => getClientById.bind(null, clientRepo, log )
 }
