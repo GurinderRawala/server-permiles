@@ -174,7 +174,7 @@
 			"response": []
 		},
 		{
-			"name": "/client-accounts/create-client-account",
+			"name": "/clients/create-client",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -188,27 +188,27 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8081/client-accounts/create-client-account",
+					"raw": "localhost:8081/clients/create-client",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
-						"client-accounts",
-						"create-client-account"
+						"clients",
+						"create-client"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/client-accounts/edit-client-account",
+			"name": "/clients/edit-client",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\":\"89e40bed-1a77-42d2-b552-141d79e39e70\",\r\n    \"name\": \"Mickey Dhami\"\r\n}",
+					"raw": "{\r\n    \"id\":\"bc577552-be2a-43d6-b805-36fa9b519082\",\r\n    \"name\": \"{{$randomFullName}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -216,14 +216,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8081/client-accounts/edit-client-account",
+					"raw": "localhost:8081/clients/edit-client",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
-						"client-accounts",
-						"edit-client-account"
+						"clients",
+						"edit-client"
 					]
 				}
 			},
