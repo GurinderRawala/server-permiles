@@ -9,7 +9,7 @@ async function updateClient ( clientRepo, log, Client, callback) {
     callback(null, res)
 }
 
-async function addClientAccount ( clientRepo, log, Client, callback) {
+async function addClient ( clientRepo, log, Client, callback) {
     log.info({Client}, 'adding client account')
     const res = await clientRepo.create(Client)
     log.info({res}, 'client account added')
@@ -24,7 +24,7 @@ async function getClientById (clientRepo, log, Client, callback) {
 }
   
 module.exports = {
-    createAddClient : ({ clientRepo, log  }) => addClientAccount.bind(null, clientRepo, log),
+    createAddClient : ({ clientRepo, log  }) => addClient.bind(null, clientRepo, log),
     createUpdateClient : ({ clientRepo, log  }) => updateClient.bind(null, clientRepo, log),
     createGetClient : ({ clientRepo, log  }) => getClientById.bind(null, clientRepo, log )
 }
