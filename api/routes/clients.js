@@ -13,7 +13,7 @@ exports.registerRoutes = (server, modules) =>{
             next()
         })
     })
-    const permissionUpdateClient = permissions('client:edit')
+    const permissionUpdateClient = permissions('client:update')
     router.post('/clients/edit-client', [determineUserRole, permissionUpdateClient], (req, res, next) =>{
         const updateClient = createUpdateClient(modules)
         updateClient(req.body, (err) =>{
@@ -22,7 +22,7 @@ exports.registerRoutes = (server, modules) =>{
             next()
         })
     })
-    const permissionGetClient = permissions('client:get')
+    const permissionGetClient = permissions('client:retreive')
     router.get('/clients/:id',[determineUserRole, permissionGetClient], (req, res, next) =>{
         const getClient = createGetClient(modules)
         getClient(req.params, (err, client) => {

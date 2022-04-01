@@ -10,9 +10,9 @@ async function updateClient ( clientRepo, log, Client, callback) {
 }
 
 async function addClient ( clientRepo, log, Client, callback) {
-    log.info({Client}, 'adding client account')
+    log.info({Client}, 'adding client')
     const res = await clientRepo.create(Client)
-    log.info({res}, 'client account added')
+    log.info({res}, 'client added')
     callback(null, res)
 }
 
