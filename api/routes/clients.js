@@ -14,7 +14,7 @@ exports.registerRoutes = (server, modules) =>{
         })
     })
     const permissionUpdateClient = permissions('client:update')
-    router.post('/clients/edit-client', [determineUserRole, permissionUpdateClient], (req, res, next) =>{
+    router.post('/clients/update-client', [determineUserRole, permissionUpdateClient], (req, res, next) =>{
         const updateClient = createUpdateClient(modules)
         updateClient(req.body, (err) =>{
             if(err) return next(err)
