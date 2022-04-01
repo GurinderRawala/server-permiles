@@ -4,7 +4,7 @@ const { createAddDriver, createUpdateDriver, createGetDriver } = require('../../
 
 exports.registerRoutes = (server, modules) => {
     const { authenticationMiddlware : { determineUserRole, permissions } } = modules
-    const permissionAddDriver = permissions('driver:add')
+    const permissionAddDriver = permissions('driver:create')
     router.post('/drivers/add-driver', [determineUserRole, permissionAddDriver] , (req, res, next) => {
         const addDriver = createAddDriver(modules)
         //Todo: translate req.body to Driver object
@@ -14,7 +14,7 @@ exports.registerRoutes = (server, modules) => {
             next()
         })
     })
-    const permissionEditDriver = permissions('driver:edit')
+    const permissionEditDriver = permissions('driver:update')
     router.post('/drivers/update-driver', [determineUserRole, permissionEditDriver], (req, res, next) => {
         const updateDriver = createUpdateDriver(modules)
         //Todo: translate req.body to Driver object
