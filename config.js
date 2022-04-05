@@ -16,5 +16,18 @@ module.exports = require('rc')('permiles',{
     sequelize : {
         dialect: 'postgres',
         logging : false
+    },
+    mailer: {
+        name: "permiles.com",
+        host: "mail.permiles.com",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+            user: 'no-reply@permiles.com', // generated ethereal user
+            pass: 'Rawala39!!', // generated ethereal password
+        },
+        tls:{
+            rejectUnauthorized: false
+        }
     }
 })
