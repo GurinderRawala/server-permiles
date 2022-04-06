@@ -99,7 +99,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"id\" : \"{{$randomUUID}}\",\r\n \"firstname\" : \"{{$randomFirstName}}\",\r\n \"lastname\" :\"{{$randomLastName}}\",\r\n \"username\" : \"{{$randomUserName}}\",\r\n \"email\" : \"{{$randomEmail}}\",\r\n \"password\" : \"{{$randomPassword}}\",\r\n \"company\" : \"{{$randomJobDescriptor}}\",\r\n \"address\" : \"{{$randomCity}}\",\r\n \"reg_date\" : \"{{$isoTimestamp}}\",\r\n \"role\": \"admin\"\r\n\r\n}",
+					"raw": "{\r\n\"id\" : \"{{$randomUUID}}\",\r\n \"firstname\" : \"{{$randomFirstName}}\",\r\n \"lastname\" :\"{{$randomLastName}}\",\r\n \"username\" : \"{{$randomUserName}}\",\r\n \"email\" : \"{{$randomEmail}}\",\r\n \"password\" : \"{{$randomPassword}}\",\r\n \"company\" : \"{{$randomJobDescriptor}}\",\r\n \"address\" : \"{{$randomCity}}\",\r\n \"reg_date\" : \"{{$isoTimestamp}}\",\r\n \"role\": \"admin\",\r\n \"active\": true,\r\n \"clientid\": \"{{$randomUUID}}\",\r\n \"awaitingSignup\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
