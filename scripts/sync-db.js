@@ -4,7 +4,7 @@ const config = require('../config.js')
 const syncTable = async (log, table) => {
     log.info( { table } ,'syncing model')
     try {
-        await table.sync({ alter : true})
+        await table.sync({ alter : true, force : true})
     }
     catch (ex) {
         log.error( { table, ex}, 'failed to sync')
