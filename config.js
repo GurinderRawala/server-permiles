@@ -13,6 +13,7 @@ module.exports = require('rc')('permiles',{
         username: 'postgres',
         password: 'NInAN5t3kJo8d7I3',
     },
+    privateKey: '1DCLDToVBohPgizzbqqLCZbs3Sk9Ww2yK5',
     sequelize : {
         dialect: 'postgres',
         logging : false
@@ -28,6 +29,7 @@ module.exports = require('rc')('permiles',{
         },
         tls:{
             rejectUnauthorized: false
-        }
+        },
+        from : 'no-reply@permiles.com'
     }
 })
