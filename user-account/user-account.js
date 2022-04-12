@@ -35,6 +35,7 @@ class UserAccount {
             clientId: client.id,
             company: client.name,
             token: token.create({ 
+                id: data.id,
                 username: data.username,
                 email: data.email
             }, {
