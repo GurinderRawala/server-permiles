@@ -40,7 +40,7 @@ async function inviteUser(clientRepo, userAccountRepo, log, sendEmail, clock, to
         return callback(error)
     }
 
-    const inviteUser = await UserAccount.createInviteUser(user, client, { clock, token })
+    const inviteUser = UserAccount.createInviteUser(user, client, { clock, token })
     let res = await addUserAccount(inviteUser, (err, res) => {
         if(err){
             return callback(err)
