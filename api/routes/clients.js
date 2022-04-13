@@ -1,5 +1,5 @@
 const express = require('express');
-const { createAddClient, createUpdateClient, createGetClient } = require('../../clients');
+const { createAddClient, createUpdateClient, createGetClient, createInviteUser } = require('../../clients');
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
@@ -22,12 +22,23 @@ exports.registerRoutes = (server, modules) =>{
             next()
         })
     })
+    
     const permissionGetClient = permissions('client:retreive')
     router.get('/clients/:id',[determineUserRole, permissionGetClient], (req, res, next) =>{
         const getClient = createGetClient(modules)
         getClient(req.params, (err, client) => {
             if (err) { return next(err) }
             res.status(200).send({data: client})
+            next()
+        })
+    })
+
+    const permissionInviteUser = permissions('client:invite-user')
+    router.post('/clients/invite-user', [determineUserRole, permissionInviteUser], (req, res, next) => {
+        const inviteUser = createInviteUser(modules)
+        inviteUser(req.body, (err) => {
+            if (err) { return next(err) }
+            res.sendStatus(200)
             next()
         })
     })
