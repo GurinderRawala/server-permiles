@@ -47,15 +47,16 @@ async function inviteUser(clientRepo, userAccountRepo, log, sendEmail, clock, to
         }
         return res
     })
-    //TODO: Use templates for this email
-    const template = require('../lib/mailer/templates/invite-user')({email: inviteUser.email, company: inviteUser.company, username: inviteUser.username})
+    const inviteLink = `https://permiles.com?token=${inviteUser.token}`;
+    const locals = {
+        firstname: inviteUser.firstname,
+        company: inviteUser.company,
+        inviteLink
+    }
+    const html = await sendEmail.render('invite-user.hbs', locals)
    
-    await sendEmail(
-        inviteUser.email,
-        template.subject,
-        template.body
-    )
-    callback(null, res)
+    sendEmail.send({to: inviteUser.email, subject: 'This is Test', html, attachments: []})
+    callback(null,res)
 }
   
 module.exports = {
