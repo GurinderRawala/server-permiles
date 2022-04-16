@@ -48,14 +48,14 @@ async function inviteUser(clientRepo, userAccountRepo, log, sendEmail, clock, to
         return res
     })
     const inviteLink = `https://permiles.com?token=${inviteUser.token}`;
-    const locals = {
+    const emailPayload = {
         firstname: inviteUser.firstname,
         company: inviteUser.company,
         inviteLink
     }
-    const html = await sendEmail.render('invite-user.hbs', locals)
-   
-    sendEmail.send({to: inviteUser.email, subject: 'This is Test', html, attachments: []})
+    const emailBody = await sendEmail.render('invite-user.hbs', emailPayload)
+    const subject = `${inviteUser.company}- Invitation to join Per Miles`;
+    sendEmail.send({to: inviteUser.email, subject, body: emailBody, attachments: []})
     callback(null,res)
 }
   
