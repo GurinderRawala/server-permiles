@@ -30,6 +30,9 @@ module.exports = require('rc')('permiles',{
         tls:{
             rejectUnauthorized: false
         },
-        from : 'no-reply@permiles.com'
+        from : {
+            name: 'Per Miles',
+            address: 'no-reply@permiles.com'
+        }
     }
 })

@@ -25,7 +25,7 @@ async function getClientById (clientRepo, log, Client, callback) {
     return callback(null, res)
 }
 
-async function inviteUser(clientRepo, userAccountRepo, log, sendEmail, clock, token, user, callback){
+async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token, user, callback){
     log.info({user}, 'inviting user')
     const addUserAccount = createAddUserAccount({userAccountRepo, log})
     let client = await getClientById(clientRepo, log, {id: user.clientid }, (err, res)=>{
@@ -47,14 +47,14 @@ async function inviteUser(clientRepo, userAccountRepo, log, sendEmail, clock, to
         }
         return res
     })
-    //TODO: Use templates for this email
-    const template = require('../lib/mailer/templates/invite-user')({email: inviteUser.email, company: inviteUser.company, username: inviteUser.username})
-   
-    await sendEmail(
-        inviteUser.email,
-        template.subject,
-        template.body
-    )
+    const inviteLink = `https://permiles.com?token=${inviteUser.token}`;
+    const payload = {
+        firstname: inviteUser.firstname,
+        company: inviteUser.company,
+        inviteLink
+    }
+    const subject = `${inviteUser.company}- Invitation to join Per Miles`;
+    mailer.send('invite-user.hbs', { to: inviteUser.email, subject, payload})
     callback(null, res)
 }
   
@@ -62,5 +62,5 @@ module.exports = {
     createAddClient : ({ clientRepo, log  }) => addClient.bind(null, clientRepo, log),
     createUpdateClient : ({ clientRepo, log  }) => updateClient.bind(null, clientRepo, log),
     createGetClient : ({ clientRepo, log  }) => getClientById.bind(null, clientRepo, log ),
-    createInviteUser : ({ clientRepo, userAccountRepo, log, sendEmail, clock, token  }) => inviteUser.bind(null, clientRepo, userAccountRepo, log, sendEmail, clock, token )
+    createInviteUser : ({ clientRepo, userAccountRepo, log, mailer, clock, token  }) => inviteUser.bind(null, clientRepo, userAccountRepo, log,    mailer, clock, token )
 }
