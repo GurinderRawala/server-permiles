@@ -29,7 +29,7 @@ class UserAccount {
         const inviteUser = {
             ...data,
             password : 'NEWPASSWORD',
-            active: true,
+            active: false,
             awaitingSignup: true,
             createdAt: clock(),
             clientId: client.id,
