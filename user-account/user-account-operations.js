@@ -28,7 +28,7 @@ async function findUserAccount (userAccountRepo, log, userId, callback){
     return callback(null, res)
 }
 
-async function activateUserAccount (userAccountRepo, log, userAccount, callback) {
+async function activateUserAccount (userAccountRepo, log, hash, userAccount, callback) {
     const { id, password, confirmPassword } = userAccount
     const user = await findUserAccount(userAccountRepo, log, id, (err, res) =>{
         if(err){
@@ -45,13 +45,19 @@ async function activateUserAccount (userAccountRepo, log, userAccount, callback)
         const error = new Error('Invalid confirm Password')
         return callback(error)
     }
+    const hashedPassword = await hash.hashPassword(password, ( err, results) =>{
+        if(err){
+            return callback(err)
+        }
+        return results
+    })
     const updatedUser = {
         ...user.dataValues,
-        password,
+        password: hashedPassword,
         active: true,
         awaitingSignup: false
     }
-    log.info(updatedUser, "Updated user account created")
+
     const res = await updateUserAccount(userAccountRepo, log, updatedUser, (err, res) =>{
         if(err){
             return callback(err)
@@ -65,7 +71,7 @@ module.exports = {
     createAddUserAccount : ({ userAccountRepo, log  }) => addUserAccount.bind(null, userAccountRepo, log),
     createUpdateUserAccount : ({ userAccountRepo, log  }) => updateUserAccount.bind(null, userAccountRepo, log),
     createGetUserRoleById : ({ userAccountRepo, log  }) => getUserRoleById.bind(null, userAccountRepo, log ),
-    createActivateUserAccount: ({ userAccountRepo, log }) => activateUserAccount.bind(null, userAccountRepo, log),
+    createActivateUserAccount: ({ userAccountRepo, log, hash }) => activateUserAccount.bind(null, userAccountRepo, log, hash),
     createFindUserAccount: ({ userAccountRepo, log }) => findUserAccount.bind(null, userAccountRepo, log)
 }
   
