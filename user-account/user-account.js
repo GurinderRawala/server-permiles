@@ -44,5 +44,21 @@ class UserAccount {
         }
         return this.fromData(inviteUser)
     }
+    static async createActiveUserAccount (data, { hashingService, log }){
+        const hash = await hashingService.hash(data.password, ( err, results ) =>{
+            if(err){
+                throw new Error(err)
+            }
+            return results
+        })
+        log.info("password hashed")
+        return {
+            ...data,
+            password: hash,
+            active: true,
+            awaitingSignup: false
+        }
+    }
+
 }
 module.exports = { UserAccount }

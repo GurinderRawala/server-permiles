@@ -1,17 +1,19 @@
-async function updateUserAccount ( userAccountRepo, log, userAccount, callback) {
-    log.info({userAccount}, 'updating user account')
-    const res = await userAccountRepo.update(userAccount, {
+const { UserAccount } = require("./user-account");
+
+async function updateUserAccount ( userAccountRepo, log, account, callback) {
+    log.info({account}, 'updating user account')
+    const res = await userAccountRepo.update(account, {
         where: {
-            id: userAccount.id
+            id: account.id
         }
     });
     log.info({res}, 'user account updated')
     callback(null, res)
 }
 
-async function addUserAccount ( userAccountRepo, log, userAccount, callback) {
-    log.info({userAccount}, 'adding user account')
-    const res = await userAccountRepo.create(userAccount)
+async function addUserAccount ( userAccountRepo, log, account, callback) {
+    log.info({account}, 'adding user account')
+    const res = await userAccountRepo.create(account)
     log.info({res}, 'user account added')
     callback(null, res)
 }
@@ -21,16 +23,16 @@ async function getUserRoleById (userAccountRepo, log, userId, callback) {
     callback(null, res?.role)
 }
 
-async function findUserAccount (userAccountRepo, log, userId, callback){
+async function getUserAccountById (userAccountRepo, log, userId, callback){
     log.info({userAccountRepo}, 'retrieving User information')
     const res = await userAccountRepo.findByPk(userId)
     log.info({userAccountRepo}, 'User information retrieved')
     return callback(null, res)
 }
 
-async function activateUserAccount (userAccountRepo, log, hash, userAccount, callback) {
-    const { id, password, confirmPassword } = userAccount
-    const user = await findUserAccount(userAccountRepo, log, id, (err, res) =>{
+async function activateUserAccount (userAccountRepo, log, hashingService, account, callback) {
+    const { id, password, confirmPassword } = account
+    const user = await getUserAccountById(userAccountRepo, log, id, (err, res) =>{
         if(err){
             log.error({err}, "user account is not found")
             return callback(err)
@@ -45,19 +47,7 @@ async function activateUserAccount (userAccountRepo, log, hash, userAccount, cal
         const error = new Error('Invalid confirm Password')
         return callback(error)
     }
-    const hashedPassword = await hash.hashPassword(password, ( err, results) =>{
-        if(err){
-            return callback(err)
-        }
-        return results
-    })
-    const updatedUser = {
-        ...user.dataValues,
-        password: hashedPassword,
-        active: true,
-        awaitingSignup: false
-    }
-
+    const updatedUser = await UserAccount.createActiveUserAccount(account, {log, hashingService})
     const res = await updateUserAccount(userAccountRepo, log, updatedUser, (err, res) =>{
         if(err){
             return callback(err)
@@ -71,7 +61,7 @@ module.exports = {
     createAddUserAccount : ({ userAccountRepo, log  }) => addUserAccount.bind(null, userAccountRepo, log),
     createUpdateUserAccount : ({ userAccountRepo, log  }) => updateUserAccount.bind(null, userAccountRepo, log),
     createGetUserRoleById : ({ userAccountRepo, log  }) => getUserRoleById.bind(null, userAccountRepo, log ),
-    createActivateUserAccount: ({ userAccountRepo, log, hash }) => activateUserAccount.bind(null, userAccountRepo, log, hash),
-    createFindUserAccount: ({ userAccountRepo, log }) => findUserAccount.bind(null, userAccountRepo, log)
+    createActivateUserAccount: ({ userAccountRepo, log, hashingService }) => activateUserAccount.bind(null, userAccountRepo, log, hashingService),
+    createGetUserAccountById: ({ userAccountRepo, log }) => getUserAccountById.bind(null, userAccountRepo, log)
 }
   
