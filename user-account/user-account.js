@@ -29,7 +29,7 @@ class UserAccount {
         const inviteUser = {
             ...data,
             password : 'NEWPASSWORD',
-            active: true,
+            active: false,
             awaitingSignup: true,
             createdAt: clock(),
             clientId: client.id,
@@ -44,5 +44,28 @@ class UserAccount {
         }
         return this.fromData(inviteUser)
     }
+    static async createActiveUserAccount (data, { hashingService, log }){
+        const hash = await hashingService.hash(data.password, ( err, results ) =>{
+            if(err){
+                throw new Error(err)
+            }
+            return results
+        })
+        log.info("password hashed")
+        return {
+            ...data,
+            password: hash,
+            active: true,
+            awaitingSignup: false
+        }
+    }
+    static validatePassword ({ password, confirmPassword }, { log }) {
+        if(password !== confirmPassword){
+            log.error("Password validation failed")
+            return { err: true, msg: "Password validation failed" }
+        }
+        return { err: false, msg: "Password validation successful" }
+    }
+
 }
 module.exports = { UserAccount }

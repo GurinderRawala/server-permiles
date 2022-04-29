@@ -1,5 +1,5 @@
 const express = require('express');
-const { createAddUserAccount, createEditUserAccount } = require('../../user-account');
+const { createAddUserAccount, createUpdateUserAccount, createActivateUserAccount } = require('../../user-account');
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
@@ -13,11 +13,20 @@ exports.registerRoutes = (server, modules) =>{
             next()
         })
     })
-    const permissionEditUserAccount = permissions('user-account:edit')
-    router.post('/user-accounts/edit-user-account',[determineUserRole, permissionEditUserAccount], (req, res, next) =>{
-        const editUserAccount = createEditUserAccount(modules)
+    const permissionUpdateUserAccount = permissions('user-account:update')
+    router.post('/user-accounts/update-user-account',[determineUserRole, permissionUpdateUserAccount], (req, res, next) =>{
+        const editUserAccount = createUpdateUserAccount(modules)
         editUserAccount(req.body, (err) =>{
             if(err) return next(err)
+            res.sendStatus(201)
+            next()
+        })
+    })
+    const permissionActivateUserAccount = permissions('user-account:activate')
+    router.post('/user-account/activate', [determineUserRole, permissionActivateUserAccount], (req, res, next) =>{
+        const activeUserAccount = createActivateUserAccount(modules)
+        activeUserAccount(req.body, (err) =>{
+            if(err){ return next(err) }
             res.sendStatus(201)
             next()
         })
