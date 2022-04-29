@@ -1,14 +1,20 @@
 const { UserAccount } = require("./user-account");
 
 async function updateUserAccount ( userAccountRepo, log, account, callback) {
-    log.info({account}, 'updating user account')
-    const res = await userAccountRepo.update(account, {
-        where: {
-            id: account.id
-        }
-    });
-    log.info({res}, 'user account updated')
-    callback(null, res)
+    try{
+        log.info({account}, 'updating user account')
+        const res = await userAccountRepo.update(account, {
+            where: {
+                id: account.id
+            }
+        });
+        log.info({res}, 'user account updated')
+        callback(null, res)
+    }catch(err){
+        log.error({err}, 'error updating account')
+        const error = new Error(err)
+        callback(error)
+    }
 }
 
 async function addUserAccount ( userAccountRepo, log, account, callback) {
@@ -31,30 +37,18 @@ async function getUserAccountById (userAccountRepo, log, userId, callback){
 }
 
 async function activateUserAccount (userAccountRepo, log, hashingService, account, callback) {
-    const { id, password, confirmPassword } = account
-    const user = await getUserAccountById(userAccountRepo, log, id, (err, res) =>{
-        if(err){
-            log.error({err}, "user account is not found")
-            return callback(err)
-        }
-        return res
-    })
-    if( !user ){
-        const error = new Error('User not found')
-        return callback(error)
-    }
-    if(password !== confirmPassword){
-        const error = new Error('Invalid confirm Password')
-        return callback(error)
+    const validatePassword = UserAccount.validatePassword (account, { log })
+    if( validatePassword.err ){
+        return callback(validatePassword.msg)
     }
     const updatedUser = await UserAccount.createActiveUserAccount(account, {log, hashingService})
-    const res = await updateUserAccount(userAccountRepo, log, updatedUser, (err, res) =>{
+    await updateUserAccount(userAccountRepo, log, updatedUser, (err, res) =>{
         if(err){
             return callback(err)
         }
-        return res
+        callback(null, res)
     })
-    callback(null, res)
+    
 }
   
 module.exports = {
