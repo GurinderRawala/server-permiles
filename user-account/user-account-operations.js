@@ -48,7 +48,16 @@ async function activateUserAccount (userAccountRepo, log, hashingService, accoun
         }
         callback(null, res)
     })
+}
     
+async function signUpUserAccount (userAccountRepo, log, token, signupToken, callback) {
+    const { id, username, error} = token.verify(signupToken)
+    if(error) {
+        const error = new Error('Invalid Token')
+        return callback(error)
+    }
+    const sessionsToken = token.create({id, username,  })
+    callback(null, sessionsToken)
 }
   
 module.exports = {
@@ -56,6 +65,6 @@ module.exports = {
     createUpdateUserAccount : ({ userAccountRepo, log  }) => updateUserAccount.bind(null, userAccountRepo, log),
     createGetUserRoleById : ({ userAccountRepo, log  }) => getUserRoleById.bind(null, userAccountRepo, log ),
     createActivateUserAccount: ({ userAccountRepo, log, hashingService }) => activateUserAccount.bind(null, userAccountRepo, log, hashingService),
-    createGetUserAccountById: ({ userAccountRepo, log }) => getUserAccountById.bind(null, userAccountRepo, log)
+    createGetUserAccountById: ({ userAccountRepo, log }) => getUserAccountById.bind(null, userAccountRepo, log),
+    createSignUpUserAccount: ({ userAccountRepo, log, token }) => signUpUserAccount.bind(null, userAccountRepo, log, token)
 }
-  
