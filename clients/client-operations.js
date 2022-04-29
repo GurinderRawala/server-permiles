@@ -47,7 +47,7 @@ async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token
         }
         return res
     })
-    const inviteLink = `https://permiles.com?token=${inviteUser.token}`;
+    const inviteLink = `https://permiles.com/signup?token=${inviteUser.token}`;
     const payload = {
         firstname: inviteUser.firstname,
         company: inviteUser.company,
