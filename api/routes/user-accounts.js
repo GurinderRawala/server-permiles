@@ -1,5 +1,5 @@
 const express = require('express');
-const { createAddUserAccount, createUpdateUserAccount, createActivateUserAccount } = require('../../user-account');
+const { createAddUserAccount, createUpdateUserAccount, createActivateUserAccount, createSignUpUserAccount } = require('../../user-account');
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
@@ -31,5 +31,17 @@ exports.registerRoutes = (server, modules) =>{
             next()
         })
     })
+
+    router.get('/signup/:token', (req, res, next) => {
+        const signUpUserAccount = createSignUpUserAccount(modules)
+        const { params: { token } } = req
+        signUpUserAccount(token, (err, data) => {
+            if (err) { return next(err) }
+            res.cookie('session', data);
+            res.sendStatus(200)
+            next()
+        })
+    })
+
     server.use(router)
 }

@@ -7,7 +7,7 @@
     "dev": "NODE_ENV=development nodemon ./api | bunyan -o short",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "sync-db": "nodemon ./scripts/sync-db | bunyan -o short",
+    "sync-db": "node ./scripts/sync-db | bunyan -o short",
     "prepare": "husky install"
   },
   "keywords": [],
