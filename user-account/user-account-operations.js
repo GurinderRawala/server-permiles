@@ -56,8 +56,7 @@ async function signUpUserAccount (userAccountRepo, log, token, signupToken, call
         const error = new Error('Invalid Token')
         return callback(error)
     }
-    const sessionsToken = token.create({id, username,  })
-    callback(null, sessionsToken)
+    callback(null, {id, username })
 }
   
 module.exports = {
