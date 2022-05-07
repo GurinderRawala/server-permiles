@@ -8,8 +8,8 @@ exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo }) =
             if(!enabled) {
                 next()
                 return  
-            } 
-            getUserRoleById(req.cookies?.userId, (err, role) => {
+            }
+            getUserRoleById(req.session?.user?.id , (err, role) => {
                 if(err) {
                     const errorMessage = 'An error occured while determing user role'
                     log.error({err}, errorMessage )
