@@ -19,9 +19,14 @@ async function updateUserAccount ( userAccountRepo, log, account, callback) {
 
 async function addUserAccount ( userAccountRepo, log, account, callback) {
     log.info({account}, 'adding user account')
-    const res = await userAccountRepo.create(account)
-    log.info({res}, 'user account added')
-    callback(null, res)
+    try{
+        const res = await userAccountRepo.create(account)
+        log.info({res}, 'user account added')
+        return callback(null, res)
+    }catch(err){
+        log.error({err}, 'Error adding user account')
+        return callback(err)
+    }
 }
 
 async function getUserRoleById (userAccountRepo, log, userId, callback) {

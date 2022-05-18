@@ -16,6 +16,10 @@ module.exports.startServer = async (config) => {
     server.use(bodyParser.json())
     server.use(cookieParser())
     routes.registerAllRoutes(server, modules)  
+    server.use( (error, req, res, next) =>{
+        res.json(error)
+        next()
+    })
     server.listen(PORT, () => 
         log.info({ PORT }, 'permiles-api started succesfully')
     );

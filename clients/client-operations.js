@@ -41,11 +41,11 @@ async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token
     }
 
     const inviteUser = UserAccount.createInviteUser(user, client, { clock, token })
-    let res = await addUserAccount(inviteUser, (err, res) => {
+    const response = await addUserAccount(inviteUser, (err, response) => {
         if(err){
             return callback(err)
         }
-        return res
+        return response
     })
     const inviteLink = `https://permiles.com/signup?token=${inviteUser.token}`;
     const payload = {
@@ -54,8 +54,10 @@ async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token
         inviteLink
     }
     const subject = `${inviteUser.company}- Invitation to join Per Miles`;
-    mailer.send('invite-user.hbs', { to: inviteUser.email, subject, payload})
-    callback(null, res)
+    if( response ){
+        mailer.send('invite-user.hbs', { to: inviteUser.email, subject, payload})
+        callback(null,{message: `${inviteUser.role} has been Invited to join ${payload.company}`})
+    }
 }
   
 module.exports = {
