@@ -3,7 +3,8 @@ const { createAddClient, createUpdateClient, createGetClient, createInviteUser }
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
-    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler } = modules
+    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, validation } = modules
+    const { clientRoutesValidation } = validation
     const permissionCreateClient = permissions('client:create')
     router.post('/clients/create-client', [sessionHandler, determineUserRole, permissionCreateClient], (req, res, next) => {
         const addClient = createAddClient(modules)
@@ -34,13 +35,23 @@ exports.registerRoutes = (server, modules) =>{
     })
 
     const permissionInviteUser = permissions('client:invite-user')
-    router.post('/clients/invite-user', [sessionHandler, determineUserRole, permissionInviteUser], (req, res, next) => {
-        const inviteUser = createInviteUser(modules)
-        inviteUser(req.body, (err) => {
-            if (err) { return next(err) }
-            res.sendStatus(200)
-            next()
+    router.post('/clients/invite-user', 
+        [sessionHandler, determineUserRole, permissionInviteUser, clientRoutesValidation('invite-user')],
+        (req, res, next) => {
+            const { validationErrorMessage } = validation
+            const errors = validationErrorMessage(req, res)
+            if ( errors ) {
+                return next(errors)
+            }
+            const inviteUser = createInviteUser(modules)
+            inviteUser(req.body, (err, resp) => {
+                if (err) { 
+                    res.status(500)
+                    return next(err) 
+                }
+                res.status(200)
+                next(resp)
+            })
         })
-    })
     server.use(router)
 }
