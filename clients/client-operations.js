@@ -7,22 +7,34 @@ async function updateClient ( clientRepo, log, Client, callback) {
             id: Client.id
         }
     });
-    log.info({res}, 'client updated')
-    callback(null, res)
+    if( res[0] === 1 ){
+        log.info({res}, 'client updated')
+        return callback(null, { msg: 'Client has been updated' })
+    }
+    return callback({ msg: 'Error Updating Client' })
+
 }
 
 async function addClient ( clientRepo, log, Client, callback) {
     log.info({Client}, 'adding client')
     const res = await clientRepo.create(Client)
-    log.info({res}, 'client added')
-    callback(null, res)
+    if( res[0] === 1 ){
+        log.info({res}, 'client updated')
+        return callback(null, { msg: 'Client has been added' })
+    }
+    return callback({ msg: 'Error adding Client' })
 }
 
 async function getClientById (clientRepo, log, Client, callback) {
     log.info({Client}, 'retrieving client information')
-    const res = await clientRepo.findByPk(Client.id)
-    log.info({Client}, 'client information retrieved')
-    return callback(null, res)
+    try{
+        const res = await clientRepo.findByPk(Client.id)
+        log.info({res}, 'client information retrieved')
+        if( res ) { return callback(null, res)  }
+        return callback([{ msg: 'No record Found' }])
+    }catch(err){
+        return callback(err)
+    }
 }
 
 async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token, user, callback){
@@ -56,7 +68,7 @@ async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token
     const subject = `${inviteUser.company}- Invitation to join Per Miles`;
     if( response ){
         mailer.send('invite-user.hbs', { to: inviteUser.email, subject, payload})
-        callback(null,{message: `${inviteUser.role} has been Invited to join ${payload.company}`})
+        callback(null,{msg: `${inviteUser.role} has been Invited to join ${payload.company}`})
     }
 }
   
