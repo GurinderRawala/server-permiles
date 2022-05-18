@@ -6,43 +6,62 @@ exports.registerRoutes = (server, modules) =>{
     const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, validation } = modules
     const { clientRoutesValidation } = validation
     const permissionCreateClient = permissions('client:create')
-    router.post('/clients/create-client', [sessionHandler, determineUserRole, permissionCreateClient], (req, res, next) => {
-        const addClient = createAddClient(modules)
-        addClient(req.body, (err) => {
-            if (err) { return next(err) }
-            res.sendStatus(201)
-            next()
-        })
-    })
-    const permissionUpdateClient = permissions('client:update')
-    router.post('/clients/update-client', [sessionHandler, determineUserRole, permissionUpdateClient], (req, res, next) =>{
-        const updateClient = createUpdateClient(modules)
-        updateClient(req.body, (err) =>{
-            if(err) return next(err)
-            res.sendStatus(201)
-            next()
-        })
-    })
-    
-    const permissionGetClient = permissions('client:retreive')
-    router.get('/clients/:id',[sessionHandler, determineUserRole, permissionGetClient], (req, res, next) =>{
-        const getClient = createGetClient(modules)
-        getClient(req.params, (err, client) => {
-            if (err) { return next(err) }
-            res.status(200).send({data: client})
-            next()
-        })
-    })
-
-    const permissionInviteUser = permissions('client:invite-user')
-    router.post('/clients/invite-user', 
-        [sessionHandler, determineUserRole, permissionInviteUser, clientRoutesValidation('invite-user')],
+    const validationCreateClient = clientRoutesValidation('client:create')
+    router.post('/clients/create-client', 
+        [sessionHandler, determineUserRole, permissionCreateClient, validationCreateClient], 
         (req, res, next) => {
             const { validationErrorMessage } = validation
-            const errors = validationErrorMessage(req, res)
-            if ( errors ) {
-                return next(errors)
-            }
+            if( validationErrorMessage(req, res, next) ) return
+            const addClient = createAddClient(modules)
+            addClient(req.body, (err) => {
+                if (err) { return next(err) }
+                res.sendStatus(201)
+                next()
+            })
+        })
+    const permissionUpdateClient = permissions('client:update')
+    const validationUpdateClient = clientRoutesValidation('client:update')
+    router.post('/clients/update-client', 
+        [sessionHandler, determineUserRole, permissionUpdateClient, validationUpdateClient], 
+        (req, res, next) =>{
+            const { validationErrorMessage } = validation
+            if( validationErrorMessage(req, res, next) ) return
+            const updateClient = createUpdateClient(modules)
+            updateClient(req.body, (err, msg) =>{
+                if(err){ 
+                    res.status(500)
+                    return next(err) 
+                }
+                res.status(201).send(msg)
+                next()
+            })
+        })
+    
+    const permissionGetClient = permissions('client:retreive')
+    const validationGetClient = clientRoutesValidation('client:retreive')
+    router.get('/clients/:id',
+        [sessionHandler, determineUserRole, permissionGetClient, validationGetClient], 
+        (req, res, next) =>{
+            const { validationErrorMessage } = validation
+            if( validationErrorMessage(req, res, next) ) return
+            const getClient = createGetClient(modules)
+            getClient(req.params, (err, client) => {
+                if (err) { 
+                    res.status(500)
+                    return next(err) 
+                }
+                res.status(200).send({ ...client })
+                next()
+            })
+        })
+
+    const permissionInviteUser = permissions('client:invite-user')
+    const validationInviteUser = clientRoutesValidation('client:invite-user')
+    router.post('/clients/invite-user', 
+        [sessionHandler, determineUserRole, permissionInviteUser, validationInviteUser],
+        (req, res, next) => {
+            const { validationErrorMessage } = validation
+            if ( validationErrorMessage(req, res, next) ) return
             const inviteUser = createInviteUser(modules)
             inviteUser(req.body, (err, resp) => {
                 if (err) { 
