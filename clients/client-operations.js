@@ -18,7 +18,7 @@ async function updateClient ( clientRepo, log, Client, callback) {
 async function addClient ( clientRepo, log, Client, callback) {
     log.info({Client}, 'adding client')
     const res = await clientRepo.create(Client)
-    if( res[0] === 1 ){
+    if( res ){
         log.info({res}, 'client updated')
         return callback(null, { msg: 'Client has been added' })
     }

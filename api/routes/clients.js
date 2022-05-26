@@ -13,9 +13,9 @@ exports.registerRoutes = (server, modules) =>{
             const { validationErrorMessage } = validation
             if( validationErrorMessage(req, res, next) ) return
             const addClient = createAddClient(modules)
-            addClient(req.body, (err) => {
+            addClient(req.body, (err, msg) => {
                 if (err) { return next(err) }
-                res.sendStatus(201)
+                res.status(201).send(msg)
                 next()
             })
         })
@@ -28,10 +28,7 @@ exports.registerRoutes = (server, modules) =>{
             if( validationErrorMessage(req, res, next) ) return
             const updateClient = createUpdateClient(modules)
             updateClient(req.body, (err, msg) =>{
-                if(err){ 
-                    res.status(500)
-                    return next(err) 
-                }
+                if(err){ return next(err) }
                 res.status(201).send(msg)
                 next()
             })
@@ -64,10 +61,7 @@ exports.registerRoutes = (server, modules) =>{
             if ( validationErrorMessage(req, res, next) ) return
             const inviteUser = createInviteUser(modules)
             inviteUser(req.body, (err, resp) => {
-                if (err) { 
-                    res.status(500)
-                    return next(err) 
-                }
+                if (err) { return next(err) }
                 res.status(200)
                 next(resp)
             })

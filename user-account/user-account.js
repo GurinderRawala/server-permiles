@@ -59,13 +59,6 @@ class UserAccount {
             awaitingSignup: false
         }
     }
-    static validatePassword ({ password, confirmPassword }, { log }) {
-        if(password !== confirmPassword){
-            log.error("Password validation failed")
-            return { err: true, msg: "Password validation failed" }
-        }
-        return { err: false, msg: "Password validation successful" }
-    }
 
 }
 module.exports = { UserAccount }

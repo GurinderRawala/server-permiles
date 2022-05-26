@@ -1,7 +1,17 @@
-const { check } = require('express-validator')
-const { validateEmail } = require('./validate-email')
-const { validatePhoneNumber } = require('./validate-phone-number')
-exports.clientRoutesValidation = (userAccountRepo, clientRepo, route) =>{
+const { validateEmail } = require('../validate-email')
+const { validatePhoneNumber } = require('../validate-phone-number')
+const clientIdValidation = (check, clientRepo) =>{
+    const validation = check('id', 'Invalid client ID').trim().isUUID()
+        .custom(value => clientRepo
+            .findByPk(value)
+            .then(client => {
+                if(!client){
+                    return Promise.reject(`client not found`)
+                }
+            }))
+    return validation
+}
+exports.clientRoutesValidation = (userAccountRepo, clientRepo, { check }, route) =>{
     switch(route){
     case 'client:invite-user':
         return[
@@ -16,15 +26,15 @@ exports.clientRoutesValidation = (userAccountRepo, clientRepo, route) =>{
             check('role', 'User Role is Required').trim().notEmpty(),
             check('active', 'Active status is Required').isBoolean(),
             check('awaitingSignup', 'Await signup is Required').isBoolean(),
-            check('clientid', 'Invalid Client Id').trim().isUUID(),
+            check('clientId', 'Invalid Client Id').trim().isUUID(),
         ]
     case 'client:retreive':
         return[
-            check('id', 'Invalid client ID').trim().isUUID()
+            clientIdValidation(check, clientRepo)
         ]
     case 'client:update':
         return[
-            check('id', 'Invalid client Id').trim().isUUID()
+            clientIdValidation(check, clientRepo)
         ]
     case 'client:create':
         return[
