@@ -1,27 +1,34 @@
 const { UserAccount } = require("./user-account");
 
 async function updateUserAccount ( userAccountRepo, log, account, callback) {
+    let res;
     try{
         log.info({account}, 'updating user account')
-        const res = await userAccountRepo.update(account, {
+        res = await userAccountRepo.update(account, {
             where: {
                 id: account.id
             }
         });
         log.info({res}, 'user account updated')
-        callback(null, res)
     }catch(err){
         log.error({err}, 'error updating account')
-        const error = new Error(err)
-        callback(error)
     }
+    if( res[0] === 1 ){
+        return callback(null, { msg: 'User account has been updated' })
+    }
+    return callback({msg: 'Error Updating user account'})
 }
 
 async function addUserAccount ( userAccountRepo, log, account, callback) {
     log.info({account}, 'adding user account')
-    const res = await userAccountRepo.create(account)
-    log.info({res}, 'user account added')
-    callback(null, res)
+    try{
+        const res = await userAccountRepo.create(account)
+        log.info({res}, 'user account added')
+        return callback(null, {msg: `${account.role} account has been created`})
+    }catch(err){
+        log.error({err}, 'Error adding user account')
+        return callback(err)
+    }
 }
 
 async function getUserRoleById (userAccountRepo, log, userId, callback) {
@@ -37,10 +44,6 @@ async function getUserAccountById (userAccountRepo, log, userId, callback){
 }
 
 async function activateUserAccount (userAccountRepo, log, hashingService, account, callback) {
-    const validatePassword = UserAccount.validatePassword (account, { log })
-    if( validatePassword.err ){
-        return callback(validatePassword.msg)
-    }
     const updatedUser = await UserAccount.createActiveUserAccount(account, {log, hashingService})
     await updateUserAccount(userAccountRepo, log, updatedUser, (err, res) =>{
         if(err){

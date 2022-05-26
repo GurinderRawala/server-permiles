@@ -1,8 +1,12 @@
 async function addDriver (driverRepo, log, driver, callback) {
-    log.info({driver}, 'adding driver')
-    const res = await driverRepo.create(driver)
-    log.info({driver}, 'driver added')
-    callback(null, res)
+    try{
+        log.info({driver}, 'adding driver')
+        const res = await driverRepo.create(driver)
+        log.info({res}, 'driver added')
+        return callback(null, {msg: `${driver.firstname} has been added as a driver`})
+    }catch(err){
+        return callback(err)
+    }
 }
 
 async function updateDriver (driverRepo, log, driver, callback) {

@@ -7,22 +7,34 @@ async function updateClient ( clientRepo, log, Client, callback) {
             id: Client.id
         }
     });
-    log.info({res}, 'client updated')
-    callback(null, res)
+    if( res[0] === 1 ){
+        log.info({res}, 'client updated')
+        return callback(null, { msg: 'Client has been updated' })
+    }
+    return callback({ msg: 'Error Updating Client' })
+
 }
 
 async function addClient ( clientRepo, log, Client, callback) {
     log.info({Client}, 'adding client')
     const res = await clientRepo.create(Client)
-    log.info({res}, 'client added')
-    callback(null, res)
+    if( res ){
+        log.info({res}, 'client updated')
+        return callback(null, { msg: 'Client has been added' })
+    }
+    return callback({ msg: 'Error adding Client' })
 }
 
 async function getClientById (clientRepo, log, Client, callback) {
     log.info({Client}, 'retrieving client information')
-    const res = await clientRepo.findByPk(Client.id)
-    log.info({Client}, 'client information retrieved')
-    return callback(null, res)
+    try{
+        const res = await clientRepo.findByPk(Client.id)
+        log.info({res}, 'client information retrieved')
+        if( res ) { return callback(null, res)  }
+        return callback([{ msg: 'No record Found' }])
+    }catch(err){
+        return callback(err)
+    }
 }
 
 async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token, user, callback){
@@ -41,11 +53,11 @@ async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token
     }
 
     const inviteUser = UserAccount.createInviteUser(user, client, { clock, token })
-    let res = await addUserAccount(inviteUser, (err, res) => {
+    const response = await addUserAccount(inviteUser, (err, response) => {
         if(err){
             return callback(err)
         }
-        return res
+        return response
     })
     const inviteLink = `https://permiles.com/signup?token=${inviteUser.token}`;
     const payload = {
@@ -54,8 +66,10 @@ async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token
         inviteLink
     }
     const subject = `${inviteUser.company}- Invitation to join Per Miles`;
-    mailer.send('invite-user.hbs', { to: inviteUser.email, subject, payload})
-    callback(null, res)
+    if( response ){
+        mailer.send('invite-user.hbs', { to: inviteUser.email, subject, payload})
+        callback(null,{msg: `${inviteUser.role} has been Invited to join ${payload.company}`})
+    }
 }
   
 module.exports = {
