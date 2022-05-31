@@ -2,9 +2,9 @@ const { check } = require('express-validator');
 exports.validateClient = (clientRepo) =>{
     const clientValidation = check('clientid', 'Invalid client UUID').trim().isUUID()
         .custom(value => clientRepo
-            .findAll({ where: { id: value } })
+            .findOne({ where: { id: value } })
             .then(client => {
-                if(client.length === 0){
+                if(!client){
                     return Promise.reject(`Client is not found`)
                 }
             })

@@ -4,9 +4,9 @@ exports.validateEmail = ( Repo ) =>{
         check('email', 'Enter a valid Email').trim().isEmail().normalizeEmail()
             .custom(value =>{
                 return Repo
-                    .findAll( { where: {email: value} } )
+                    .findOne( { where: {email: value} } )
                     .then(user => {
-                        if(user.length > 0){
+                        if(user){
                             return Promise.reject(`Provided Email already exits`)
                         }
                     })

@@ -54,12 +54,32 @@ async function activateUserAccount (userAccountRepo, log, hashingService, accoun
 }
     
 async function signUpUserAccount (userAccountRepo, log, token, signupToken, callback) {
-    const { id, username, error} = token.verify(signupToken)
+    const { id, username, error } = token.verify(signupToken)
     if(error) {
         const error = new Error('Invalid Token')
         return callback(error)
     }
     callback(null, {id, username })
+}
+
+async function findUserAccountByEmail (userAccountRepo, log, account, callback){
+    log.info({ email: account.email }, 'finding user with email')
+    const res = await userAccountRepo.findAll({ where:{ email: account.email } })
+    log.info({res}, "User information")
+    return callback(null, res)
+}
+async function signinUserAccount ( userAccountRepo, log, hashingService, token, account, callback ){
+    const user  = await findUserAccountByEmail(userAccountRepo, log, account, (err, res) =>{
+        if(err){ return callback(err) }
+        return res[0]
+    })
+    const payload = { password: account.password, hashedPassword: user.password }
+    const verify = await UserAccount.createSigninUserAccount(payload, { hashingService, log })
+    if( !verify ){
+        return callback({ msg: 'wrong email or password'})
+    }
+    const accessToken = token.create({ id: user.id, email: user.email, clientid: user.clientid }, {  expiresIn: '48h' })
+    callback(null, accessToken)
 }
   
 module.exports = {
@@ -68,5 +88,6 @@ module.exports = {
     createGetUserRoleById : ({ userAccountRepo, log  }) => getUserRoleById.bind(null, userAccountRepo, log ),
     createActivateUserAccount: ({ userAccountRepo, log, hashingService }) => activateUserAccount.bind(null, userAccountRepo, log, hashingService),
     createGetUserAccountById: ({ userAccountRepo, log }) => getUserAccountById.bind(null, userAccountRepo, log),
-    createSignUpUserAccount: ({ userAccountRepo, log, token }) => signUpUserAccount.bind(null, userAccountRepo, log, token)
+    createSignUpUserAccount: ({ userAccountRepo, log, token }) => signUpUserAccount.bind(null, userAccountRepo, log, token),
+    createSigninUserAccount: ({ userAccountRepo, log, hashingService, token }) => signinUserAccount.bind(null, userAccountRepo, log, hashingService, token)
 }

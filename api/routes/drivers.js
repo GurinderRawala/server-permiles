@@ -1,18 +1,23 @@
 const express = require('express');
 const router = express.Router()
-const { createAddDriver, createUpdateDriver, createGetDriver } = require('../../driver')
+const { createInviteDriver, createUpdateDriver, createGetDriver, createGetDriverByEmail } = require('../../driver')
 
 exports.registerRoutes = (server, modules) => {
-    const { authenticationMiddlware : { determineUserRole, permissions }, validation } = modules
-    const permissionAddDriver = permissions('driver:create')
-    const validateAddDriver = validation.driverRoutesValidation('driver:create')
-    router.post('/drivers/add-driver', 
-        [determineUserRole, permissionAddDriver, validateAddDriver], 
+    const { 
+        authenticationMiddlware : { determineUserRole, permissions }, 
+        validation, 
+        sessionHandler,
+        uploadMiddleware
+    } = modules
+    const permissionInviteDriver = permissions('driver:invite')
+    const validateInviteDriver = validation.driverRoutesValidation('driver:invite')
+    router.post('/drivers/invite-driver', 
+        [ uploadMiddleware, sessionHandler, determineUserRole, permissionInviteDriver, validateInviteDriver ], 
         (req, res, next) => {
             const { validationErrorMessage } = validation
             if( validationErrorMessage(req, res, next) ) return
-            const addDriver = createAddDriver(modules)
-            addDriver(req.body, (err, msg) => {
+            const addDriver = createInviteDriver(modules)
+            addDriver(req.body, req.files, (err, msg) => {
                 if (err) { return next(err) }
                 res.status(201).send(msg)
                 next()
@@ -32,7 +37,20 @@ exports.registerRoutes = (server, modules) => {
                 next()
             })
         })
-
+    const permissionGetDriver = permissions('driver:get-driver')
+    const validateGetDriver = validation.driverRoutesValidation('driver:get-driver')
+    router.get('/drivers/:email', 
+        [sessionHandler, determineUserRole, permissionGetDriver, validateGetDriver],
+        (req,res,next) =>{
+            const { validationErrorMessage } = validation
+            if( validationErrorMessage(req, res, next) ) return
+            const findDriverByEmail = createGetDriverByEmail(modules)
+            findDriverByEmail(req.params, (err, driver) =>{
+                if(err){ return next(err) }
+                res.status(200).send(driver)
+                next()
+            })
+        })
     router.get('/drivers/:id', 
         [validateDriverExits],
         (req, res, next) =>{
@@ -44,6 +62,16 @@ exports.registerRoutes = (server, modules) => {
                 res.status(200).send({data: driver})
                 next()
             })
+        })
+    router.post('/upload', uploadMiddleware, 
+        (req, res, next) =>{
+            const { uploadService } = modules
+            uploadService(req.files, 'test-upload/', 
+                (err, response) =>{
+                    if(err){ return next(err)}
+                    res.status(200).send({msg: response})
+                    next()
+                })
         })
     server.use(router)
 }

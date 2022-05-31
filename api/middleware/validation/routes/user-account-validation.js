@@ -13,6 +13,12 @@ exports.userAccountValidation = ({ check }, userAccountRepo, route) =>{
                 .exists()
                 .custom((value, { req }) => value === req.body.password)
         ]
+    case 'user-account:signin':
+        return[
+            checkEmailforSignin(check, userAccountRepo),
+            check('password', 'Must provide a valid password to login')
+                .trim().notEmpty()
+        ]
     default:
         return []
     }
@@ -26,5 +32,18 @@ const validateUserAccountPk = (check, userAccountRepo) =>{
                     return Promise.reject(`User not found`)
                 }
             }))
+    return validation
+}
+const checkEmailforSignin = (check, userAccountRepo) =>{
+    const validation = check('email', 'Invalid email address')
+        .trim().isEmail().normalizeEmail()
+        .custom(value => userAccountRepo
+            .findOne({ where: { email: value } })
+            .then(user => {
+                if(!user){
+                    return Promise.reject(`${value} email does not exits`)
+                }
+            })
+        )
     return validation
 }

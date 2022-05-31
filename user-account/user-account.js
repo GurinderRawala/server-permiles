@@ -19,7 +19,7 @@ class UserAccount {
         userAccount.role = data.role 
         userAccount.filepath = data.filepath 
         userAccount.reg_date = data.reg_date 
-        userAccount.clientId = data.clientId 
+        userAccount.clientid = data.clientid 
         userAccount.token = data.token
 
         return userAccount
@@ -32,11 +32,11 @@ class UserAccount {
             active: false,
             awaitingSignup: true,
             createdAt: clock(),
-            clientId: client.id,
+            clientid: client.id,
             company: client.name,
             token: token.create({ 
                 id: data.id,
-                username: data.username,
+                clientid: client.id,
                 email: data.email
             }, {
                 expiresIn: '48h'
@@ -58,6 +58,19 @@ class UserAccount {
             active: true,
             awaitingSignup: false
         }
+    }
+    static async createSigninUserAccount (data, { hashingService, log }){
+        const {  password, hashedPassword } = data
+        const verifyPassword = await hashingService
+            .verify(password, hashedPassword, 
+                (err, response) =>{
+                    if(err){
+                        throw new Error(err)
+                    }
+                    return response
+                })
+        log.info(verifyPassword, 'Password verification response')
+        return verifyPassword
     }
 
 }

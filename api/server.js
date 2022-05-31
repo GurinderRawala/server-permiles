@@ -14,6 +14,7 @@ module.exports.startServer = async (config) => {
 
     server.use(express.static('public'));
     server.use(bodyParser.json())
+    server.use(bodyParser.urlencoded({ extended: true }))
     server.use(cookieParser())
     routes.registerAllRoutes(server, modules)  
     server.use( (error, req, res, next) =>{

@@ -1,7 +1,7 @@
 const { validateEmail } = require('../validate-email')
 const { validatePhoneNumber } = require('../validate-phone-number')
-const clientIdValidation = (check, clientRepo) =>{
-    const validation = check('id', 'Invalid client ID').trim().isUUID()
+const clientIdValidation = (check, clientRepo, field) =>{
+    const validation = check(field, 'Invalid client ID').trim().isUUID()
         .custom(value => clientRepo
             .findByPk(value)
             .then(client => {
@@ -26,15 +26,15 @@ exports.clientRoutesValidation = (userAccountRepo, clientRepo, { check }, route)
             check('role', 'User Role is Required').trim().notEmpty(),
             check('active', 'Active status is Required').isBoolean(),
             check('awaitingSignup', 'Await signup is Required').isBoolean(),
-            check('clientId', 'Invalid Client Id').trim().isUUID(),
+            clientIdValidation(check, clientRepo, 'clientid'),
         ]
     case 'client:retreive':
         return[
-            clientIdValidation(check, clientRepo)
+            clientIdValidation(check, clientRepo, 'id')
         ]
     case 'client:update':
         return[
-            clientIdValidation(check, clientRepo)
+            clientIdValidation(check, clientRepo, 'id')
         ]
     case 'client:create':
         return[

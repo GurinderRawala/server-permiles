@@ -1,7 +1,7 @@
 const configurePermissionsMiddleware = require('./permissions')
 const { createGetUserRoleById } = require('../../user-account')
 
-exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo }) => {
+exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo, token }) => {
     const getUserRoleById = createGetUserRoleById( { log, userAccountRepo} )
     const middlewares = {
         determineUserRole: (req, res, next) => { 
@@ -9,13 +9,22 @@ exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo }) =
                 next()
                 return  
             }
-            getUserRoleById(req.session?.user?.id , (err, role) => {
+            const accessToken = req.session?.user?.id
+            const decodedToken = token.verify(accessToken, (err, response) =>{
+                if(err){
+                    return { err }
+                }
+                return response
+            })
+            getUserRoleById(decodedToken?.id, (err, role) => {
                 if(err) {
                     const errorMessage = 'An error occured while determing user role'
                     log.error({err}, errorMessage )
                     return res.status(500).json({ message: errorMessage })
                 }
                 req.role = role
+                req.body.clientid = decodedToken?.clientid
+                req.body.userId = decodedToken?.id
                 next()
             })
         },

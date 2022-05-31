@@ -34,5 +34,6 @@ module.exports = require('rc')('permiles',{
             name: 'Per Miles',
             address: 'no-reply@permiles.com'
         }
-    }
+    },
+    awsBucket: process.env.AWS_BUCKET_NAME
 })

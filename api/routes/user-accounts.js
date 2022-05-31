@@ -1,5 +1,5 @@
 const express = require('express');
-const { createAddUserAccount, createUpdateUserAccount, createActivateUserAccount, createSignUpUserAccount } = require('../../user-account');
+const { createAddUserAccount, createUpdateUserAccount, createActivateUserAccount, createSignUpUserAccount, createSigninUserAccount } = require('../../user-account');
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
@@ -60,14 +60,25 @@ exports.registerRoutes = (server, modules) =>{
         })
     })
 
-    //Temp API to set user sessions
-    router.get('/signin/:userId', [sessionHandler], (req, res, next) => {
-        req.session.user = {
-            id: req.params.userId
-        }
-        res.sendStatus(200)
-        next()
-    })
+    const validateUserSignin =  userAccountValidation('user-account:signin')
+    router.post('/user-account/signin', 
+        [sessionHandler, validateUserSignin], 
+        (req, res, next) => {
+            const { validationErrorMessage } = validation
+            if( validationErrorMessage(req, res, next) ) return
+            const verifySignin = createSigninUserAccount(modules)
+            verifySignin(req.body, (err, user) =>{
+                console.log(err)
+                if(err){ return next(err)}
+                const { log } = modules
+                log.info(req.session)
+                req.session.user = {
+                    id: user
+                }
+                res.status(200).send({msg: user})
+                next()
+            })
+        })
 
     server.use(router)
 }
