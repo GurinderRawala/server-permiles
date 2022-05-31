@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <style>
+            .container{
+                background-color: #f1f1f1;
+                padding: 25px 25px;
+                font-size: 14px;
+            }
+            .my-spacer{
+                margin: 8px;
+                text-align: center;
+            }
+            .link{
+                background-color: #031c32;
+                padding: 12px 12px;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+            .link:hover{
+                background-color: #fff;
+                color: #031c32;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <center class="my-spacer">
+                <img 
+                src="https://www.permiles.com/transparent-small-logo.png" 
+                style="max-width: 75px; height: 75px;"
+                />
+            </center>
+            <h1>
+                Hi {{firstname}},
+            </h1>
+            <p>
+                {{company}} invited you to join Per Miles Driver App. Visit the link below
+                and set up the password for your Driver App. If you are not associated with 
+                {{company}} you can ignore this email. 
+            </p>
+            <br />
+            <div class="my-spacer">
+                <a href={{ inviteLink }} class="link">Accept Invite</a>
+            </div>
+            <p style="text-align: center;">
+                <i style="font-size: small;">Link expires in 24hrs</i>
+            </p>
+            <p>
+                Per Miles Driver App is available on apple and google play store. Download Per Miles
+                Driver App now and report like a pro.
+            </p>
+            <br />
+            <div class="my-spacer">
+                    <a href={{ driverAppLink.googlePlayStore }} class="link">
+                        Play Store
+                    </a>
+            </div>
+            <br />
+            <div class="my-spacer">
+                    <a href={{ driverAppLink.appleStore }} class="link">
+                        Apple Store
+                    </a>
+            </div>
+            
+        <p>
+            Thank you, <br />
+            Per Miles
+        </p>
+        </div>
+    </body>
+</html>

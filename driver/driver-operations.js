@@ -1,3 +1,4 @@
+const { createGetClient } = require("../clients/client-operations")
 const { Driver } = require("./driver")
 
 async function addDriver (driverRepo, log, driver, callback) {
@@ -40,27 +41,45 @@ async function getDriverByEmail ( driverRepo, log, driver, callback ){
     }
 }
 
-async function inviteDriver ( driverRepo, log, uploadService, clock, token, mailer, driver, files, callback ){
+async function inviteDriver ( driverRepo, clientRepo, log, uploadService, clock, token, mailer, driver, files, callback ){
     const inviteDriver = await Driver.createInviteDriver(driver, files, { clock, uploadService, token })
     const response = await addDriver (driverRepo, log, inviteDriver, (err, response) =>{
         if(err){ return callback(err)}
         return response
     })
+    const getClient = createGetClient({clientRepo, log})
+    const client = { id: driver.clientid }
+    const { name } = await getClient(client, (err, info) => {
+        if(err){ return callback(err)}
+        return info
+    })
     const payload = {
         firstname: inviteDriver.firstname,
-        company: 'Per Miles',
-        inviteLink: inviteDriver.token
+        company: name,
+        inviteLink: inviteDriver.token,
+        driverAppLink: {
+            googlePlayStore: 'https://permiles.com',
+            appleStore: 'https://permiles.com'
+        }
     }
-    log.info(response, "response to added driver")
     const subject = `Invitation to join Per Miles`;
-    mailer.send('invite-user.hbs', { to: inviteDriver.email, subject, payload})
-    callback(null,{msg: `Invitation has been sent to the driver`})
+    mailer.send('invite-driver.hbs', { to: inviteDriver.email, subject, payload})
+    callback(null,{msg: `Invitation sent, ${response.msg}`})
     
 }
 
+async function activateDriverAccount ( driverRepo, log, hashingService, driver, callback){
+    const driverPayload = await Driver.createActiveDriverAccount(driver, {hashingService, log});
+    await updateDriver(driverRepo, log, driverPayload, (err) =>{
+        if(err){ return callback(err) }
+        callback(null, 'Driver Account has been activated')
+    })
+}
+
 module.exports = {
-    createInviteDriver: ({driverRepo, log, uploadService, clock, token, mailer }) =>  inviteDriver.bind(null, driverRepo, log, uploadService, clock, token, mailer),
+    createInviteDriver: ({driverRepo, clientRepo, log, uploadService, clock, token, mailer }) =>  inviteDriver.bind(null, driverRepo, clientRepo, log, uploadService, clock, token, mailer),
     createUpdateDriver: ({driverRepo, log}) => updateDriver.bind(null, driverRepo, log),
     createGetDriver: ({driverRepo, log}) => getDriverById.bind(null, driverRepo, log),
-    createGetDriverByEmail: ({driverRepo, log}) => getDriverByEmail.bind(null, driverRepo, log)
+    createGetDriverByEmail: ({driverRepo, log}) => getDriverByEmail.bind(null, driverRepo, log),
+    createActiveDriverAccount: ({ driverRepo, log, hashingService }) => activateDriverAccount.bind(null, driverRepo, log, hashingService)
 }

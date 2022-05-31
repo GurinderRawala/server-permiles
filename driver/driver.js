@@ -73,7 +73,8 @@ class Driver {
                 street: data.street, 
                 city: data.city, 
                 state: data.state, 
-                postal: data.postal 
+                postal: data.postal,
+                country: data.country
             } 
         ]
     }

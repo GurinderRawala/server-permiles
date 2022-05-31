@@ -10,12 +10,7 @@ exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo, tok
                 return  
             }
             const accessToken = req.session?.user?.id
-            const decodedToken = token.verify(accessToken, (err, response) =>{
-                if(err){
-                    return { err }
-                }
-                return response
-            })
+            const decodedToken = token.verify(accessToken)
             getUserRoleById(decodedToken?.id, (err, role) => {
                 if(err) {
                     const errorMessage = 'An error occured while determing user role'
