@@ -8,6 +8,7 @@
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "sync-db": "node ./scripts/sync-db | bunyan -o short",
+    "pg-cmd": "node ./scripts/postgres-cmd | bunyan -o short",
     "prepare": "husky install"
   },
   "keywords": [],

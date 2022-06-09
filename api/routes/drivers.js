@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const { createInviteDriver, createUpdateDriver, createGetDriver, createGetDriverByEmail, createActiveDriverAccount } = require('../../driver')
+const { createInviteDriver, createUpdateDriver, createGetDriver, createGetDriverByEmail, createActiveDriverAccount, createResetPasswordDriver } = require('../../driver')
 
 exports.registerRoutes = (server, modules) => {
     const { 
@@ -75,5 +75,15 @@ exports.registerRoutes = (server, modules) => {
                 next()
             })
         })
+    const validationResetPasswordDriver = validation.driverRoutesValidation('driver:reset-password')
+    router.post('/drivers/reset-password', [validationResetPasswordDriver], (req, res, next) =>{
+        if( validation.validationErrorMessage(req, res, next) ) return
+        const resetPassword = createResetPasswordDriver(modules)
+        resetPassword(req.body, (err, response) =>{
+            if(err){ return next(err) }
+            res.status(200).send(response)
+            next()
+        })
+    })
     server.use(router)
 }

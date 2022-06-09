@@ -68,7 +68,7 @@ async function inviteUser(clientRepo, userAccountRepo, log, mailer, clock, token
     const subject = `${inviteUser.company}- Invitation to join Per Miles`;
     if( response ){
         mailer.send('invite-user.hbs', { to: inviteUser.email, subject, payload})
-        callback(null,{msg: `${inviteUser.role} has been Invited to join ${payload.company}`})
+        callback(null,{msg: `${inviteUser.role} has been Invited to join ${payload.company}` })
     }
 }
   

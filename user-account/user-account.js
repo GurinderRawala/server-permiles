@@ -33,13 +33,14 @@ class UserAccount {
             awaitingSignup: true,
             createdAt: clock(),
             clientid: client.id,
+            address: this.createAddress(data),
             company: client.name,
             token: token.create({ 
                 id: data.id,
                 clientid: client.id,
                 email: data.email
             }, {
-                expiresIn: '48h'
+                expiresIn: '24h'
             })
         }
         return this.fromData(inviteUser)
@@ -54,6 +55,7 @@ class UserAccount {
         log.info("password hashed")
         return {
             ...data,
+            id: data.userId,
             password: hash,
             active: true,
             awaitingSignup: false
@@ -71,6 +73,17 @@ class UserAccount {
                 })
         log.info(verifyPassword, 'Password verification response')
         return verifyPassword
+    }
+    static createAddress ( data ){
+        return [ 
+            { 
+                street: data.street, 
+                city: data.city, 
+                state: data.state, 
+                postal: data.postal,
+                country: data.country
+            } 
+        ]
     }
 
 }

@@ -29,6 +29,7 @@ exports.driverRoutesValidation = ({ check }, driverRepo, clientRepo, route) =>{
             check('city', 'City Name is required').trim().notEmpty(),
             check('state', 'State Name is Required').trim().notEmpty(),
             check('postal', 'Postal code is required').trim().notEmpty(),
+            check('country', 'Country Name is Required').trim().notEmpty(),
             check('awaitingSignup', 'Await signup is Required').isBoolean(),
             validateClient(clientRepo)
         ]
@@ -68,6 +69,19 @@ exports.driverRoutesValidation = ({ check }, driverRepo, clientRepo, route) =>{
             check('confirmPassword', 'Repeat password does not match password')
                 .exists()
                 .custom((value, { req }) => value === req.body.password)
+        ]
+    case 'driver:reset-password':
+        return[
+            check('email', 'Provide a valid driver email')
+                .trim().isEmail()
+                .custom(value => driverRepo
+                    .findOne({ where: { email: value } })
+                    .then(user => {
+                        if(!user){
+                            return Promise.reject(`${value} email does not exits`)
+                        }
+                    })
+                )
         ]
     default:
         return []

@@ -34,10 +34,10 @@ async function getDriverByEmail ( driverRepo, log, driver, callback ){
     try{
         const res = await driverRepo.findOne({ where:{ email: driver.email }})
         log.info({ res }, 'driver retrived successfully')
-        callback(null, res)
+        return callback(null, res)
     }catch(err){
         log.error({ err }, 'Error finding driver')
-        callback(err)
+        return callback(err)
     }
 }
 
@@ -72,8 +72,27 @@ async function activateDriverAccount ( driverRepo, log, hashingService, driver, 
     const driverPayload = await Driver.createActiveDriverAccount(driver, {hashingService, log});
     await updateDriver(driverRepo, log, driverPayload, (err) =>{
         if(err){ return callback(err) }
-        callback(null, 'Driver Account has been activated')
+        callback(null, {msg: 'Driver Account has been activated'})
     })
+}
+
+async function resetPasswordDriver ( driverRepo, log, mailer, token, driver, callback ){
+    log.info({driver}, 'user requesting for password reset')
+    const driverInfo = await getDriverByEmail(driverRepo, log, driver, (err, info) =>{
+        if(err) { return callback(err) }
+        return info
+    })
+    const accessToken = token.create({ 
+        id: driverInfo.id, 
+        email: driverInfo.email, clientid: driverInfo.clientid }, 
+    {  expiresIn: '1h' })
+    const payload = {
+        firstname: driverInfo.firstname,
+        resetLink: accessToken
+    }
+    const subject = `Reset Password for Per Miles Driver Account`
+    mailer.send('reset-password.hbs', { to: driverInfo.email, subject, payload })
+    callback(null, { msg: `Reset password request is sent to your email` })
 }
 
 module.exports = {
@@ -81,5 +100,6 @@ module.exports = {
     createUpdateDriver: ({driverRepo, log}) => updateDriver.bind(null, driverRepo, log),
     createGetDriver: ({driverRepo, log}) => getDriverById.bind(null, driverRepo, log),
     createGetDriverByEmail: ({driverRepo, log}) => getDriverByEmail.bind(null, driverRepo, log),
-    createActiveDriverAccount: ({ driverRepo, log, hashingService }) => activateDriverAccount.bind(null, driverRepo, log, hashingService)
+    createActiveDriverAccount: ({ driverRepo, log, hashingService }) => activateDriverAccount.bind(null, driverRepo, log, hashingService),
+    createResetPasswordDriver: ({ driverRepo, log, mailer, token }) => resetPasswordDriver.bind(null, driverRepo, log, mailer, token)
 }

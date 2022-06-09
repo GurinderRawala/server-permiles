@@ -1,5 +1,5 @@
 const express = require('express');
-const { createAddUserAccount, createUpdateUserAccount, createActivateUserAccount, createSignUpUserAccount, createSigninUserAccount } = require('../../user-account');
+const { createAddUserAccount, createUpdateUserAccount, createActivateUserAccount, createSignUpUserAccount, createSigninUserAccount, createResetPasswordUserAccount } = require('../../user-account');
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
@@ -35,7 +35,7 @@ exports.registerRoutes = (server, modules) =>{
         })
     const permissionActivateUserAccount = permissions('user-account:activate')
     const validationActivateUserAccount = userAccountValidation('user-account:activate')
-    router.post('/user-account/activate', 
+    router.post('/user-accounts/activate', 
         [sessionHandler, determineUserRole, permissionActivateUserAccount, validationActivateUserAccount], 
         (req, res, next) =>{
             const { validationErrorMessage } = validation
@@ -51,31 +51,42 @@ exports.registerRoutes = (server, modules) =>{
     router.get('/signup/:token',[sessionHandler], (req, res, next) => {
         const signUpUserAccount = createSignUpUserAccount(modules)
         const { params: { token } } = req
-        signUpUserAccount(token, (err, data) => {
+        signUpUserAccount(token, (err) => {
             if (err) { return next(err) }
-            const { userId } = data
-            req.session.user = { id: userId }
+            req.session.user = { id: token }
             res.sendStatus(200)
             next()
         })
     })
 
     const validateUserSignin =  userAccountValidation('user-account:signin')
-    router.post('/user-account/signin', 
+    router.post('/user-accounts/signin', 
         [sessionHandler, validateUserSignin], 
         (req, res, next) => {
             const { validationErrorMessage } = validation
             if( validationErrorMessage(req, res, next) ) return
             const verifySignin = createSigninUserAccount(modules)
-            verifySignin(req.body, (err, user) =>{
+            verifySignin(req.body, (err, token) =>{
                 console.log(err)
                 if(err){ return next(err)}
                 const { log } = modules
                 log.info(req.session)
                 req.session.user = {
-                    id: user
+                    id: token
                 }
-                res.status(200).send({msg: user})
+                res.status(200).send({msg: token})
+                next()
+            })
+        })
+    const validateResetPassword = userAccountValidation('user-account:reset-password')
+    router.post('/user-accounts/reset-password', 
+        [validateResetPassword],
+        (req, res, next) =>{
+            if( validation.validationErrorMessage(req, res, next) ) return
+            const resetPassword = createResetPasswordUserAccount(modules)
+            resetPassword(req.body, (err, response) =>{
+                if(err) { return next(err) }
+                res.status(200).send(response)
                 next()
             })
         })
