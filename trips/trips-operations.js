@@ -38,13 +38,13 @@ async function getTripByTripNumber(tripRepo, log, trip, callback){
                 }
             }
         })
-        if(res.length === 0){
+        if(!res){
             return callback({msg: `No trip found by trip#: ${trip.tripId}`})
         }
         return callback(null, res)
     }catch(err){
         log.error({err}, 'Error finding Trip by trip#')
-        callback(err)
+        return callback(err)
     }
 }
 async function updateTrip(tripRepo, log, trip, callback){

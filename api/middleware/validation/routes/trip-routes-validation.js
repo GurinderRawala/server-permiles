@@ -25,6 +25,15 @@ exports.tripRoutesValidation = ({ check }, tripRepo, clientRepo, driverRepo, rou
                     }
                 }))
         ]
+    case 'trip:by-tripId':
+        return[
+            check('tripId', 'Trip number is required').trim().notEmpty()
+                .custom(tripId => tripRepo.findOne({ where:{ tripId } }).then(trip => { 
+                    if(!trip){
+                        return Promise.reject(`No record found for Trip#: ${tripId}`)
+                    }
+                }))
+        ]
     default: 
         return []
     }

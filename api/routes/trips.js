@@ -1,8 +1,9 @@
 const express = require('express')
-const { createAddTrip, createUpdateTrip } = require('../../trips')
+const { createAddTrip, createUpdateTrip, createGetTripById, 
+    createGetTripByTripNumber, createGetTripList } = require('../../trips')
 const router = express.Router()
 
-exports.registerRoutes = (server, modules) =>{
+exports.registerRoutes = (server, modules)=>{
     const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, 
         validation, uploadMiddleware } = modules
     const permissionsAddTrip = permissions('trip:add-trip')
@@ -31,5 +32,40 @@ exports.registerRoutes = (server, modules) =>{
                 next()
             })
         })
+    const permissionsGetTrip = permissions('trip:get-trip')
+    router.get('/trips/:id', 
+        [sessionHandler, determineUserRole, permissionsGetTrip, validateUpdateTrip],
+        (req, res, next)=>{
+            if( validation.validationErrorMessage(req, res, next) ) return
+            const getTripById = createGetTripById(modules)
+            getTripById(req.params, (err, trip) =>{
+                if(err){ return next(err) }
+                res.status(200).send(trip)
+                next()
+            })
+        })
+    const validateTripByTripNumber = validation.tripRoutesValidation('trip:by-tripId')
+    router.post('/trips/by-tripId', 
+        [sessionHandler, determineUserRole, permissionsGetTrip, validateTripByTripNumber],
+        (req, res, next) =>{
+            if( validation.validationErrorMessage(req, res, next) ) return
+            const getTripByTripNumber = createGetTripByTripNumber(modules)
+            getTripByTripNumber(req.body, (err, trip) => {
+                if(err){ return next(err) }
+                res.status(200).send(trip)
+                next()
+            })
+        })
+    router.post('/trips/trip-list', 
+        [sessionHandler, determineUserRole, permissionsGetTrip],
+        (req, res, next) => {
+            const getTripList = createGetTripList(modules)
+            getTripList(req.body, (err, list) => {
+                if(err){ return next(err) }
+                res.status(200).send(list)
+                next()
+            })
+        })
+   
     server.use(router)
 }
