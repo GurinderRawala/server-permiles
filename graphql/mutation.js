@@ -1,15 +1,20 @@
-const { GraphQLObjectType, GraphQLBoolean } = require("graphql")
-
+const { GraphQLObjectType } = require("graphql");
+const { graphQLTypes } = require("./types");
 module.exports.registerMutation = (server, modules) =>{
-    const { log } = modules;
+    const { log, trailerRepo } = modules;
     log.info("mutation")
     const mutation = new GraphQLObjectType({
         name: 'Mutation',
-        description: "Query data from graphql",
+        description: "Muatating data",
         fields:{
             addTrailer: {
-                type: GraphQLBoolean,
-                resolve: () => true
+                type: graphQLTypes.outputTypes.Trailer,
+                args: {
+                    input:{
+                        type: graphQLTypes.inputTypes.Trailer
+                    }
+                },
+                resolve: async (_, args) => await trailerRepo.create({ ...args.input })
             }
         }
     });

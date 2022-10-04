@@ -21,8 +21,7 @@ module.exports.registerQuery = (server, modules) =>{
                     before: (findOptions, args) => {
                         findOptions.where = {
                             id: args.id,
-                        };
-                        findOptions.order = [['id', 'DSC']];
+                        }
                         return findOptions;
                     },
                 })

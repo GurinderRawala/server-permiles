@@ -23,7 +23,7 @@ exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo, tok
                 next()
             })
         },
-        permissions: configurePermissionsMiddleware({log, rbac, enabled })
+        permissions: configurePermissionsMiddleware({ log, rbac, enabled })
     }
 
     return middlewares
