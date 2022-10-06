@@ -11,9 +11,11 @@ module.exports.registerGraphQL = (server, modules) =>{
         mutation: rootMutation
     })
 
-    server.use('/graphql', [sessionHandler, determineUserRole, permissionsAddTrailer], graphqlHTTP({
-        schema,
-        pretty: true,
-        graphiql: true
-    }))
+    server.use('/graphql', [sessionHandler, determineUserRole, permissionsAddTrailer], 
+        graphqlHTTP((req) => ({
+            schema,
+            context: req.body,
+            pretty: true,
+            graphiql: true
+        })))
 }
