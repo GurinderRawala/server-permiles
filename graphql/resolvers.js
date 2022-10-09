@@ -7,12 +7,16 @@ class Resolver{
     async findAll(repoKey, condition){
         return await this.findRepo(repoKey).findAll(condition)
     }
-    async create(repoKey, condition){
-        return await this.findRepo(repoKey).create(condition)
+    async create(repoKey, payload){
+        return await this.findRepo(repoKey).create(payload)
     }
     async update(repoKey, payload){
         const { condition, data } = payload
-        return await this.findRepo(repoKey).update(data, condition)
+        const res = await this.findRepo(repoKey).update(data, condition)
+        if(res[0] === 1){
+            return await this.findByPk(repoKey, condition.where.id)
+        }
+        return null
     }
     async findByPk(repoKey, pk){
         return await this.findRepo(repoKey).findByPk(pk)

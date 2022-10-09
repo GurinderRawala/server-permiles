@@ -1,6 +1,6 @@
 const { GraphQLObjectType } = require("graphql");
 const { Resolver } = require("../resolvers");
-const { queryByPk, queryDataFields } = require("./query-data-fields")
+const { queryByPk, queryDataFields } = require("./query-fields")
 
 module.exports.registerQuery = (server, modules) =>{
     const resolver = new Resolver(modules)
