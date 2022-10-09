@@ -1,4 +1,4 @@
-module.exports.MODEL_REPO = [
+exports.MODEL_REPO = [
     { model: "Trailer", repo: "trailerRepo"},
     { model: "Truck", repo: "truckRepo" },
     { model: "UserAccount", repo:  "userAccountRepo" },
@@ -6,5 +6,4 @@ module.exports.MODEL_REPO = [
     { model: "Broker", repo: "brokerRepo" },
     { model: "Driver", repo: "driverRepo"},
     { model: "Trip", repo: "tripRepo" },
-    // { model: "Client", repo: "clientRepo"}
 ]

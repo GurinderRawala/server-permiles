@@ -1,5 +1,6 @@
 const { GraphQLObjectType } = require("graphql");
 const { Resolver } = require("../resolvers");
+const { clientQueryField } = require("./client-query");
 const { queryByPk, queryDataFields } = require("./query-fields")
 
 module.exports.registerQuery = (server, modules) =>{
@@ -9,7 +10,8 @@ module.exports.registerQuery = (server, modules) =>{
         description: "Query data from graphql",
         fields:{
             ...queryDataFields(resolver),
-            ...queryByPk(resolver)
+            ...queryByPk(resolver),
+            ...clientQueryField(resolver)
         }
     });
 

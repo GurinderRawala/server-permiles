@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon ./api | bunyan -o short",
+    "dev": "nodemon ./api | bunyan -o short",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "sync-db": "node ./scripts/sync-db | bunyan -o short",
@@ -50,7 +50,8 @@
     "redis": "^4.1.0",
     "sequelize": "^6.17.0",
     "uniqid": "^5.4.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "eslint": "^8.12.0",

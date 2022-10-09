@@ -8,7 +8,7 @@ const queryDataFields = (resolver) => MODEL_REPO.map(({ model, repo }) =>({
     [`${camelCase(model)}s`]: {
         type: new GraphQLList(get(graphQLTypes, `outputTypes.${model}`)),
         resolve: async(_, args, context) => await resolver.findAll(
-            repo, createWhereCondition(context))
+            repo, createWhereCondition(context.body))
     }
 })).reduce(( obj, _, index, arr) => {
     return { ...obj, ...arr[index] }
@@ -23,7 +23,7 @@ const argsForPk = {
 };
 
 const queryByPk = (resolver) => MODEL_REPO.map(({ model, repo }) => ({
-    [`find${camelCase(model)}`]: {
+    [camelCase(`find${model}`)]: {
         type: get(graphQLTypes, `outputTypes.${model}`),
         args: argsForPk,
         resolve: async(_, args) => await resolver.findByPk(repo, args.id)

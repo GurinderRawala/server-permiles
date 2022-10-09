@@ -15,7 +15,8 @@ const genrateCreateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>(
         resolve: async (_, args, ctx) => {
             const payload = {
                 ...args.input,
-                clientid: ctx.clientid
+                clientid: ctx.body.clientid,
+                id: ctx.body.id ? ctx.body.id : args.id
             }
             return await resolver.create(repo, payload)
         }

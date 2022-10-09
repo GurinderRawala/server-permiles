@@ -77,7 +77,7 @@ async function signinUserAccount ( userAccountRepo, log, hashingService, token, 
     if( !verify ){
         return callback({ msg: 'wrong email or password'})
     }
-    const accessToken = token.create({ id: user.id, email: user.email, clientid: user.clientid }, {  expiresIn: '24h' })
+    const accessToken = token.create({ id: user.id, email: user.email, clientid: user.clientid }, {  expiresIn: '48h' })
     callback(null, accessToken)
 }
 
