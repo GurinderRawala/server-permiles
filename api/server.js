@@ -3,6 +3,7 @@ const routes = require('./routes')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const { configureModules } = require('../lib/configure-modules')
+const { registerGraphQL } = require('../graphql')
 
 module.exports.startServer = async (config) => {
     const modules = await configureModules(config)
@@ -22,6 +23,7 @@ module.exports.startServer = async (config) => {
         res.json(error)
         next()
     })
+    registerGraphQL(server, modules)
     server.listen(PORT, () => 
         log.info({ PORT }, 'permiles-api started succesfully')
     );

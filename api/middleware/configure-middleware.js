@@ -1,9 +1,18 @@
 const configurePermissionsMiddleware = require('./permissions')
 const { createGetUserRoleById } = require('../../user-account')
-
-exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo, token }) => {
+const { v4 } = require('uuid')
+exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo, token, uuidRegex }) => {
     const getUserRoleById = createGetUserRoleById( { log, userAccountRepo} )
     const middlewares = {
+        uuidMiddleware: (req, res, next) => {
+            if(req.body.id && req.body.id.match(uuidRegex)) {
+                console.log(`id exits`)
+                next();
+                return
+            }
+            req.body.id = v4()
+            next()
+        },
         determineUserRole: (req, res, next) => { 
             if(!enabled) {
                 next()
@@ -23,7 +32,7 @@ exports.createConfigureMiddlewares = ({ enabled, log, rbac, userAccountRepo, tok
                 next()
             })
         },
-        permissions: configurePermissionsMiddleware({log, rbac, enabled })
+        permissions: configurePermissionsMiddleware({ log, rbac, enabled })
     }
 
     return middlewares

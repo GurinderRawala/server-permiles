@@ -52,10 +52,10 @@ async function getTrailerByTrailerNumber(trailerRepo, log, trailer, callback){
     try{
         const res = await trailerRepo.findAll({
             where:{
-                trailerNo: trailer.trailerNo,
-                [Op.and]:{
-                    clientid: trailer.clientid
-                }
+                [Op.and]:[
+                    { clientid: trailer.clientid },
+                    { trailerNo: trailer.trailerNo }
+                ]
             }
         })
         if(res.length === 0){

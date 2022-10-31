@@ -35,5 +35,6 @@ module.exports = require('rc')('permiles',{
             address: 'no-reply@permiles.com'
         }
     },
-    awsBucket: process.env.AWS_BUCKET_NAME
+    awsBucket: process.env.AWS_BUCKET_NAME,
+    uuidRegex: /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
 })
