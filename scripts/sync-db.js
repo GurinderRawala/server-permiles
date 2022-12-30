@@ -14,7 +14,7 @@ const syncTable = async (log, table) => {
 
 const sync = async () => {
     try {
-        const { log,  driverRepo, userAccountRepo, clientRepo, brokerRepo, loadRepo, tripRepo, truckRepo, trailerRepo } = await configureModules(config)
+        const { log,  driverRepo, userAccountRepo, clientRepo, brokerRepo, loadRepo, tripRepo, truckRepo, trailerRepo, payrollRepo } = await configureModules(config)
         
         log.info( 'starting database sync')
         await syncTable(log, driverRepo)
@@ -25,6 +25,7 @@ const sync = async () => {
         await syncTable(log, loadRepo)
         await syncTable(log, truckRepo)
         await syncTable(log, trailerRepo)
+        await syncTable(log, payrollRepo)
         log.info( 'database sync complete')
         process.exit(0) 
     }

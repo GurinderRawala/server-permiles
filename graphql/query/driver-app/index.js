@@ -1,0 +1,1 @@
+exports.registerDriverAppGraphQL = (server, modules) => require("./driver-query").registerDriverAppQuery(server, modules);

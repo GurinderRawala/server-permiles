@@ -67,7 +67,6 @@ exports.registerRoutes = (server, modules) =>{
             if( validationErrorMessage(req, res, next) ) return
             const verifySignin = createSigninUserAccount(modules)
             verifySignin(req.body, (err, token) =>{
-                console.log(err)
                 if(err){ return next(err)}
                 const { log } = modules
                 log.info(req.session)

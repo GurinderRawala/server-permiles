@@ -1,4 +1,4 @@
-const { GraphQLList, GraphQLString } = require("graphql");
+const { GraphQLList, GraphQLID } = require("graphql");
 const { graphQLTypes } = require("../types");
 const { MODEL_REPO } = require("../consts");
 const { get, camelCase } = require("lodash");
@@ -17,7 +17,7 @@ const queryDataFields = (resolver) => MODEL_REPO.map(({ model, repo }) =>({
 
 const argsForPk = {
     id:{
-        type: GraphQLString,
+        type: GraphQLID,
         description: "Primary repo to find Data"
     }
 };

@@ -16,7 +16,7 @@ const genrateCreateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>(
             const payload = {
                 ...args.input,
                 clientid: ctx.body.clientid,
-                id: ctx.body.id ? ctx.body.id : args.id
+                id: ctx.body.id || args.id
             }
             return await resolver.create(repo, payload)
         }
@@ -39,8 +39,7 @@ const genrateUpdateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>(
             }
         },
         resolve: async(_, args) => await resolver.update(repo,
-            { data: args.input, condition: { where: { id: args.id } } 
-            })
+            { data: args.input, condition: { where: { id: args.id } } })
     }
 })).reduce(( obj, _, index, arr) => {
     return { ...obj, ...arr[index] }

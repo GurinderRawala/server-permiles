@@ -6,4 +6,5 @@ exports.MODEL_REPO = [
     { model: "Broker", repo: "brokerRepo" },
     { model: "Driver", repo: "driverRepo"},
     { model: "Trip", repo: "tripRepo" },
+    { model: "Payroll", repo: "payrollRepo" },
 ]

@@ -2,6 +2,7 @@ const express = require('express')
 const routes = require('./routes') 
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const cors = require('cors');
 const { configureModules } = require('../lib/configure-modules')
 const { registerGraphQL } = require('../graphql')
 
@@ -12,7 +13,7 @@ module.exports.startServer = async (config) => {
     const server = express()
 
     log.info('permiles-api is starting...')
-
+    server.use(cors());
     server.use(express.static('public'));
     server.use(bodyParser.json())
     server.use(bodyParser.urlencoded({ extended: true }))
