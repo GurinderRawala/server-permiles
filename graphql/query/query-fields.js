@@ -1,38 +1,17 @@
-const { GraphQLList, GraphQLID } = require("graphql");
+const { GraphQLList } = require("graphql");
 const { graphQLTypes } = require("../types");
-const { MODEL_REPO } = require("../consts");
 const { get, camelCase } = require("lodash");
-const createWhereCondition = (ctx) => ({ where:{ clientid: ctx.clientid } })
+const { createWhereCondition, createCommonArgs } = require("./utils");
+const { MODEL_REPO } = require("../consts");
 
-const queryDataFields = (resolver) => MODEL_REPO.map(({ model, repo }) =>({
+exports.generateQueryFields = (resolver, referenceModel = MODEL_REPO) => referenceModel.map(({ model, repo }) =>({
     [`${camelCase(model)}s`]: {
         type: new GraphQLList(get(graphQLTypes, `outputTypes.${model}`)),
-        resolve: async(_, args, context) => await resolver.findAll(
-            repo, createWhereCondition(context.body))
+        args: {
+            ...createCommonArgs(get(graphQLTypes, `inputTypes.${model}`))
+        },
+        resolve: async(_, args, ctx) => await resolver.findAll(repo, createWhereCondition(ctx, args))
     }
 })).reduce(( obj, _, index, arr) => {
     return { ...obj, ...arr[index] }
 },{})
-
-
-const argsForPk = {
-    id:{
-        type: GraphQLID,
-        description: "Primary repo to find Data"
-    }
-};
-
-const queryByPk = (resolver) => MODEL_REPO.map(({ model, repo }) => ({
-    [camelCase(`find${model}`)]: {
-        type: get(graphQLTypes, `outputTypes.${model}`),
-        args: argsForPk,
-        resolve: async(_, args) => await resolver.findByPk(repo, args.id)
-    }
-})).reduce(( obj, _, index, arr) => {
-    return { ...obj, ...arr[index] }
-},{})
-
-module.exports = {
-    queryByPk,
-    queryDataFields
-}

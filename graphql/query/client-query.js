@@ -1,13 +1,15 @@
 const { GraphQLList } = require("graphql");
 const { graphQLTypes } = require("../types");
+const { createCommonArgs, createWhereCondition } = require("./utils");
 exports.clientQueryField = (resolver) => ({
     clients: {
         type: new GraphQLList(graphQLTypes.outputTypes.Client),
-        resolve: async(_, __, ctx) => {
+        args: createCommonArgs(graphQLTypes.inputTypes.Client),
+        resolve: async(_, args, ctx) => {
             if(ctx.role !== "superAdmin"){
-                return;
+                return "Access denied";
             }
-            return await resolver.findAll("clientRepo")
+            return await resolver.findAll("clientRepo", createWhereCondition(ctx, args))
         }
     }
 })
