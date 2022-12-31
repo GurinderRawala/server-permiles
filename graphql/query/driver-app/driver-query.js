@@ -26,7 +26,7 @@ const tripsGraphQL = ({ tripRepo }) =>({
     findAssignedTrips: {
         type: new GraphQLList(graphQLTypes.outputTypes.Trip),
         args: createCommonArgs(graphQLTypes.inputTypes.Trip),
-        resolve: async(_, args, ctx) => await tripRepo.findAll(createWhereCondition(ctx, merge({}, args, { where: { assignedTo: ctx.driverId, ...args.where }} )))
+        resolve: async(_, args, ctx) => await tripRepo.findAll(createWhereCondition(ctx,  mergeForDriverIdCondition(ctx, args) ))
     }
 });
 
@@ -41,6 +41,8 @@ const loadsGraphQL = ({ loadRepo }) =>({
     findAssignedLoads: {
         type: new GraphQLList(graphQLTypes.outputTypes.Load),
         args: createCommonArgs(graphQLTypes.inputTypes.Load),
-        resolve: async(_, args, ctx) => await loadRepo.findAll(createWhereCondition(ctx, merge({}, args, { where: { assignedTo: ctx.driverId, ...args.where }} )))
+        resolve: async(_, args, ctx) => await loadRepo.findAll(createWhereCondition(ctx, mergeForDriverIdCondition(ctx, args)  ))
     }
 });
+
+const mergeForDriverIdCondition = (ctx, args) => merge({}, args, { where: { assignedTo: ctx.driverId, ...args.where }})
