@@ -25,7 +25,7 @@ module.exports = require('rc')('permiles',{
         secure: false, // true for 465, false for other ports
         auth: {
             user: 'no-reply@permiles.com', // generated ethereal user
-            pass: 'Rawala39!!', // generated ethereal password
+            pass: 'Rawala39!', // generated ethereal password
         },
         tls:{
             rejectUnauthorized: false

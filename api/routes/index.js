@@ -9,6 +9,7 @@ module.exports.registerAllRoutes = (server, modules) => {
     require('./trips.js').registerRoutes(server, modules)
     require('./trucks.js').registerRoutes(server, modules)
     require('./trailers.js').registerRoutes(server, modules)
+    require("./files.js").registerRoutes(server, modules)
 }
 
 

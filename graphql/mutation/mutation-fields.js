@@ -9,7 +9,7 @@ const genrateCreateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>(
         args: {
             input:{
                 type: graphQLTypes.inputTypes[model],
-                discription: `${model} input values`
+                description: `${model} input values`
             }
         },
         resolve: async (_, args, ctx) => {
@@ -35,7 +35,7 @@ const genrateUpdateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>(
             },
             id:{
                 type: GraphQLString,
-                discription: "update where id match"
+                description: "update where id match"
             }
         },
         resolve: async(_, args) => await resolver.update(repo,
