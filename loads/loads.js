@@ -21,8 +21,8 @@ class Load{
     }
     static async createAddLoad(data, files, {uploadService}){
         let uploadResponse = null;
-        if( files ){
-            uploadResponse = await uploadService(files, data.id, (err, results) =>{
+        if( files?.length ){
+            uploadResponse = await uploadService(files, [data.clientid, "load"].join("/"), (err, results) =>{
                 if(err){ throw new Error(err)}
                 return results
             })

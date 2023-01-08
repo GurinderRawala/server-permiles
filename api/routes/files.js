@@ -19,10 +19,7 @@ exports.registerRoutes = (server, modules) =>{
                 if(!data) return next({ msg: "File upload failed, please try again." });
              
                 try{
-                    const updated = await get(modules, repo).update({[fieldToUpdate]: data}, {where:{ id: uuid }});
-                    if(updated[0] === 0){
-                        return next({ msg: "Database update failed, please try again." });
-                    }
+                    await get(modules, repo).update({[fieldToUpdate]: data}, {where:{ id: uuid }});
                     return res.status(201).send({fileUploadResponse: data})
                 }catch(err){
                     log.error({err})
@@ -33,7 +30,6 @@ exports.registerRoutes = (server, modules) =>{
     
     const getFilePermission = permissions('file:get-file')
     const getFileValidation = fileRoutesValidation('file:get-file')
-    
     router.post("/get-file",
         [sessionHandler, determineUserRole, getFilePermission, getFileValidation],
         (req, res, next)=>{
@@ -48,16 +44,38 @@ exports.registerRoutes = (server, modules) =>{
         })
     
     const deleteFilePermission = permissions('file:delete-file')
-    const deleteFileValidation = getFileValidation;
-    router.post("/delete-file", 
+    const deleteFileValidation = fileRoutesValidation('file:delete-file');
+    router.post("/delete-file/:uuid/:repo", 
         [sessionHandler, determineUserRole, deleteFilePermission, deleteFileValidation],
-        (req, res, next) =>{
+        async (req, res, next) =>{
             if( validationErrorMessage(req, res, next) ) return
             const { deleteFileService } = modules
-            const { filePath } = req.body
-            deleteFileService(filePath, (err, data) =>{
-                if(err) return next({ msg: err })
-                return res.status(200).send({msg: data})
+            const { filePath, fieldToUpdate } = req.body
+            const { uuid, repo } = req.params;
+            const model = get(modules, repo);
+           
+            deleteFileService(filePath, async (err, data) =>{
+                if(err) return next({ msg: err });
+                try{
+                    const dbData = await model.findByPk(uuid);
+                    if(!dbData){
+                        return next({ msg: "File is deleted from cloud, but no changes made in DB", deletedFileData: data })
+                    }
+
+                    const removeFilePath = dbData[fieldToUpdate].filter(fileInfo => JSON.parse(fileInfo).key !== filePath)
+                    log.info({removeFilePath}, "filePath removed, new payload.")
+                    try{
+                        await model.update({[fieldToUpdate]: removeFilePath}, {where:{ id: uuid }})
+                        return res.status(201).send({msg: data})
+                    }catch(err){
+                        log.error({err}, "error updating field, something went wrong");
+                        return next({ msg: err });
+                    }
+
+                }catch{
+                    log.error({err}, "error updating finding data, something went wrong");
+                    return next({ msg: err });
+                }
             })
         })
 

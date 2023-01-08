@@ -10,8 +10,8 @@ class Trip{
     }
     async uploadTripFiles(files, { uploadService }){
         let fileData = null
-        if(files){
-            fileData = await uploadService(files, this.id, (err, results) =>{
+        if(files?.length){
+            fileData = await uploadService(files, [this.clientid, "trip"].join("/"), (err, results) =>{
                 if(err){ throw new Error(err)}
                 return results
             })
