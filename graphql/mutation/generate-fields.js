@@ -2,13 +2,14 @@ const { camelCase, get } = require("lodash")
 const { GraphQLString } = require('graphql')
 const { MODEL_REPO } = require("../consts")
 const { graphQLTypes } = require("../types")
+const { modifyInputTypes } = require("./modify-types")
 
-const genrateCreateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>({
+const generateCreateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>({
     [camelCase(`add${model}`)]: {
         type: get(graphQLTypes, `outputTypes.${model}`),
         args: {
             input:{
-                type: graphQLTypes.inputTypes[model],
+                type: modifyInputTypes(model),
                 description: `${model} input values`
             }
         },
@@ -25,7 +26,7 @@ const genrateCreateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>(
     return { ...obj, ...arr[index] }
 },{})
 
-const genrateUpdateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>({
+const generateUpdateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>({
     [camelCase(`update${model}`)]: {
         type: get(graphQLTypes, `outputTypes.${model}`),
         args: {
@@ -46,6 +47,6 @@ const genrateUpdateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>(
 },{})
 
 module.exports = {
-    genrateCreateMutation,
-    genrateUpdateMutation
+    generateCreateMutation,
+    generateUpdateMutation
 }

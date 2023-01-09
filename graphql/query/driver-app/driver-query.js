@@ -5,6 +5,7 @@ const { Resolver } = require("../../resolvers");
 const { MODEL_REPO } = require("../../consts");
 const { createCommonArgs, createWhereCondition } = require("../utils");
 const { merge } = require("lodash");
+const { tripOutputQL } = require("../../trip");
 
 exports.registerDriverAppQuery = (_, modules) =>{
     const resolver = new Resolver(modules);
@@ -22,11 +23,37 @@ exports.registerDriverAppQuery = (_, modules) =>{
     return query;
 }
 
-const tripsGraphQL = ({ tripRepo }) =>({
+const tripsGraphQL = ({ tripRepo, loadRepo, log }) =>({
     findAssignedTrips: {
-        type: new GraphQLList(graphQLTypes.outputTypes.Trip),
+        type: new GraphQLList(tripOutputQL),
         args: createCommonArgs(graphQLTypes.inputTypes.Trip),
-        resolve: async(_, args, ctx) => await tripRepo.findAll(createWhereCondition(ctx,  mergeForDriverIdCondition(ctx, args) ))
+        resolve: async(_, args, ctx) =>{
+            try{
+                const assignedTrips = await tripRepo.findAll(createWhereCondition(ctx,  mergeForDriverIdCondition(ctx, args) ));
+                const response = await Promise.all( assignedTrips.map( async (trip) =>{
+                    const tripInfoList = trip.tripInfo.map(mapToJSONparse);
+                    const loads = await Promise.all(tripInfoList.map( async ({id}) => {
+                        const { dataValues } = await loadRepo.findByPk(id) 
+                        return {
+                            ...dataValues,
+                            shipper: dataValues.shipper.map(mapToJSONparse),
+                            receiver: dataValues.receiver.map(mapToJSONparse)
+                        }
+                    }));
+                    return {
+                        ...trip.dataValues,
+                        tripInfo: loads
+                    }
+                }))
+
+                log.info({response}, "assigned trips: driver graphQL");
+
+                return response;
+
+            }catch(err){
+                throw new Error(err);
+            }
+        } 
     }
 });
 
@@ -46,3 +73,4 @@ const loadsGraphQL = ({ loadRepo }) =>({
 });
 
 const mergeForDriverIdCondition = (ctx, args) => merge({}, args, { where: { assignedTo: ctx.driverId, ...args.where }})
+const mapToJSONparse = (data) => JSON.parse(data);

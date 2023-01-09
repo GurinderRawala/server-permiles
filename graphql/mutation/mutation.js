@@ -1,15 +1,15 @@
 const { GraphQLObjectType } = require("graphql");
 const { Resolver } = require("../resolvers");
 const { clientMutationField } = require("./client-mutation");
-const { genrateCreateMutation, genrateUpdateMutation } = require("./mutation-fields");
+const { generateCreateMutation, generateUpdateMutation } = require("./generate-fields");
 module.exports.registerMutation = (_, modules) =>{
     const resolver = new Resolver(modules)
     const mutation = new GraphQLObjectType({
         name: 'Mutation',
         description: "Mutating data",
         fields:{
-            ...genrateCreateMutation(resolver),
-            ...genrateUpdateMutation(resolver),
+            ...generateCreateMutation(resolver),
+            ...generateUpdateMutation(resolver),
             ...clientMutationField(resolver)
         }
     });
