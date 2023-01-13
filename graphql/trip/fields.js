@@ -12,7 +12,7 @@ const { loadsOutputQL } = require('../load');
 
 exports.tripInfoFieldsQL = {
     id: {
-        type: GraphQLID,
+        type: new GraphQLNonNull(GraphQLID),
         description: 'The id of the load included in the trip',
     }
 }
@@ -23,9 +23,9 @@ exports.tripInfoInputQL = new GraphQLInputObjectType({
     fields: this.tripInfoFieldsQL
 })
 
-exports.tripFieldsQL = (tripInfoType) =>({
+exports.tripFieldsQL = (tripInfoType, type = "output") =>({
     id: {
-        type: GraphQLString,
+        type: type === "output"? new GraphQLNonNull(GraphQLID): GraphQLID,
         description: 'The ID of the trip, automatically generated',
     },
     assignedTo: {
@@ -33,11 +33,11 @@ exports.tripFieldsQL = (tripInfoType) =>({
         description: 'The driver ID of the assigned driver',
     },
     tripInfo: {
-        type: new GraphQLNonNull( new GraphQLList(tripInfoType)),
+        type: new GraphQLNonNull(new GraphQLList(tripInfoType)),
         description: 'The trip information',
     },
     state: {
-        type: GraphQLString,
+        type: new GraphQLNonNull(GraphQLString),
         description: 'State (state: string), CREATED | ASSIGNED | MOVING | DELIVERED | PAID',
     },
     totalMiles: {
@@ -49,7 +49,7 @@ exports.tripFieldsQL = (tripInfoType) =>({
 exports.tripInputQL = new GraphQLInputObjectType({
     name: 'TripModifiedInput',
     description: "Trip input fields",
-    fields: this.tripFieldsQL(this.tripInfoInputQL)
+    fields: this.tripFieldsQL(this.tripInfoInputQL, "input")
 })
 
 exports.tripOutputQL = new GraphQLObjectType({
@@ -66,7 +66,7 @@ exports.tripOutputQL = new GraphQLObjectType({
             description: 'POD of the trip, aws file download link',
         },
         tripId: {
-            type: GraphQLInt,
+            type: new GraphQLNonNull(GraphQLInt),
             description: 'Trip id number, automatically generated',
         },
     }
