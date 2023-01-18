@@ -32,7 +32,7 @@ const generateUpdateMutation = (resolver) => MODEL_REPO.map(({ model, repo }) =>
         args: {
             input:{
                 type: graphQLTypes.inputTypes[model],
-                discription: `${model} input values`
+                description: `${model} input values`
             },
             id:{
                 type: GraphQLString,

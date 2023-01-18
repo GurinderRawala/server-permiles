@@ -18,9 +18,12 @@ module.exports.registerGraphQL = (server, modules) =>{
             graphiql: true
         })));
 
+    // driver app graphql query and mutation
     const driverAppQuery = require("./query").registerDriverAppGraphQL(server, modules);
+    const driverAppMutation = require("./mutation").registerDriverMutation(server, modules);
     const driverAppGraphQL = new GraphQLSchema({
-        query: driverAppQuery
+        query: driverAppQuery,
+        mutation: driverAppMutation
     });
     server.use('/driver-app/graphql', [sessionHandler, determineUserRole, uuidMiddleware], 
         graphqlHTTP(

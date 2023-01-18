@@ -5,7 +5,7 @@ const {
     GraphQLBoolean, 
     GraphQLObjectType,
     GraphQLID,
-    GraphQLNonNull
+    GraphQLNonNull,
 } = require('graphql');
 
 exports.addressFieldsQL = {
@@ -63,33 +63,67 @@ exports.receiverShipperCommonFieldsQL = (type, addressType = this.addressInputQL
     email: {
         type: GraphQLString,
         description: `Email of the ${type}`
+    },
+    arrival: {
+        type: GraphQLString,
+        description: `Arrival at the ${type}`
+    },
+    depart: {
+        type: GraphQLString,
+        description: `Depart at the ${type}`
     }
 })
 
+exports.shipperFields = {
+    pickUpAppointment: {
+        type: GraphQLString,
+        description: "Pick up appointment date and time"
+    }
+}
+
+exports.receiverFields = {
+    deliveryAppointment: {
+        type: GraphQLString,
+        description: "Delivery appointment date and time"
+    }
+}
+
 
 exports.receiverOutputQL = new GraphQLObjectType({
-    name: 'receiverInput',
-    description: 'Receiver infomation',
-    fields: this.receiverShipperCommonFieldsQL("receiver", this.addressOutputQL)
+    name: 'receiverOutput',
+    description: 'Receiver information',
+    fields: { 
+        ...this.receiverShipperCommonFieldsQL("receiver", this.addressOutputQL),
+        ...this.receiverFields
+    }
 });
 
 exports.shipperOutputQL = new GraphQLObjectType({
-    name: 'shipperInput',
-    description: 'Shipper infomation',
-    fields: this.receiverShipperCommonFieldsQL("shipper", this.addressOutputQL)
+    name: 'shipperOutput',
+    description: 'Shipper information',
+    fields: { 
+        ...this.receiverShipperCommonFieldsQL("shipper", this.addressOutputQL),
+        ...this.shipperFields
+    }
 });
 
 
 exports.receiverInputQL = new GraphQLInputObjectType({
     name: 'receiverInput',
-    description: 'Receiver infomation',
-    fields: this.receiverShipperCommonFieldsQL("receiver")
+    description: 'Receiver information',
+    fields: { 
+        ...this.receiverShipperCommonFieldsQL("receiver"),
+        ...this.receiverFields
+    }
 });
 
 exports.shipperInputQL = new GraphQLInputObjectType({
     name: 'shipperInput',
-    description: 'Shipper infomation',
-    fields: this.receiverShipperCommonFieldsQL("shipper")
+    description: 'Shipper information',
+    fields: {
+        ...this.receiverShipperCommonFieldsQL("shipper"),
+        ...this.shipperFields
+    }
 });
 
 exports.loadFieldsQL = (receiver, shipper, type = "output") =>({

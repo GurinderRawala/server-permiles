@@ -7,7 +7,7 @@ const { createCommonArgs, createWhereCondition } = require("../utils");
 const { merge } = require("lodash");
 const { tripOutputQL } = require("../../trip");
 
-exports.registerDriverAppQuery = (_, modules) =>{
+const registerDriverAppQuery = (_, modules) =>{
     const resolver = new Resolver(modules);
     const query = new GraphQLObjectType({
         name: 'Query',
@@ -27,35 +27,41 @@ const tripsGraphQL = ({ tripRepo, loadRepo, log }) =>({
     findAssignedTrips: {
         type: new GraphQLList(tripOutputQL),
         args: createCommonArgs(graphQLTypes.inputTypes.Trip),
-        resolve: async(_, args, ctx) =>{
-            try{
-                const assignedTrips = await tripRepo.findAll(createWhereCondition(ctx,  mergeForDriverIdCondition(ctx, args) ));
-                const response = await Promise.all( assignedTrips.map( async (trip) =>{
-                    const tripInfoList = trip.tripInfo.map(mapToJSONparse);
-                    const loads = await Promise.all(tripInfoList.map( async ({id}) => {
-                        const { dataValues } = await loadRepo.findByPk(id) 
-                        return {
-                            ...dataValues,
-                            shipper: dataValues.shipper.map(mapToJSONparse),
-                            receiver: dataValues.receiver.map(mapToJSONparse)
-                        }
-                    }));
-                    return {
-                        ...trip.dataValues,
-                        tripInfo: loads
-                    }
-                }))
-
-                log.info({response}, "assigned trips: driver graphQL");
-
-                return response;
-
-            }catch(err){
-                throw new Error(err);
-            }
-        } 
+        resolve: resolveWithModifiedTripOutput({ tripRepo, loadRepo, log })
     }
 });
+
+function resolveWithModifiedTripOutput({ tripRepo, loadRepo, log }){
+    return async function (_, args, ctx){
+        try{
+            log.info({args, ctx: ctx.body})
+            const assignedTrips = await tripRepo.findAll(createWhereCondition(ctx,  mergeForDriverIdCondition(ctx, args) ));
+            const response = await Promise.all( assignedTrips.map( async (trip) =>{
+                const tripInfoList = trip.tripInfo.map(mapToJSONparse);
+                const loads = await Promise.all(tripInfoList.map( async ({id}) => {
+                    const { dataValues } = await loadRepo.findByPk(id) 
+                    return {
+                        ...dataValues,
+                        shipper: dataValues.shipper.map(mapToJSONparse),
+                        receiver: dataValues.receiver.map(mapToJSONparse)
+                    }
+                }));
+                return {
+                    ...trip.dataValues,
+                    tripInfo: loads
+                }
+            }))
+
+            log.info({response}, "assigned trips: driver graphQL");
+
+            return response;
+
+        }catch(err){
+            log.error({err})
+            throw new Error(err);
+        }
+    }
+}
 
 const driverInfoGraphQL = ({ driverRepo }) =>({
     driverInfo: {
@@ -74,3 +80,8 @@ const loadsGraphQL = ({ loadRepo }) =>({
 
 const mergeForDriverIdCondition = (ctx, args) => merge({}, args, { where: { assignedTo: ctx.driverId, ...args.where }})
 const mapToJSONparse = (data) => JSON.parse(data);
+
+module.exports = {
+    resolveWithModifiedTripOutput,
+    registerDriverAppQuery
+}
