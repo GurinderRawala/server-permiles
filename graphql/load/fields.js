@@ -8,7 +8,8 @@ const {
     GraphQLNonNull,
 } = require('graphql');
 
-exports.addressFieldsQL = {
+
+const addressFieldsQL = {
     unitNumber: {
         type: new GraphQLNonNull( GraphQLString ),
         description: 'Unit number of bussiness or house number'
@@ -35,19 +36,19 @@ exports.addressFieldsQL = {
     }
 };
 
-exports.addressInputQL = new GraphQLInputObjectType({
+const addressInputQL = new GraphQLInputObjectType({
     name: 'addressInput',
     description: 'Address information',
-    fields: this.addressFieldsQL
+    fields: addressFieldsQL
 })
 
-exports.addressOutputQL = new GraphQLObjectType({
+const addressOutputQL = new GraphQLObjectType({
     name: 'addressOutput',
     description: 'Address information',
-    fields: this.addressFieldsQL
+    fields: addressFieldsQL
 })
 
-exports.receiverShipperCommonFieldsQL = (type, addressType = this.addressInputQL) =>({
+const receiverShipperCommonFieldsQL = (type, addressType = addressInputQL) =>({
     [`${type}Name`]: {
         type: new GraphQLNonNull(GraphQLString),
         description: `The name of the ${type}`
@@ -74,14 +75,14 @@ exports.receiverShipperCommonFieldsQL = (type, addressType = this.addressInputQL
     }
 })
 
-exports.shipperFields = {
+const shipperFields = {
     pickUpAppointment: {
         type: GraphQLString,
         description: "Pick up appointment date and time"
     }
 }
 
-exports.receiverFields = {
+const receiverFields = {
     deliveryAppointment: {
         type: GraphQLString,
         description: "Delivery appointment date and time"
@@ -89,44 +90,44 @@ exports.receiverFields = {
 }
 
 
-exports.receiverOutputQL = new GraphQLObjectType({
+const receiverOutputQL = new GraphQLObjectType({
     name: 'receiverOutput',
     description: 'Receiver information',
     fields: { 
-        ...this.receiverShipperCommonFieldsQL("receiver", this.addressOutputQL),
-        ...this.receiverFields
+        ...receiverShipperCommonFieldsQL("receiver", addressOutputQL),
+        ...receiverFields
     }
 });
 
-exports.shipperOutputQL = new GraphQLObjectType({
+const shipperOutputQL = new GraphQLObjectType({
     name: 'shipperOutput',
     description: 'Shipper information',
     fields: { 
-        ...this.receiverShipperCommonFieldsQL("shipper", this.addressOutputQL),
-        ...this.shipperFields
+        ...receiverShipperCommonFieldsQL("shipper", addressOutputQL),
+        ...shipperFields
     }
 });
 
 
-exports.receiverInputQL = new GraphQLInputObjectType({
+const receiverInputQL = new GraphQLInputObjectType({
     name: 'receiverInput',
     description: 'Receiver information',
     fields: { 
-        ...this.receiverShipperCommonFieldsQL("receiver"),
-        ...this.receiverFields
+        ...receiverShipperCommonFieldsQL("receiver"),
+        ...receiverFields
     }
 });
 
-exports.shipperInputQL = new GraphQLInputObjectType({
+const shipperInputQL = new GraphQLInputObjectType({
     name: 'shipperInput',
     description: 'Shipper information',
     fields: {
-        ...this.receiverShipperCommonFieldsQL("shipper"),
-        ...this.shipperFields
+        ...receiverShipperCommonFieldsQL("shipper"),
+        ...shipperFields
     }
 });
 
-exports.loadFieldsQL = (receiver, shipper, type = "output") =>({
+const loadFieldsQL = (receiver, shipper, type = "output") =>({
     id: {
         type: type === "output" ? new GraphQLNonNull(GraphQLID): GraphQLID,
         description: `The uuid of load, automatically generated if not provided`
@@ -156,7 +157,7 @@ exports.loadFieldsQL = (receiver, shipper, type = "output") =>({
         description: 'Is load is hazmat yes or no? (hazmat: boolean)',
     },
     poNumber: {
-        type: GraphQLString,
+        type: new GraphQLNonNull( GraphQLString ),
         description: 'Po number (poNumber: string)',
     },
     specialInstructions: {
@@ -177,14 +178,33 @@ exports.loadFieldsQL = (receiver, shipper, type = "output") =>({
     }
 });
 
-exports.loadsInputQL = new GraphQLInputObjectType({
+const loadsInputQL = new GraphQLInputObjectType({
     name: "loadModifiedInput",
     description: "Load modified input information",
-    fields: this.loadFieldsQL(this.receiverInputQL, this.shipperInputQL, "input")
+    fields: loadFieldsQL(receiverInputQL, shipperInputQL, "input")
 })
 
-exports.loadsOutputQL = new GraphQLObjectType({
+const loadsOutputQL = new GraphQLObjectType({
     name: "loadModifiedOutput",
     description: "Loads output information",
-    fields: this.loadFieldsQL(this.receiverOutputQL, this.shipperOutputQL)
+    fields: loadFieldsQL(receiverOutputQL, shipperOutputQL)
 });
+
+
+module.exports = {
+    loadFieldsQL,
+    loadsInputQL,
+    loadsOutputQL,
+
+    shipperInputQL,
+    shipperFields,
+    shipperOutputQL,
+    
+    receiverInputQL,
+    receiverFields,
+    receiverOutputQL,
+
+    addressFieldsQL,
+    addressInputQL,
+    addressOutputQL,
+}

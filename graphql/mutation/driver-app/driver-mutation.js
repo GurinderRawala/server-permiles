@@ -2,20 +2,20 @@ const { GraphQLObjectType, GraphQLNonNull, GraphQLEnumType, GraphQLID } = requir
 const { resolveWithModifiedTripOutput } = require('../../query/driver-app/');
 const { tripOutputQL } = require('../../trip');
 
-exports.registerDriverMutation = (_, modules) => new GraphQLObjectType({
+const registerDriverMutation = (_, modules) => new GraphQLObjectType({
     name: 'driverMutations',
     description: 'Driver app mutations',
     fields: {
-        ...this.driverMutationFields(modules)
+        ...driverMutationFields(modules)
     }
 });
 
-exports.driverMutationFields = ({ log, tripRepo, ...modules }) =>({
+const driverMutationFields = ({ log, tripRepo, ...modules }) =>({
     responseToTrip: {
         type: tripOutputQL,
         args: {
             driverResponse: {
-                type: new GraphQLNonNull( this.driverResponseEnum ),
+                type: new GraphQLNonNull( driverResponseEnum ),
                 description: "Driver accept or reject load"
             },
             id: {
@@ -45,26 +45,39 @@ exports.driverMutationFields = ({ log, tripRepo, ...modules }) =>({
     }
 })
 
-exports.driverResponseEnum = new GraphQLEnumType(
+const driverResponseEnum = new GraphQLEnumType(
     {
         name: "driverResponseEnum",
         values: {
             CREATED: { value: "CREATED" },
+            ASSIGNED: { value: "ASSIGNED" },
+
             PENDING: { value: "PENDING" },
+
             ACCEPTED: { value: "ACCEPTED" },
-            MOVING: {value: "MOVING"},
+            REJECTED: { value: "REJECTED" },
+
             LOADING: { value: "LOADING"},
             LOADED: { value: "LOADED"},
+            MOVING: { value: "MOVING" },
+            
             DELIVERING: {value: "DELIVERING"},
-            DELIVERED: {value: "DELIVERED"}
+            DELIVERED: {value: "DELIVERED"},
         }
     }
 )
 
-exports.createTripStatus = (driverResponse) => {
+const createTripStatus = (driverResponse) => {
     if( driverResponse ) {
         return "ACCEPTED"
     }
 
     return "CREATED";
+}
+
+module.exports = {
+    createTripStatus,
+    driverResponseEnum,
+    driverMutationFields,
+    registerDriverMutation
 }
