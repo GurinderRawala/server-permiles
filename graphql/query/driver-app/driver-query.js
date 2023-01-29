@@ -3,7 +3,7 @@ const { graphQLTypes } = require("../../types");
 const { generateQueryFields } = require("../query-fields");
 const { Resolver } = require("../../resolvers");
 const { MODEL_REPO } = require("../../consts");
-const { createCommonArgs, createWhereCondition } = require("../utils");
+const { createCommonArgs, createWhereCondition, mapToJSONparse } = require("../utils");
 const { merge } = require("lodash");
 const { tripOutputQL } = require("../../trip");
 
@@ -79,7 +79,6 @@ const loadsGraphQL = ({ loadRepo }) =>({
 });
 
 const mergeForDriverIdCondition = (ctx, args) => merge({}, args, { where: { assignedTo: ctx.driverId, ...args.where }})
-const mapToJSONparse = (data) => JSON.parse(data);
 
 module.exports = {
     resolveWithModifiedTripOutput,

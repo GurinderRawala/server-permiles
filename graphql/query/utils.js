@@ -25,3 +25,5 @@ exports.createCommonArgs = (whereTypes) =>(
         }
     }
 )
+
+exports.mapToJSONparse = (data) => JSON.parse(data);

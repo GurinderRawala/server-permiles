@@ -49,6 +49,10 @@ const addressOutputQL = new GraphQLObjectType({
 })
 
 const receiverShipperCommonFieldsQL = (type, addressType = addressInputQL) =>({
+    stopID: {
+        type:  new GraphQLNonNull( GraphQLID ),
+        description: `StopID(uuid) for the ${type}`
+    },
     [`${type}Name`]: {
         type: new GraphQLNonNull(GraphQLString),
         description: `The name of the ${type}`

@@ -1,6 +1,6 @@
-const { GraphQLObjectType, GraphQLNonNull, GraphQLEnumType, GraphQLID } = require('graphql');
-const { resolveWithModifiedTripOutput } = require('../../query/driver-app/');
-const { tripOutputQL } = require('../../trip');
+const { GraphQLObjectType } = require('graphql');
+const { updateTripState } = require('./update-trip-state');
+const { updateAssignedLoad } = require('./update-assigned-load');
 
 const registerDriverMutation = (_, modules) => new GraphQLObjectType({
     name: 'driverMutations',
@@ -10,74 +10,12 @@ const registerDriverMutation = (_, modules) => new GraphQLObjectType({
     }
 });
 
-const driverMutationFields = ({ log, tripRepo, ...modules }) =>({
-    responseToTrip: {
-        type: tripOutputQL,
-        args: {
-            driverResponse: {
-                type: new GraphQLNonNull( driverResponseEnum ),
-                description: "Driver accept or reject load"
-            },
-            id: {
-                type: new GraphQLNonNull( GraphQLID ),
-                description: "Trip uuid which is updating"
-            }
-        },
-        resolve: async (_, args, ctx) => {
-            const trip = await tripRepo.update({
-                state: args.driverResponse
-            }, {
-                where: {
-                    id: args.id
-                }
-            })
-
-            log.info({trip, args, ctx: ctx.driverId, id: args.id}, "Driver trip information")
-
-            if( trip[0] === 1){
-                const modifiedTripOutput = resolveWithModifiedTripOutput({ log, tripRepo, ...modules })
-                const res = await modifiedTripOutput(_, { ...args, where: { ...args.where, id: args.id } }, ctx);
-                return res[0];
-            }
-
-            throw new Error("Error while finding trip output")
-        }
-    }
-})
-
-const driverResponseEnum = new GraphQLEnumType(
-    {
-        name: "driverResponseEnum",
-        values: {
-            CREATED: { value: "CREATED" },
-            ASSIGNED: { value: "ASSIGNED" },
-
-            PENDING: { value: "PENDING" },
-
-            ACCEPTED: { value: "ACCEPTED" },
-            REJECTED: { value: "REJECTED" },
-
-            LOADING: { value: "LOADING"},
-            LOADED: { value: "LOADED"},
-            MOVING: { value: "MOVING" },
-            
-            DELIVERING: {value: "DELIVERING"},
-            DELIVERED: {value: "DELIVERED"},
-        }
-    }
-)
-
-const createTripStatus = (driverResponse) => {
-    if( driverResponse ) {
-        return "ACCEPTED"
-    }
-
-    return "CREATED";
-}
+const driverMutationFields = (modules) =>({
+    ...updateTripState(modules),
+    ...updateAssignedLoad(modules)
+});
 
 module.exports = {
-    createTripStatus,
-    driverResponseEnum,
     driverMutationFields,
     registerDriverMutation
 }
