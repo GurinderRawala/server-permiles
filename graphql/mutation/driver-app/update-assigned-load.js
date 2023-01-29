@@ -74,7 +74,7 @@ const findAndUpdateArrivalOrDepart = (list, id, update) => {
     }
 
     return [
-        ...list,
+        ...list.filter(({stopID}) => stopID !== id),
         {
             ...select,
             ...update
