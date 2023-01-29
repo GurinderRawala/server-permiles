@@ -9,7 +9,7 @@ const updateAssignedLoad = ({ log, loadRepo }) => ({
         args: {
             input: {
                 type: new GraphQLNonNull( reportArrivalOrDepartInput ),
-                description: "Driver accept or reject load"
+                description: "Report arrival or departure by StopID"
             },
             loadID: {
                 type: new GraphQLNonNull( GraphQLID ),
