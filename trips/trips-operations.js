@@ -60,10 +60,10 @@ async function updateTrip(tripRepo, log, trip, callback){
 async function createTrip(tripRepo, log, uploadService, trip, files, callback){
     const tripData = new Trip(trip)
     const bol = await tripData.uploadTripFiles(files, { uploadService })
-    const payload = {
+    let payload = {
         ...trip,
         bol
-    }
+    };
     await addTrip(tripRepo, log, payload, (err, msg) => {
         if(err){ return callback(err)}
         return callback(null, msg)

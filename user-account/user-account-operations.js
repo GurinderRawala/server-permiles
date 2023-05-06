@@ -77,7 +77,8 @@ async function signinUserAccount ( userAccountRepo, log, hashingService, token, 
     if( !verify ){
         return callback({ msg: 'wrong email or password'})
     }
-    const accessToken = token.create({ id: user.id, email: user.email, clientid: user.clientid }, {  expiresIn: '48h' })
+    // hard coding driver id for driver App
+    const accessToken = token.create({ id: user.id, email: user.email, clientid: user.clientid, driverId: "7242a987-4b2a-4d7b-aff5-827ae028bd98" }, {  expiresIn: '48h' })
     callback(null, accessToken)
 }
 

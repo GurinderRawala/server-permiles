@@ -2,7 +2,7 @@ const express = require('express')
 const { createAddLoad, createUpdateLoad, createGetLoadById, createGetLoadList, createGetLoadByLoadNumber } = require('../../loads')
 const router = express.Router()
 exports.registerRoutes = (server, modules) =>{
-    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, 
+    const { authenticationMiddleware : { determineUserRole, permissions }, sessionHandler, 
         validation, uploadMiddleware } = modules
     const permissionsAddLoad = permissions('loads:add-load')
     const validateAddLoad = validation.loadRoutesValidation('loads:add-load')

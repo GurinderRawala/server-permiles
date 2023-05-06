@@ -2,7 +2,7 @@ const express = require('express')
 const { get } = require('lodash')
 const router = express.Router()
 exports.registerRoutes = (server, modules) =>{
-    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, validation, uploadMiddleware, uploadService, log } = modules
+    const { authenticationMiddleware : { determineUserRole, permissions }, sessionHandler, validation, uploadMiddleware, uploadService, log } = modules
     const fileUploadPermissions = permissions('file:upload-file')
     const { fileRoutesValidation, validationErrorMessage } = validation
     const uploadFileRouteValidation = fileRoutesValidation('file:upload-file')

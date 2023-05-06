@@ -4,7 +4,7 @@ const { createInviteDriver, createUpdateDriver, createGetDriver, createGetDriver
 
 exports.registerRoutes = (server, modules) => {
     const { 
-        authenticationMiddlware : { determineUserRole, permissions }, 
+        authenticationMiddleware : { determineUserRole, permissions }, 
         validation, 
         sessionHandler,
         uploadMiddleware
@@ -63,9 +63,9 @@ exports.registerRoutes = (server, modules) => {
                 next()
             })
         })
-    const valdationActivateDriver = validation.driverRoutesValidation('driver:activate')
+    const validationActivateDriver = validation.driverRoutesValidation('driver:activate')
     router.post('/drivers/activate', 
-        [ valdationActivateDriver ],
+        [ validationActivateDriver ],
         (req, res, next) =>{
             if( validation.validationErrorMessage(req, res, next) ) return
             const activateDriverAccount = createActiveDriverAccount(modules)

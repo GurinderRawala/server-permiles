@@ -4,12 +4,12 @@ const { createAddTrip, createUpdateTrip, createGetTripById,
 const router = express.Router()
 
 exports.registerRoutes = (server, modules)=>{
-    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, 
+    const { authenticationMiddleware : { determineUserRole, permissions, uuidMiddleware }, sessionHandler, 
         validation, uploadMiddleware } = modules
     const permissionsAddTrip = permissions('trip:add-trip')
     const validateAddTrip = validation.tripRoutesValidation('trip:add-trip')
     router.post('/trips/add-trip', 
-        [uploadMiddleware, sessionHandler, determineUserRole, permissionsAddTrip, validateAddTrip],
+        [uploadMiddleware, sessionHandler, determineUserRole, permissionsAddTrip, uuidMiddleware, validateAddTrip],
         (req, res, next) =>{
             if( validation.validationErrorMessage(req, res, next) ) return
             const addTrip = createAddTrip(modules)

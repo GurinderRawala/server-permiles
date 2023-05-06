@@ -2,7 +2,7 @@ const { GraphQLSchema } = require('graphql');
 const { graphqlHTTP } = require('express-graphql');
 
 module.exports.registerGraphQL = (server, modules) =>{
-    const { authenticationMiddlware : { determineUserRole, permissions, uuidMiddleware }, sessionHandler } = modules
+    const { authenticationMiddleware : { determineUserRole, permissions, uuidMiddleware }, sessionHandler } = modules
     const permissionsGraphQL = permissions('userAccount:graphql')
     const rootMutation = require('./mutation').registerMutation(server, modules);
     const rootQuery = require('./query').registerQuery(server, modules);

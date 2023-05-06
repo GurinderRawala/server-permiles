@@ -8,31 +8,31 @@ module.exports = require('rc')('permiles',{
     },
     port: 8081,
     postgres: {
-        host: 'localhost',
-        database: 'permiles',
-        username: 'postgres',
-        password: 'NInAN5t3kJo8d7I3',
+        host: process.env.PG_HOST || 'localhost',
+        database: process.env.PG_DATABASE,
+        username: process.env.PG_USERNAME,
+        password: process.env.PG_PASSWORD,
     },
-    privateKey: '1DCLDToVBohPgizzbqqLCZbs3Sk9Ww2yK5',
+    privateKey: process.env.PRIVATE_KEY,
     sequelize : {
         dialect: 'postgres',
         logging : false
     },
     mailer: {
-        name: "permiles.com",
-        host: "mail.permiles.com",
-        port: 587,
+        name: process.env.MAILER_NAME,
+        host: process.env.MAILER_HOST,
+        port: process.env.MAILER_PORT,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'no-reply@permiles.com', // generated ethereal user
-            pass: 'Rawala39!', // generated ethereal password
+            user: process.env.SENDER_EMAIL, // generated ethereal user
+            pass: process.env.SENDER_EMAIL_PASS, // generated ethereal password
         },
         tls:{
             rejectUnauthorized: false
         },
         from : {
-            name: 'Per Miles',
-            address: 'no-reply@permiles.com'
+            name: process.env.FROM_NAME,
+            address: process.env.FROM_ADDRESS
         }
     },
     awsBucket: process.env.AWS_BUCKET_NAME,

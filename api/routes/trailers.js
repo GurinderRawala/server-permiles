@@ -3,7 +3,7 @@ const router = express.Router()
 const { createAddTrailer, createUpdateTrailer, createGetTrailerById, 
     createGetTrailerList, createGetTrailerByTrailerNumber } = require('../../trailers')
 exports.registerRoutes = (server, modules)=>{
-    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, 
+    const { authenticationMiddleware : { determineUserRole, permissions }, sessionHandler, 
         validation:{ trailerRoutesValidation, validationErrorMessage }, uploadMiddleware } = modules
     const permissionsAddTrailer = permissions('trailer:add-trailer')
     const validateAddTrailer = trailerRoutesValidation('trailer:add-trailer')

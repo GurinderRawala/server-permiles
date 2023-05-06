@@ -3,7 +3,7 @@ const { createAddClient, createUpdateClient, createGetClient, createInviteUser }
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
-    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, validation } = modules
+    const { authenticationMiddleware : { determineUserRole, permissions }, sessionHandler, validation } = modules
     const { clientRoutesValidation } = validation
     const permissionCreateClient = permissions('client:create')
     const validationCreateClient = clientRoutesValidation('client:create')

@@ -3,7 +3,7 @@ const { createAddBroker, createUpdateBroker, createGetBrokerList, createGetBroke
 const router = express.Router()
 
 exports.registerRoutes = (server, modules) =>{
-    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, validation } = modules
+    const { authenticationMiddleware : { determineUserRole, permissions }, sessionHandler, validation } = modules
     const validateAddBroker = validation.brokerRoutesValidation('broker:add-broker')
     const permissionsAddBroker = permissions('broker:add-broker')
     router.post('/brokers/add-broker', 

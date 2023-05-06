@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { createAddTruck, createUpdateTruck, createGetTruckById, createGetTruckList, createGetTruckByTruckNumber } = require('../../trucks')
 exports.registerRoutes = (server, modules)=>{
-    const { authenticationMiddlware : { determineUserRole, permissions }, sessionHandler, 
+    const { authenticationMiddleware : { determineUserRole, permissions }, sessionHandler, 
         validation:{ truckRoutesValidation, validationErrorMessage }, uploadMiddleware } = modules
     const permissionsAddTruck = permissions('truck:add-truck')
     const validateAddTruck = truckRoutesValidation('truck:add-truck')
