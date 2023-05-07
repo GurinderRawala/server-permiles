@@ -17,10 +17,12 @@ exports.registerRoutes = (server, modules) =>{
             uploadService(req.files, path, async (err, data) => {
                 if( err ) return next({ msg: err});
                 if(!data) return next({ msg: "File upload failed, please try again." });
-             
+                const currentRecord = await get(modules, repo).findByPk(uuid)
+                const inRecordFiles = currentRecord.dataValues[fieldToUpdate].map(v => JSON.parse(v)) || [];
+
                 try{
-                    await get(modules, repo).update({[fieldToUpdate]: data}, {where:{ id: uuid }});
-                    return res.status(201).send({fileUploadResponse: data})
+                    await get(modules, repo).update({[fieldToUpdate]: [...inRecordFiles, ...data]}, {where:{ id: uuid }});
+                    return res.status(201).send({fileUploadResponse: [...inRecordFiles, ...data] })
                 }catch(err){
                     log.error({err})
                     return next(err)
@@ -79,5 +81,5 @@ exports.registerRoutes = (server, modules) =>{
             })
         })
 
-    server.use(router)
+    server.use("/api", router)
 }

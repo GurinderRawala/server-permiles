@@ -66,5 +66,5 @@ exports.registerRoutes = (server, modules) =>{
                 next(resp)
             })
         })
-    server.use(router)
+    server.use("/api", router)
 }
