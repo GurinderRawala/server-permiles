@@ -10,7 +10,7 @@ module.exports.registerGraphQL = (server, modules) =>{
         query: rootQuery,
         mutation: rootMutation
     });
-    server.use('/graphql', [sessionHandler, determineUserRole, permissionsGraphQL, uuidMiddleware], 
+    server.use('/api/graphql', [sessionHandler, determineUserRole, permissionsGraphQL, uuidMiddleware], 
         graphqlHTTP((req) => ({
             schema,
             context: req,
