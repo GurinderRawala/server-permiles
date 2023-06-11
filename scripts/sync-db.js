@@ -1,5 +1,7 @@
 const { configureModules } = require('../lib/configure-modules')
-const config = require('../config.js')
+require('dotenv').config()
+const config = require('../config')
+
 
 const syncTable = async (log, table) => {
     log.info( { table } ,'syncing model')

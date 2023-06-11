@@ -1,3 +1,6 @@
+/**
+ * A refrence to the model name and repo name existed in the modules. 
+ */
 exports.MODEL_REPO = [
     { model: "Trailer", repo: "trailerRepo"},
     { model: "Truck", repo: "truckRepo" },
