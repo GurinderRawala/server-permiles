@@ -1,3 +1,5 @@
+import { PerMilesConfig } from '../config'
+
 const bunyan = require('bunyan')
 const RBAC = require('easy-rbac')
 const { createMailer } = require('./mailer')
@@ -29,7 +31,7 @@ const {
   deleteFileObjectService,
 } = require('./file-upload-service')
 
-exports.configureModules = async (config) => {
+exports.configureModules = async (config: PerMilesConfig) => {
   const log = bunyan.createLogger(config.log)
   const rbac = new RBAC(permissions)
   const clock = createClock()

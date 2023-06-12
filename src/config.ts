@@ -1,6 +1,4 @@
-import rc from 'rc'
-
-const config: PerMilesConfig = rc('permiles', {
+const config = require('rc')('permiles', {
   authentication: {
     enabled: true,
   },
@@ -66,10 +64,10 @@ export declare type PerMilesConfig = {
     name: string
     host: string
     port: string
-    secure: boolean // true for 465, false for other ports
+    secure: boolean
     auth: {
-      user: string // generated ethereal user
-      pass: string // generated ethereal password
+      user: string
+      pass: string
     }
     tls: {
       rejectUnauthorized: boolean
