@@ -1,1148 +1,958 @@
 {
-	"info": {
-		"_postman_id": "77305940-9466-4f6c-8741-f6a09cbae1b9",
-		"name": "Permiles",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Invite-driver",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n \"id\" : \"{{$randomUUID}}\",\n \"firstname\" : \"Gurinder\",\n \"lastname\" :\"Singh\",\n\"phone\" : \"{{$randomPhoneNumber}}\",\n\"email\" : \"gurinderrawala@gmail.com\",\n\"street\": \"{{$randomStreetAddress}}\", \n\"city\": \"{{$randomCity}}\", \n\"state\": \"ON\", \n\"postal\": \"{{$randomWord}}\",\n\"country\": \"{{$randomWord}}\",\n\"driver_id\" : \"{{$randomInt}}\",\n\"awaitingSignup\": true,\n \"drivers_licence\" : \"{{$randomDepartment}}\",\n \"licence_state\" : \"{{$randomCity}}\",\n \"clientid\": \"f48d88cb-1068-414d-acb7-d4ca78b2dca8\",\n \"truckno\" : \"{{$randomJobDescriptor}}\",\n \"reg_date\" : \"{{$isoTimestamp}}\"\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/drivers/invite-driver",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"drivers",
-						"invite-driver"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "update-driver",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"firstname\": \"fancy Jatt\",\r\n    \"id\": \"1e9bdeaf-1073-4bcb-ac00-5a21f9bcf8246\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/drivers/update-driver",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"drivers",
-						"update-driver"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "clients/invite-user",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n \"id\" : \"{{$randomUUID}}\",\r\n \"firstname\" : \"{{$randomFirstName}}\",\r\n \"lastname\" :\"{{$randomLastName}}\",\r\n \"username\" : \"{{$randomUserName}}\",\r\n \"email\" : \"gurinderrawala@gmail.com\",\r\n \"password\" : \"{{$randomPassword}}\",\r\n \"company\" : \"{{$randomCompanyName}}\",\r\n \"address\" : \"{{$randomCity}}\",\r\n \"reg_date\" : \"{{$isoTimestamp}}\",\r\n \"role\": \"manager\",\r\n \"active\": true,\r\n \"clientid\": \"e7dbcad1-b779-41bd-a9ff-8c639104425c\",\r\n \"awaitingSignup\": true\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/clients/invite-user",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"clients",
-						"invite-user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/user-accounts/update-user-account",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"9ab7fa3e-f885-4835-b0bd-63d985e3ddce\",  \r\n    \"role\": \"manager\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/user-accounts/update-user-account",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"user-accounts",
-						"update-user-account"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/drivers/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/drivers/:id",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"drivers",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "06f8c365-537e-46a8-879d-5c7b0bf3f432"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/clients/create-client",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n\"id\": \"{{$randomUUID}}\",\r\n\"name\": \"{{$randomFullName}}\",\r\n\"legalname\": \"{{$randomFullName}}\",\r\n\"startdate\": \"{{$isoTimestamp}}\", \r\n\"streetaddress\": \"{{$randomStreetAddress}}\",\r\n\"postalcode\": \"{{$randomWords}}\",\r\n\"city\": \"{{$randomCity}}\",\r\n\"country\":\"{{$randomCountry}}\",\r\n\"province\":\"{{$randomCity}}\",\r\n\"isActive\": \"active\",\r\n\"email\": \"gurinderrawala@gmail.com\",\r\n\"phone\": \"{{$randomPhoneNumber}}\",\r\n\"contactname\": \"{{$randomFullName}}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/clients/create-client",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"clients",
-						"create-client"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/clients/update-client",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\":\"bc577552-be2a-43d6-b805-36fa9b519082\",\r\n    \"name\": \"{{$randomFullName}}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/clients/update-client",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"clients",
-						"update-client"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/clients/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/clients/:id",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"clients",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "1df38d55-e143-4eda-8759-9d7f696d5ad3"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/user-account/signin",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"gurinderrawala@gmail.com\",\r\n    \"password\": \"Gurinder\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/user-accounts/signin",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"user-accounts",
-						"signin"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/user-accounts/create-user-account",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n \"id\" : \"{{$randomUUID}}\",\r\n \"firstname\" : \"{{$randomFirstName}}\",\r\n \"lastname\" :\"{{$randomLastName}}\",\r\n \"username\" : \"{{$randomUserName}}\",\r\n \"email\" : \"{{$randomEmail}}\",\r\n \"password\" : \"{{$randomPassword}}\",\r\n \"company\" : \"{{$randomCompanyName}}\",\r\n \"address\" : \"{{$randomCity}}\",\r\n \"reg_date\" : \"{{$isoTimestamp}}\",\r\n \"role\": \"user\",\r\n \"active\": true,\r\n \"clientid\": \"b47d22ef-f33e-4a8d-9ae3-47a2c48dd4a0\",\r\n \"awaitingSignup\": true\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/user-accounts/create-user-account",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"user-accounts",
-						"create-user-account"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/user-accounts/activate",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"password\": \"Gurinder\",\r\n    \"confirmPassword\": \"Gurinder\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/user-accounts/activate",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"user-accounts",
-						"activate"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/drivers/activate",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"password\": \"Gurinder\",\r\n    \"confirmPassword\": \"Gurinder\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/drivers/activate",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"drivers",
-						"activate"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/signup/:token",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/signup/:token",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"signup",
-						":token"
-					],
-					"variable": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ4ZDAyYzVlLTkzYTctNDY2ZC04NTA5LWUyNzY2NTgyNzc0NSIsImNsaWVudGlkIjoiZTdkYmNhZDEtYjc3OS00MWJkLWE5ZmYtOGM2MzkxMDQ0MjVjIiwiZW1haWwiOiJndXJpbmRlcnJhd2FsYUBnbWFpbC5jb20iLCJpYXQiOjE2NTQ3MzAwNTAsImV4cCI6MTY1NDgxNjQ1MH0.xtrbojan9yIXEB6zFRhowRC_WndWCsMbiWbWAYQSaxQ"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/drivers/reset-password",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"gurinderrawala@gmail.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/drivers/reset-password",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"drivers",
-						"reset-password"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/drivers/:email",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/drivers/:email",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"drivers",
-						":email"
-					],
-					"variable": [
-						{
-							"key": "email",
-							"value": "gurinderrawala@gmail.com"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/brokers/update-broker",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"c2fc6d20-499b-4dba-b205-6947101b26d7\",\r\n    \"name\": \"Gurinder\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/brokers/update-broker",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"brokers",
-						"update-broker"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/brokers/broker-list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/brokers/broker-list",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"brokers",
-						"broker-list"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/brokers/add-broker",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"{{$randomUUID}}\",\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"streetaddress\": \"{{$randomStreetAddress}}\",\r\n    \"city\": \"{{$randomCity}}\",\r\n    \"postalcode\": \"{{$randomWord}}\",\r\n    \"province\": \"{{$randomWord}}\",\r\n    \"country\": \"{{$randomCountry}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"contactname\": \"{{$randomEmail}}\",\r\n    \"phone\": \"{{$randomPhoneNumber}}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/brokers/add-broker",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"brokers",
-						"add-broker"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/loads/add-load",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "id",
-							"value": "{{$randomUUID}}",
-							"type": "default"
-						},
-						{
-							"key": "brokerId",
-							"value": "37b7df29-2f0c-48ae-894f-43006d3f6529",
-							"type": "default"
-						},
-						{
-							"key": "state",
-							"value": "CREATED",
-							"type": "default"
-						},
-						{
-							"key": "shipper",
-							"value": "{{$randomFullName}}",
-							"type": "default"
-						},
-						{
-							"key": "receiver",
-							"value": "{{$randomFullName}}",
-							"type": "default"
-						},
-						{
-							"key": "hazmat",
-							"value": "false",
-							"type": "default"
-						},
-						{
-							"key": "poNumber",
-							"value": "{{$randomWord}}",
-							"type": "default"
-						},
-						{
-							"key": "trailerNo",
-							"value": "1234",
-							"type": "default"
-						},
-						{
-							"key": "commodity",
-							"value": "{{$randomWord}}",
-							"type": "default"
-						},
-						{
-							"key": "totalWeight",
-							"value": "45000",
-							"type": "default"
-						},
-						{
-							"key": "shipper",
-							"value": "{{$randomStreetAddress}}",
-							"type": "default"
-						},
-						{
-							"key": "receiver",
-							"value": "{{$randomStreetName}}",
-							"type": "default"
-						},
-						{
-							"key": "files",
-							"type": "file",
-							"src": "/C:/Users/gurin/Downloads/My Resume.pdf"
-						}
-					]
-				},
-				"url": {
-					"raw": "localhost:8081/loads/add-load",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"loads",
-						"add-load"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/loads/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/loads/:id",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"loads",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "42ef48ea-a6ad-447c-89f9-4ff68a321ff6"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/loads/update-load",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"85bef555-4cb0-465d-89a7-ae9cfa1769ee\",\r\n    \"commodityy\": \"Autoparts\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/loads/update-load",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"loads",
-						"update-load"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/loads/load-list",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
-				"url": {
-					"raw": "localhost:8081/loads/load-list",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"loads",
-						"load-list"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/brokers/by-name",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Viola Kutch\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/brokers/by-name",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"brokers",
-						"by-name"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/loads/by-loadId",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"loadId\": 2022\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/loads/by-loadId",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"loads",
-						"by-loadId"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trips/add-trip",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "id",
-							"value": "{{$randomUUID}}",
-							"type": "default"
-						},
-						{
-							"key": "assignedTo",
-							"value": "e4a9efc5-231f-4012-b647-8fb64024bd91",
-							"type": "default"
-						},
-						{
-							"key": "tripInfo",
-							"value": "{{$randomFullName}}",
-							"type": "default"
-						},
-						{
-							"key": "tripInfo",
-							"value": "{{$randomStreetAddress}}",
-							"type": "default"
-						},
-						{
-							"key": "files",
-							"type": "file",
-							"src": "/C:/Users/gurin/Downloads/speedrangers.ca_ (1).png",
-							"disabled": true
-						}
-					]
-				},
-				"url": {
-					"raw": "localhost:8081/trips/add-trip",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trips",
-						"add-trip"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trips/update-trip",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"f8347d77-9a60-4610-b78e-10be0278032b\",\r\n    \"tripInfo\": [ { \"shipperName\": \"Lohari Developer\" } ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/trips/update-trip",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trips",
-						"update-trip"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trips/trip-list",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/trips/trip-list",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trips",
-						"trip-list"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trips/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/trips/:id",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trips",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "f8347d77-9a60-4610-b78e-10be0278032b"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trips/by-tripId",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"tripId\": 1001\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/trips/by-tripId",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trips",
-						"by-tripId"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trailers/add-trailer",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "id",
-							"value": "{{$randomUUID}}",
-							"type": "default"
-						},
-						{
-							"key": "model",
-							"value": "reefer-2014",
-							"type": "default"
-						},
-						{
-							"key": "make",
-							"value": "Carrier",
-							"type": "default"
-						},
-						{
-							"key": "year",
-							"value": "2024",
-							"type": "default"
-						},
-						{
-							"key": "trailerNo",
-							"value": "8082",
-							"type": "default"
-						},
-						{
-							"key": "licencePlate",
-							"value": "JJ8025",
-							"type": "default"
-						},
-						{
-							"key": "licenceState",
-							"value": "ON",
-							"type": "default"
-						},
-						{
-							"key": "safetyExpire",
-							"value": "{{$randomDateFuture}}",
-							"type": "default"
-						},
-						{
-							"key": "notes",
-							"value": "{{$randomWords}}",
-							"type": "default"
-						},
-						{
-							"key": "files",
-							"type": "file",
-							"src": "/C:/Users/gurin/Downloads/www.permiles.com_.png"
-						},
-						{
-							"key": "trailerAttributes",
-							"value": "trailer reefer tri-axel",
-							"type": "default"
-						}
-					]
-				},
-				"url": {
-					"raw": "localhost:8081/trailers/add-trailer",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trailers",
-						"add-trailer"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trucks/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/trucks/:id",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trucks",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "9040e4ff-6062-48a6-8d00-db535f957f9d"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trucks/update-truck",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"9040e4ff-6062-48a6-8d00-db535f957f9d\",\r\n    \"model\": \"Kenworth\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/trucks/update-truck",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trucks",
-						"update-truck"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trucks/truck-list",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/trucks/truck-list",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trucks",
-						"truck-list"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trucks/by-truck-number",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"truckNo\": \"8082\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/trucks/by-truck-number",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trucks",
-						"by-truck-number"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trailers/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/trailers/:id",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trailers",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "6f3e7793-a653-427b-8b19-9298ab70ace2"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trailers/update-trailer",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"6f3e7793-a653-427b-8b19-9298ab70ace2\",\r\n    \"model\": \"Ocean Trailer\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/trailers/update-trailer",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trailers",
-						"update-trailer"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trailers/trailer-list",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8081/trailers/trailer-list",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trailers",
-						"trailer-list"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8081/trailers/by-trailer-number",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"trailerNo\": \"8082\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8081/trailers/by-trailer-number",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"trailers",
-						"by-trailer-number"
-					]
-				}
-			},
-			"response": []
-		}
-	]
+  "info": {
+    "_postman_id": "77305940-9466-4f6c-8741-f6a09cbae1b9",
+    "name": "Permiles",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Invite-driver",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n \"id\" : \"{{$randomUUID}}\",\n \"firstname\" : \"Gurinder\",\n \"lastname\" :\"Singh\",\n\"phone\" : \"{{$randomPhoneNumber}}\",\n\"email\" : \"gurinderrawala@gmail.com\",\n\"street\": \"{{$randomStreetAddress}}\", \n\"city\": \"{{$randomCity}}\", \n\"state\": \"ON\", \n\"postal\": \"{{$randomWord}}\",\n\"country\": \"{{$randomWord}}\",\n\"driver_id\" : \"{{$randomInt}}\",\n\"awaitingSignup\": true,\n \"drivers_licence\" : \"{{$randomDepartment}}\",\n \"licence_state\" : \"{{$randomCity}}\",\n \"clientid\": \"f48d88cb-1068-414d-acb7-d4ca78b2dca8\",\n \"truckno\" : \"{{$randomJobDescriptor}}\",\n \"reg_date\" : \"{{$isoTimestamp}}\"\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/drivers/invite-driver",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["drivers", "invite-driver"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update-driver",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"fancy Jatt\",\r\n    \"id\": \"1e9bdeaf-1073-4bcb-ac00-5a21f9bcf8246\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/drivers/update-driver",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["drivers", "update-driver"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "clients/invite-user",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n \"id\" : \"{{$randomUUID}}\",\r\n \"firstname\" : \"{{$randomFirstName}}\",\r\n \"lastname\" :\"{{$randomLastName}}\",\r\n \"username\" : \"{{$randomUserName}}\",\r\n \"email\" : \"gurinderrawala@gmail.com\",\r\n \"password\" : \"{{$randomPassword}}\",\r\n \"company\" : \"{{$randomCompanyName}}\",\r\n \"address\" : \"{{$randomCity}}\",\r\n \"reg_date\" : \"{{$isoTimestamp}}\",\r\n \"role\": \"manager\",\r\n \"active\": true,\r\n \"clientid\": \"e7dbcad1-b779-41bd-a9ff-8c639104425c\",\r\n \"awaitingSignup\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/clients/invite-user",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["clients", "invite-user"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/user-accounts/update-user-account",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"9ab7fa3e-f885-4835-b0bd-63d985e3ddce\",  \r\n    \"role\": \"manager\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/user-accounts/update-user-account",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["user-accounts", "update-user-account"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/drivers/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/drivers/:id",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["drivers", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "06f8c365-537e-46a8-879d-5c7b0bf3f432"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/clients/create-client",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"id\": \"{{$randomUUID}}\",\r\n\"name\": \"{{$randomFullName}}\",\r\n\"legalname\": \"{{$randomFullName}}\",\r\n\"startdate\": \"{{$isoTimestamp}}\", \r\n\"streetaddress\": \"{{$randomStreetAddress}}\",\r\n\"postalcode\": \"{{$randomWords}}\",\r\n\"city\": \"{{$randomCity}}\",\r\n\"country\":\"{{$randomCountry}}\",\r\n\"province\":\"{{$randomCity}}\",\r\n\"isActive\": \"active\",\r\n\"email\": \"gurinderrawala@gmail.com\",\r\n\"phone\": \"{{$randomPhoneNumber}}\",\r\n\"contactname\": \"{{$randomFullName}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/clients/create-client",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["clients", "create-client"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/clients/update-client",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\":\"bc577552-be2a-43d6-b805-36fa9b519082\",\r\n    \"name\": \"{{$randomFullName}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/clients/update-client",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["clients", "update-client"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/clients/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/clients/:id",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["clients", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1df38d55-e143-4eda-8759-9d7f696d5ad3"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/user-account/signin",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"gurinderrawala@gmail.com\",\r\n    \"password\": \"Gurinder\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/user-accounts/signin",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["user-accounts", "signin"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/user-accounts/create-user-account",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n \"id\" : \"{{$randomUUID}}\",\r\n \"firstname\" : \"{{$randomFirstName}}\",\r\n \"lastname\" :\"{{$randomLastName}}\",\r\n \"username\" : \"{{$randomUserName}}\",\r\n \"email\" : \"{{$randomEmail}}\",\r\n \"password\" : \"{{$randomPassword}}\",\r\n \"company\" : \"{{$randomCompanyName}}\",\r\n \"address\" : \"{{$randomCity}}\",\r\n \"reg_date\" : \"{{$isoTimestamp}}\",\r\n \"role\": \"user\",\r\n \"active\": true,\r\n \"clientid\": \"b47d22ef-f33e-4a8d-9ae3-47a2c48dd4a0\",\r\n \"awaitingSignup\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/user-accounts/create-user-account",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["user-accounts", "create-user-account"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/user-accounts/activate",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"password\": \"Gurinder\",\r\n    \"confirmPassword\": \"Gurinder\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/user-accounts/activate",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["user-accounts", "activate"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/drivers/activate",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"password\": \"Gurinder\",\r\n    \"confirmPassword\": \"Gurinder\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/drivers/activate",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["drivers", "activate"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/signup/:token",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/signup/:token",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["signup", ":token"],
+          "variable": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ4ZDAyYzVlLTkzYTctNDY2ZC04NTA5LWUyNzY2NTgyNzc0NSIsImNsaWVudGlkIjoiZTdkYmNhZDEtYjc3OS00MWJkLWE5ZmYtOGM2MzkxMDQ0MjVjIiwiZW1haWwiOiJndXJpbmRlcnJhd2FsYUBnbWFpbC5jb20iLCJpYXQiOjE2NTQ3MzAwNTAsImV4cCI6MTY1NDgxNjQ1MH0.xtrbojan9yIXEB6zFRhowRC_WndWCsMbiWbWAYQSaxQ"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/drivers/reset-password",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"gurinderrawala@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/drivers/reset-password",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["drivers", "reset-password"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/drivers/:email",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/drivers/:email",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["drivers", ":email"],
+          "variable": [
+            {
+              "key": "email",
+              "value": "gurinderrawala@gmail.com"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/brokers/update-broker",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"c2fc6d20-499b-4dba-b205-6947101b26d7\",\r\n    \"name\": \"Gurinder\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/brokers/update-broker",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["brokers", "update-broker"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/brokers/broker-list",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/brokers/broker-list",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["brokers", "broker-list"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/brokers/add-broker",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"{{$randomUUID}}\",\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"streetaddress\": \"{{$randomStreetAddress}}\",\r\n    \"city\": \"{{$randomCity}}\",\r\n    \"postalcode\": \"{{$randomWord}}\",\r\n    \"province\": \"{{$randomWord}}\",\r\n    \"country\": \"{{$randomCountry}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"contactname\": \"{{$randomEmail}}\",\r\n    \"phone\": \"{{$randomPhoneNumber}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/brokers/add-broker",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["brokers", "add-broker"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/loads/add-load",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "id",
+              "value": "{{$randomUUID}}",
+              "type": "default"
+            },
+            {
+              "key": "brokerId",
+              "value": "37b7df29-2f0c-48ae-894f-43006d3f6529",
+              "type": "default"
+            },
+            {
+              "key": "state",
+              "value": "CREATED",
+              "type": "default"
+            },
+            {
+              "key": "shipper",
+              "value": "{{$randomFullName}}",
+              "type": "default"
+            },
+            {
+              "key": "receiver",
+              "value": "{{$randomFullName}}",
+              "type": "default"
+            },
+            {
+              "key": "hazmat",
+              "value": "false",
+              "type": "default"
+            },
+            {
+              "key": "poNumber",
+              "value": "{{$randomWord}}",
+              "type": "default"
+            },
+            {
+              "key": "trailerNo",
+              "value": "1234",
+              "type": "default"
+            },
+            {
+              "key": "commodity",
+              "value": "{{$randomWord}}",
+              "type": "default"
+            },
+            {
+              "key": "totalWeight",
+              "value": "45000",
+              "type": "default"
+            },
+            {
+              "key": "shipper",
+              "value": "{{$randomStreetAddress}}",
+              "type": "default"
+            },
+            {
+              "key": "receiver",
+              "value": "{{$randomStreetName}}",
+              "type": "default"
+            },
+            {
+              "key": "files",
+              "type": "file",
+              "src": "/C:/Users/gurin/Downloads/My Resume.pdf"
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:8081/loads/add-load",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["loads", "add-load"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/loads/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/loads/:id",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["loads", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "42ef48ea-a6ad-447c-89f9-4ff68a321ff6"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/loads/update-load",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"85bef555-4cb0-465d-89a7-ae9cfa1769ee\",\r\n    \"commodityy\": \"Autoparts\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/loads/update-load",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["loads", "update-load"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/loads/load-list",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "url": {
+          "raw": "localhost:8081/loads/load-list",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["loads", "load-list"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/brokers/by-name",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Viola Kutch\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/brokers/by-name",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["brokers", "by-name"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/loads/by-loadId",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"loadId\": 2022\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/loads/by-loadId",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["loads", "by-loadId"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trips/add-trip",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "id",
+              "value": "{{$randomUUID}}",
+              "type": "default"
+            },
+            {
+              "key": "assignedTo",
+              "value": "e4a9efc5-231f-4012-b647-8fb64024bd91",
+              "type": "default"
+            },
+            {
+              "key": "tripInfo",
+              "value": "{{$randomFullName}}",
+              "type": "default"
+            },
+            {
+              "key": "tripInfo",
+              "value": "{{$randomStreetAddress}}",
+              "type": "default"
+            },
+            {
+              "key": "files",
+              "type": "file",
+              "src": "/C:/Users/gurin/Downloads/speedrangers.ca_ (1).png",
+              "disabled": true
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:8081/trips/add-trip",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trips", "add-trip"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trips/update-trip",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"f8347d77-9a60-4610-b78e-10be0278032b\",\r\n    \"tripInfo\": [ { \"shipperName\": \"Lohari Developer\" } ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/trips/update-trip",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trips", "update-trip"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trips/trip-list",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/trips/trip-list",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trips", "trip-list"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trips/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/trips/:id",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trips", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "f8347d77-9a60-4610-b78e-10be0278032b"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trips/by-tripId",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"tripId\": 1001\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/trips/by-tripId",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trips", "by-tripId"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trailers/add-trailer",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "id",
+              "value": "{{$randomUUID}}",
+              "type": "default"
+            },
+            {
+              "key": "model",
+              "value": "reefer-2014",
+              "type": "default"
+            },
+            {
+              "key": "make",
+              "value": "Carrier",
+              "type": "default"
+            },
+            {
+              "key": "year",
+              "value": "2024",
+              "type": "default"
+            },
+            {
+              "key": "trailerNo",
+              "value": "8082",
+              "type": "default"
+            },
+            {
+              "key": "licencePlate",
+              "value": "JJ8025",
+              "type": "default"
+            },
+            {
+              "key": "licenceState",
+              "value": "ON",
+              "type": "default"
+            },
+            {
+              "key": "safetyExpire",
+              "value": "{{$randomDateFuture}}",
+              "type": "default"
+            },
+            {
+              "key": "notes",
+              "value": "{{$randomWords}}",
+              "type": "default"
+            },
+            {
+              "key": "files",
+              "type": "file",
+              "src": "/C:/Users/gurin/Downloads/www.permiles.com_.png"
+            },
+            {
+              "key": "trailerAttributes",
+              "value": "trailer reefer tri-axel",
+              "type": "default"
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:8081/trailers/add-trailer",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trailers", "add-trailer"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trucks/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/trucks/:id",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trucks", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "9040e4ff-6062-48a6-8d00-db535f957f9d"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trucks/update-truck",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"9040e4ff-6062-48a6-8d00-db535f957f9d\",\r\n    \"model\": \"Kenworth\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/trucks/update-truck",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trucks", "update-truck"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trucks/truck-list",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/trucks/truck-list",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trucks", "truck-list"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trucks/by-truck-number",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"truckNo\": \"8082\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/trucks/by-truck-number",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trucks", "by-truck-number"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trailers/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/trailers/:id",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trailers", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "6f3e7793-a653-427b-8b19-9298ab70ace2"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trailers/update-trailer",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"6f3e7793-a653-427b-8b19-9298ab70ace2\",\r\n    \"model\": \"Ocean Trailer\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/trailers/update-trailer",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trailers", "update-trailer"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trailers/trailer-list",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:8081/trailers/trailer-list",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trailers", "trailer-list"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8081/trailers/by-trailer-number",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"trailerNo\": \"8082\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8081/trailers/by-trailer-number",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["trailers", "by-trailer-number"]
+        }
+      },
+      "response": []
+    }
+  ]
 }

@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./api | bunyan -o short",
-    "lint": "eslint .",
-    "lint-fix": "eslint . --fix",
+    "lint": "eslint --ignore-pattern public/ .",
+    "lint-fix": "eslint --fix --ignore-pattern public/ .",
+    "format": "prettier --ignore-path .prettierignore --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "sync-db": "node ./scripts/sync-db | bunyan -o short",
     "pg-cmd": "node ./scripts/postgres-cmd | bunyan -o short",
     "prepare": "husky install"
@@ -55,6 +56,7 @@
   },
   "devDependencies": {
     "eslint": "^8.42.0",
-    "husky": "^7.0.0"
+    "husky": "^7.0.0",
+    "prettier": "^2.8.8"
   }
 }

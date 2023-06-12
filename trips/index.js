@@ -1,3 +1,3 @@
 module.exports = {
-    ...require('./trips-operations')
+  ...require('./trips-operations'),
 }

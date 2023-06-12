@@ -1,3 +1,3 @@
 module.exports = {
-    ...require('./broker-operations')
+  ...require('./broker-operations'),
 }

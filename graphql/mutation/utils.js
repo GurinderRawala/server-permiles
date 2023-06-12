@@ -1,5 +1,5 @@
-const mapToJSONparse = (data) => JSON.parse(data);
+const mapToJSONparse = (data) => JSON.parse(data)
 
 module.exports = {
-    mapToJSONparse
+  mapToJSONparse,
 }

@@ -1,10 +1,10 @@
 exports.REPOS = [
-    "trailerRepo",
-    "truckRepo",
-    "userAccountRepo",
-    "loadRepo",
-    "brokerRepo",
-    "driverRepo",
-    "tripRepo" ,
-    "payrollRepo",
+  'trailerRepo',
+  'truckRepo',
+  'userAccountRepo',
+  'loadRepo',
+  'brokerRepo',
+  'driverRepo',
+  'tripRepo',
+  'payrollRepo',
 ]

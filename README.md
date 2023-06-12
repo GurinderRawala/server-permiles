@@ -1,17 +1,24 @@
 ## Server Permiles
+
 PerMiles is a fleet management software, providing payroll, safety record, tracking and driver app. For more information visit [permiles.com](https://permiles.com).
-This app is a node app which is dedicated to expose http endpoints and graphql for driver app and company software. 
+This app is a node app which is dedicated to expose http endpoints and graphql for driver app and company software.
 
 ## Get Started
+
 To get started first create docker containers for redis and postgres:
+
 ```shell
 docker compose up
 ```
+
 Install dependencies:
+
 ```shell
 npm install
 ```
+
 Start server:
+
 ```shell
 npm run dev
 ```

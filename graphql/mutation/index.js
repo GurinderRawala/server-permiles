@@ -1,4 +1,4 @@
 module.exports = {
-    ...require("./mutation"),
-    ...require("./driver-app")
+  ...require('./mutation'),
+  ...require('./driver-app'),
 }

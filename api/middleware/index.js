@@ -1,5 +1,5 @@
 module.exports = {
-    ...require('./configure-middleware'),
-    ...require('./validation'),
-    ...require('./file-upload-middleware')
+  ...require('./configure-middleware'),
+  ...require('./validation'),
+  ...require('./file-upload-middleware'),
 }

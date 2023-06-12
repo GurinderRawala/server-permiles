@@ -1,3 +1,3 @@
 module.exports = {
-    ...require('./driver-mutation')
+  ...require('./driver-mutation'),
 }

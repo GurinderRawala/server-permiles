@@ -1,4 +1,4 @@
 module.exports = {
-    ...require("./query"),
-    ...require("./driver-app")
+  ...require('./query'),
+  ...require('./driver-app'),
 }

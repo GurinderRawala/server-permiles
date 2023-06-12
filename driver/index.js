@@ -1,5 +1,4 @@
-
 module.exports = {
-    ...require('./driver-operations'),
-    ...require('./driver')
+  ...require('./driver-operations'),
+  ...require('./driver'),
 }

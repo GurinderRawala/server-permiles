@@ -1,3 +1,3 @@
 module.exports = {
-    ...require('./trailers-operations')
+  ...require('./trailers-operations'),
 }

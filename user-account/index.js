@@ -1,4 +1,4 @@
 module.exports = {
-    ...require('./user-account'),
-    ...require('./user-account-operations')
+  ...require('./user-account'),
+  ...require('./user-account-operations'),
 }

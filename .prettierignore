@@ -1,0 +1,11 @@
+# Ignore public folder
+public
+
+# Ignore node_modules folder
+node_modules
+
+# Ignore .vscode folder
+.vscode
+
+# Ignore .husky folder
+.husky
