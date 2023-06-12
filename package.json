@@ -2,11 +2,14 @@
   "name": "server-permiles",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "/dist/api",
   "scripts": {
-    "dev": "nodemon ./api | bunyan -o short",
-    "lint": "eslint --ignore-pattern public/ .",
-    "lint-fix": "eslint --fix --ignore-pattern public/ .",
+    "start": "nodemon ./dist/api | bunyan -o short",
+    "dev": "concurrently \"tsc -w\" \"npm run start\"",
+    "copy-files": "copyfiles -u 1 src/**/*.js dist/",
+    "build": "npm run copy-files && tsc",
+    "lint": "eslint src",
+    "lint-fix": "eslint src --fix",
     "format": "prettier --ignore-path .prettierignore --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "sync-db": "node ./scripts/sync-db | bunyan -o short",
     "pg-cmd": "node ./scripts/postgres-cmd | bunyan -o short",
@@ -35,7 +38,7 @@
     "express-session": "^1.17.2",
     "express-validator": "^6.14.0",
     "fs": "^0.0.1-security",
-    "graphql": "^15.8.0",
+    "graphql": "^14.7.0",
     "graphql-sequelize": "^9.4.3",
     "graphql-sequelize-generator": "^7.5.1",
     "handlebars": "^4.7.7",
@@ -49,14 +52,21 @@
     "pg": "^8.7.3",
     "rc": "^1.2.8",
     "redis": "^4.1.0",
-    "sequelize": "^6.17.0",
+    "sequelize": "^5.22.3",
     "uniqid": "^5.4.0",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.38",
+    "@types/graphql": "^14.5.0",
+    "@types/rc": "^1.2.1",
+    "@types/validator": "^13.7.17",
+    "concurrently": "^8.2.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.42.0",
     "husky": "^7.0.0",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "ts-node": "^10.9.1"
   }
 }

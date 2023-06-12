@@ -1,4 +1,6 @@
-module.exports = require('rc')('permiles', {
+import rc from 'rc'
+
+const config: PerMilesConfig = rc('permiles', {
   authentication: {
     enabled: true,
   },
@@ -38,4 +40,47 @@ module.exports = require('rc')('permiles', {
   awsBucket: process.env.AWS_BUCKET_NAME,
   uuidRegex:
     /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
-})
+}) as PerMilesConfig
+
+export declare type PerMilesConfig = {
+  authentication: {
+    enabled: boolean
+  }
+  log: {
+    name: 'permiles.api'
+    level: 'info' | 'debug'
+  }
+  port: number
+  postgres: {
+    host: string
+    database: string
+    username: string
+    password: string
+  }
+  privateKey: string
+  sequelize: {
+    dialect: string
+    logging: boolean
+  }
+  mailer: {
+    name: string
+    host: string
+    port: string
+    secure: boolean // true for 465, false for other ports
+    auth: {
+      user: string // generated ethereal user
+      pass: string // generated ethereal password
+    }
+    tls: {
+      rejectUnauthorized: boolean
+    }
+    from: {
+      name: string
+      address: string
+    }
+  }
+  awsBucket: string
+  uuidRegex: RegExp
+}
+
+module.exports = config

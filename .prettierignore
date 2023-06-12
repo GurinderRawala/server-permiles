@@ -9,3 +9,6 @@ node_modules
 
 # Ignore .husky folder
 .husky
+
+# Ignore dist build folder
+dist

@@ -33,7 +33,7 @@ module.exports.startServer = async (config) => {
   })
   registerGraphQL(server, modules)
   server.get('*', (_, res) => {
-    return res.sendFile(path.join(__dirname, '../public', 'index.html'))
+    return res.sendFile(path.join(__dirname, '../../public', 'index.html'))
   })
   server.listen(PORT, () =>
     log.info({ PORT }, 'permiles-api started succesfully')

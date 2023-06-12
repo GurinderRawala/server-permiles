@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "outDir": "./dist",
+    "noEmitOnError": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true
+  },
+  "include": ["src"],
+  "exclude": ["public", "scripts", ".vscode", ".husky", "dist", "node_modules"]
+}
