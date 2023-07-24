@@ -33,7 +33,7 @@ const generateUpdateMutation = (resolver) =>
       type: get(graphQLTypes, `outputTypes.${model}`),
       args: {
         input: {
-          type: graphQLTypes.inputTypes[model],
+          type: modifyInputTypes(model),
           description: `${model} input values`,
         },
         id: {
