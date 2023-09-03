@@ -69,7 +69,7 @@ async function s3DeleteObject(bucket, log, pathToFile, callback) {
       if (err) {
         return callback(err)
       }
-      log.info('s3 deleted object successfull')
+      log.info('s3 deleted object successful')
       return callback(null, data)
     })
   } catch (err) {

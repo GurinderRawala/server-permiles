@@ -106,7 +106,12 @@ exports.registerRoutes = (server, modules) => {
               { [fieldToUpdate]: removeFilePath },
               { where: { id: uuid } }
             )
-            return res.status(201).send({ msg: data })
+            return res
+              .status(201)
+              .send({
+                msg: 'File is deleted from cloud, changes made in DB',
+                deletedFileData: data,
+              })
           } catch (err) {
             log.error({ err }, 'error updating field, something went wrong')
             return next({ msg: err })
