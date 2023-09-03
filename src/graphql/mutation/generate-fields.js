@@ -1,5 +1,5 @@
 const { camelCase, get } = require('lodash')
-const { GraphQLString } = require('graphql')
+const { GraphQLString, GraphQLNonNull, GraphQLID } = require('graphql')
 const { MODEL_REPO } = require('../consts')
 const { graphQLTypes } = require('../types')
 const { modifyInputTypes } = require('./modify-types')
@@ -44,6 +44,19 @@ const generateUpdateMutation = (resolver) =>
       resolve: async (_, args) =>
         await resolver.update(repo, {
           data: args.input,
+          condition: { where: { id: args.id } },
+        }),
+    },
+    [camelCase(`delete${model}`)]: {
+      type: get(graphQLTypes, `outputTypes.${model}`),
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID),
+          description: 'Delete record where id match',
+        },
+      },
+      resolve: async (_, args) =>
+        await resolver.delete(repo, {
           condition: { where: { id: args.id } },
         }),
     },

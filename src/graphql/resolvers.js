@@ -21,6 +21,28 @@ class Resolver {
       return null
     } catch (err) {
       this.log.error({ err }, 'Error updating in resolver')
+      throw err
+    }
+  }
+  async delete(repoKey, payload) {
+    const { condition } = payload
+
+    let record = null
+
+    try {
+      record = await this.findByPk(repoKey, condition.where.id)
+    } catch (err) {
+      this.log.error({ err }, 'error finding record')
+      throw err
+    }
+
+    try {
+      await this.findRepo(repoKey).destroy(condition)
+      this.log.info({ record }, 'Row destroyed successfully')
+      return record
+    } catch (err) {
+      this.log.error({ err }, `Error delete record`)
+      throw err
     }
   }
   async findByPk(repoKey, pk) {
