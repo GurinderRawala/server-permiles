@@ -8,6 +8,7 @@ import {
   GraphQLInputFieldConfigMap,
   GraphQLFieldConfigMap,
 } from 'graphql'
+import { CommonFieldsReturn } from '../common-types'
 
 export const truckFields: GraphQLFieldConfigMap<unknown, unknown> = {
   truckNo: {
@@ -27,15 +28,12 @@ export const trailerFields: GraphQLFieldConfigMap<unknown, unknown> = {
   },
 }
 
-export declare type EquipmentCommonFieldsReturn<T extends 'input' | 'output'> =
-  T extends 'input'
-    ? Thunk<GraphQLInputFieldConfigMap>
-    : Thunk<GraphQLFieldConfigMap<any, any, { [key: string]: any }>>
+
 
 export const equipmentCommonFields = <T extends 'input' | 'output'>(
   equipmentUniqueFields: GraphQLFieldConfigMap<unknown, unknown>,
   type: T
-): EquipmentCommonFieldsReturn<T> => ({
+): CommonFieldsReturn<T> => ({
   id: {
     type: type === 'output' ? new GraphQLNonNull(GraphQLID) : GraphQLID,
     description: `The uuid of equipment, automatically generated if not provided`,

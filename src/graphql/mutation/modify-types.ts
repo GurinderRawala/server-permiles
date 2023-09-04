@@ -3,6 +3,7 @@ import { loadsInputQL } from '../load'
 import { tripInputQL } from '../trip'
 import { trailerInputQL, truckInputQL } from '../equipment'
 import { Models } from '../consts'
+import { brokerInputQL } from '../broker'
 
 export const modifyInputTypes = (model: Models) => {
   switch (model) {
@@ -14,6 +15,8 @@ export const modifyInputTypes = (model: Models) => {
       return trailerInputQL
     case 'Truck':
       return truckInputQL
+    case 'Broker':
+      return brokerInputQL
     default:
       return graphQLTypes.inputTypes[model]
   }
