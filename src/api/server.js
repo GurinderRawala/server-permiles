@@ -16,7 +16,7 @@ module.exports.startServer = async (config) => {
   log.info('permiles-api is starting...')
   server.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: '*',
       methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
       credentials: true,
     })
