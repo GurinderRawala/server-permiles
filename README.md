@@ -17,6 +17,11 @@ Install dependencies:
 npm install
 ```
 
+Build server: 
+```shell
+npm run build
+```
+
 Start server:
 
 ```shell
