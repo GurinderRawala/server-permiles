@@ -29,7 +29,7 @@ class Driver {
   static async createInviteDriver(
     data,
     files,
-    { clock, uploadService, token }
+    { clock, uploadService, token, log }
   ) {
     let uploadResponse = null
     if (files) {
@@ -58,6 +58,8 @@ class Driver {
         }
       ),
     }
+
+    log.info({ inviteDriver }, "inviting driver: ")
     return this.fromData(inviteDriver)
   }
 
