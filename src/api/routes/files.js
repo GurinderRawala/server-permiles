@@ -41,6 +41,7 @@ exports.registerRoutes = (server, modules) => {
             { [fieldToUpdate]: [...inRecordFiles, ...data] },
             { where: { id: uuid } }
           )
+          log.info("file info uploaded successfully.", { fieldToUpdate, uuid })
           return res
             .status(201)
             .send({ fileUploadResponse: [...inRecordFiles, ...data] })
