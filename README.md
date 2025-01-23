@@ -21,6 +21,11 @@ Build server:
 npm run build
 ```
 
+Build server: 
+```shell
+npm run build
+```
+
 Start server:
 
 ```shell

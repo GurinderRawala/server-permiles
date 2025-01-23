@@ -59,6 +59,7 @@ async function inviteDriver(
     clock,
     uploadService,
     token,
+    log,
   })
   const response = await addDriver(
     driverRepo,
