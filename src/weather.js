@@ -1,4 +1,8 @@
-export async function weatherReportForToday(city = "San Francisco", apiKey = "<YOUR_API_KEY>") {
+export async function weatherReportForToday(city = "San Francisco", apiKey) {
+  if (!apiKey || apiKey === "<YOUR_API_KEY>") {
+    console.error("OpenWeather API key is required to fetch weather data.");
+    return null;
+  }
   try {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`
