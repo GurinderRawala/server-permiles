@@ -1,6 +1,9 @@
 /**
+ * Describes an object capable of producing a greeting.
+ *
+ * Implementations are expected to provide a `greet()` method that performs the greeting action.
+ *
  * @interface
- * IGreeter is a JSDoc interface for coverage testing in JS.
  */
 function IGreeter() {}
 /** @type {function(): void} */
@@ -18,7 +21,9 @@ class Greeter /* implements IGreeter (by convention) */ {
   }
 }
 
-// A plain function
+/**
+ * Logs a greeting message to the console.
+ */
 function hello() {
   console.log("Hello function in JavaScript");
 }

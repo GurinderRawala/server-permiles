@@ -16,7 +16,7 @@ func (g GreeterImpl) Greet() {
 	fmt.Println("Hello from Go,", g.Name)
 }
 
-// A plain function
+// Hello prints "Hello function in Go" to standard output.
 func Hello() {
 	fmt.Println("Hello function in Go")
 }

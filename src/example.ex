@@ -13,8 +13,18 @@ defmodule Greeter do
   @behaviour GreeterBehaviour
 
   @doc """
-  greet/0 is a simple function.
+  Prints a greeting message to standard output.
+  
+  Returns `:ok`.
+  
+  ## Examples
+  
+      iex> Greeter.greet()
+      Hello from Elixir
+      :ok
+  
   """
+  @spec greet() :: :ok
   def greet do
     IO.puts("Hello from Elixir")
     :ok

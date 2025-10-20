@@ -2,7 +2,7 @@
 
 # Bash has no classes or interfaces—just functions.
 
-# A simple function
+# greet outputs the greeting "Hello from Bash" to standard output.
 greet() {
   echo "Hello from Bash"
 }

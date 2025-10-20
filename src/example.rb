@@ -1,5 +1,8 @@
 # Greeter is a test class with an RDoc-style comment for coverage.
 class Greeter
+  ##
+  # Outputs a greeting message to standard output.
+  # The message printed is "Hello from Ruby".
   def greet
     puts "Hello from Ruby"
   end
