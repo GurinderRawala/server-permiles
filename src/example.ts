@@ -14,7 +14,9 @@ export class Greeter implements IGreeter {
   }
 }
 
-// A plain function
+/**
+ * Logs a simple greeting message to the console.
+ */
 export function hello(): void {
   console.log("Hello function in TypeScript");
 }

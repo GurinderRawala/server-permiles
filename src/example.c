@@ -8,6 +8,9 @@ typedef struct MyThing {
   int value;
 } MyThing;
 
+/**
+ * Prints "Hello from C" followed by a newline to standard output.
+ */
 void greet(void) {
   printf("Hello from C\n");
 }

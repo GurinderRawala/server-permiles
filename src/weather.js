@@ -1,3 +1,17 @@
+/**
+ * Fetches today's weather for a city and returns a structured report.
+ *
+ * @param {string} [city="San Francisco"] - City name to retrieve weather for.
+ * @param {string} apiKey - OpenWeather API key; must be a valid key (not the placeholder).
+ * @returns {{city: string, temperature: number, description: string, humidity: number, windSpeed: number}|null}
+ *   An object containing:
+ *   - `city`: resolved city name,
+ *   - `temperature`: temperature in degrees Celsius,
+ *   - `description`: short weather description,
+ *   - `humidity`: humidity percentage,
+ *   - `windSpeed`: wind speed in meters per second;
+ *   or `null` if the API key is missing/invalid or the request fails.
+ */
 export async function weatherReportForToday(city = "San Francisco", apiKey) {
   if (!apiKey || apiKey === "<YOUR_API_KEY>") {
     console.error("OpenWeather API key is required to fetch weather data.");

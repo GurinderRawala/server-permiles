@@ -7,12 +7,27 @@ pub trait Greeter {
 pub struct GreeterImpl;
 
 impl Greeter for GreeterImpl {
+    /// Prints a greeting to standard output.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let g = GreeterImpl;
+    /// g.greet();
+    /// ```
     fn greet(&self) {
         println!("Hello from Rust");
     }
 }
 
 // A free function
+/// Prints a simple greeting message to standard output.
+///
+/// # Examples
+///
+/// ```
+/// example::hello();
+/// ```
 pub fn hello() {
     println!("Hello function in Rust");
 }
