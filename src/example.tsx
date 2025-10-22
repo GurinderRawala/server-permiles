@@ -7,10 +7,6 @@ export interface Props {
   name: string;
 }
 
-/**
- * Greeter is a test class with a docstring; not a React component,
- * but included to test class doc coverage in TSX context.
- */
 export class Greeter {
   greet(): void {
     console.log("Hello from TSX context");
@@ -19,4 +15,8 @@ export class Greeter {
 
 export function Hello(props: Props) {
   return <div>Hello {props.name} from TSX</div>;
+}
+
+export function Hi(props: Props) {
+  return <div>Hi {props.name} from TSX</div>;
 }
