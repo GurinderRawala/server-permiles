@@ -110,7 +110,7 @@ reviews:
           4. Check for deleted files or major refactors that could break backward compatibility.
           Use web search or documentation lookup to verify if similar changes have caused issues in the past or require special migration steps. If breaking changes are found, summarize them and recommend clear migration or communication steps.
       - name: "Test Coverage Requirement"
-        mode: "off"
+        mode: "error"
         instructions: |
           Check if the pull request meets the required test coverage standards:
           1. Verify that new or modified code is accompanied by appropriate unit or integration tests.
