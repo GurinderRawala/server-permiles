@@ -3,7 +3,7 @@
  */
 interface IGreeter {
     /**
- * Prints a greeting message to standard output.
+ * Prints "Hello function in Kotlin" to standard output.
  */
 fun greet()
 }

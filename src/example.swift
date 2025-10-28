@@ -7,7 +7,9 @@ protocol Greeter {
 class GreeterImpl: Greeter {
     /// Prints a greeting message to standard output.
     /// 
-    /// The message produced is "Hello from Swift".
+    /// Prints a greeting message to standard output.
+    /// 
+    /// The printed message is "Hello from Swift".
     func greet() {
         print("Hello from Swift")
     }
@@ -15,7 +17,7 @@ class GreeterImpl: Greeter {
 
 /// Prints a greeting message to standard output.
 /// 
-/// The message printed is "Hello function in Swift".
+/// Prints the greeting "Hello function in Swift" to standard output.
 func hello() {
     print("Hello function in Swift")
 }

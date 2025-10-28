@@ -5,7 +5,7 @@ interface IGreeter {
     /**
  * Performs a greeting action.
  *
- * Implementations typically emit a greeting message (for example, to standard output).
+ * Implementations typically print a greeting message (for example, to standard output).
  */
 void greet();
 }
@@ -16,8 +16,6 @@ void greet();
 public class Greeter implements IGreeter {
     /**
      * Prints a greeting message to standard output.
-     *
-     * This writes "Hello from Java" to System.out.
      */
     public void greet() {
         System.out.println("Hello from Java");
@@ -27,9 +25,9 @@ public class Greeter implements IGreeter {
 // A top-level function isn’t allowed; use a utility class instead.
 class Utils {
     /**
-     * Prints a simple greeting message to standard output.
+     * Prints a greeting message to standard output.
      *
-     * Writes "Hello function in Java" followed by a platform line terminator to System.out.
+     * Outputs the literal "Hello function in Java" followed by the platform-specific line terminator.
      */
     static void hello() {
         System.out.println("Hello function in Java");

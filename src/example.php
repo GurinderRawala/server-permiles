@@ -6,9 +6,9 @@ declare(strict_types=1);
  */
 interface IGreeter {
     /**
- * Outputs a greeting message.
+ * Emit a greeting to standard output.
  *
- * Implementations should emit a greeting to the output (for example, printing "Hello from PHP" followed by a newline).
+ * Implementations should write a greeting message (for example, "Hello from PHP") followed by a newline.
  */
 public function greet(): void;
 }
