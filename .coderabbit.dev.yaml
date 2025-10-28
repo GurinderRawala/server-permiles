@@ -101,7 +101,7 @@ reviews:
           4. No exposed sensitive data in logs
           Use web search to verify security best practices for identified patterns.
       - name: "Breaking Changes Check"
-        mode: "off"
+        mode: "error"
         instructions: |
           Check for breaking changes in the pull request:
           1. Identify any changes to public APIs, exported functions, or interfaces that could impact downstream consumers.
