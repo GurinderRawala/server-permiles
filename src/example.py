@@ -12,6 +12,6 @@ def hello() -> None:
     """
     Prints a simple greeting to standard output.
     
-    This function writes "Hello function in Python" to stdout and returns None.
+    Outputs the literal string "Hello function in Python".
     """
     print("Hello function in Python")

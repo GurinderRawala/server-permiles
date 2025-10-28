@@ -2,7 +2,9 @@
 class Greeter
   ##
   # Outputs a greeting message to standard output.
-  # The message printed is "Hello from Ruby".
+  ##
+  # Prints "Hello from Ruby" to standard output.
+  # @return [nil] nil.
   def greet
     puts "Hello from Ruby"
   end

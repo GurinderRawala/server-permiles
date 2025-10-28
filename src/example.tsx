@@ -13,10 +13,22 @@ export class Greeter {
   }
 }
 
+/**
+ * Render a greeting element that includes the provided name.
+ *
+ * @param props - Component props containing the `name` to display
+ * @returns A JSX element that displays "Hello {name} from TSX"
+ */
 export function Hello(props: Props) {
   return <div>Hello {props.name} from TSX</div>;
 }
 
+/**
+ * Renders a greeting "Hi {name} from TSX" inside a div.
+ *
+ * @param props - Component props containing the `name` to display
+ * @returns A React element containing the greeting
+ */
 export function Hi(props: Props) {
   return <div>Hi {props.name} from TSX</div>;
 }

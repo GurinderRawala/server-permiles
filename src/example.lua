@@ -6,13 +6,14 @@ Greeter.__index = Greeter
 --- Constructor
 -- Creates a new Greeter instance.
 -- The returned table has Greeter set as its metatable so Greeter methods are available.
--- @return Greeter A new Greeter instance.
+-- Create a new Greeter instance.
+-- @return A new Greeter instance.
 function Greeter:new()
   return setmetatable({}, self)
 end
 
 -- Prints a greeting to standard output.
--- The message printed is "Hello from Lua".
+-- Prints a greeting message ("Hello from Lua") to standard output.
 function Greeter:greet()
   print("Hello from Lua")
 end

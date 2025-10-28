@@ -26,8 +26,8 @@ void greet() const override { std::cout << "Hello from C++\n"; }
 };
 
 /**
- * @brief Prints a free-function greeting to standard output.
+ * @brief Prints a greeting message to standard output.
  *
- * Writes "Free function in C++" followed by a newline to stdout.
+ * Outputs "Free function in C++" followed by a newline to stdout.
  */
 void greet() { std::cout << "Free function in C++\n"; }
