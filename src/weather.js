@@ -13,7 +13,7 @@
  *   or `null` if the API key is missing/invalid or the request fails.
  */
 export async function weatherReportForToday(city = "San Francisco", apiKey) {
-  if (!apiKey || apiKey === "<YOUR_API_KEY>") {
+  if (!apiKey || apiKey === process,env.WEATHER_API_KEY) {
     console.error("OpenWeather API key is required to fetch weather data.");
     return null;
   }
